@@ -3,6 +3,7 @@ import { Component, useState } from 'react';
 import './App.css';
 import Search from './search-component';
 import Pokemon from './pokemon';
+import fetchPokemons from './api';
 
 class App extends Component {
   state = {
@@ -31,8 +32,10 @@ class App extends Component {
     ],
   };
 
-  handleClick = () => {
+  handleClick = async () => {
     console.log("Hello, I'm pokemon");
+    const allPokemons = await fetchPokemons(localStorage.getItem('text') ?? '');
+    this.setState({ pokemonArray: allPokemons });
   };
 
   render() {
