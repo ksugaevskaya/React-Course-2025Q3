@@ -30,10 +30,15 @@ class App extends Component {
       },
     ],
   };
+
+  handleClick = () => {
+    console.log("Hello, I'm pokemon");
+  };
+
   render() {
     return (
       <>
-        <Search> </Search>
+        <Search onClick={this.handleClick}></Search>
         {this.state.pokemonArray.map((pokemon) => (
           <Pokemon
             key={pokemon.name}

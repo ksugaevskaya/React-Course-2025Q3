@@ -1,12 +1,22 @@
 import { Component } from 'react';
 
-export default class Search extends Component {
-  handleClick = () => {};
+type Props = {
+  onClick: () => void;
+};
+
+export default class Search extends Component<Props> {
+  onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    localStorage.setItem('text', event.target.value);
+  };
   render() {
     return (
       <div>
-        <input placeholder="Start your search"></input>
-        <button onClick={this.handleClick}> Search </button>
+        <input
+          defaultValue={localStorage.getItem('text') ?? ''}
+          onChange={this.onInputChange}
+          placeholder="Start your search"
+        ></input>
+        <button onClick={this.props.onClick}> Search </button>
       </div>
     );
   }
