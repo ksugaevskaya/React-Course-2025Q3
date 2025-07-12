@@ -1,54 +1,51 @@
-import { Component, useState } from 'react';
+import { Component } from 'react';
 
 import './App.css';
 import Search from './search-component';
-import Pokemon from './pokemon';
+import PokemonComponent from './pokemon';
 import fetchPokemons from './api';
+import Spinner from './spinner';
 
-class App extends Component {
-  state = {
-    pokemonArray: [
-      {
-        name: 'Pikachu',
-        image:
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png',
-        description:
-          'When several of these POKéMON gather, their electricity could build and cause lightning storms.',
-      },
-      {
-        name: 'Bulbazawr',
-        image:
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
-        description:
-          'When several of these POKéMON gather, their bulbazawr power could build and cause bulba growth.',
-      },
-      {
-        name: 'Ivizawr',
-        image:
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png',
-        description:
-          'When the bulb on its back grows large, it appears to lose the ability to stand on its hind legs.',
-      },
-    ],
+type Pokemon = {
+  name: string;
+  image: string;
+  description: string;
+};
+
+type AppState = {
+  isSpinnerActive: boolean;
+  pokemonArray: Pokemon[];
+};
+class App extends Component<unknown, AppState> {
+  state: AppState = {
+    isSpinnerActive: false,
+    pokemonArray: [],
   };
+
+  componentDidMount(): void {
+    this.handleClick();
+  }
 
   handleClick = async () => {
     console.log("Hello, I'm pokemon");
+    this.setState({ isSpinnerActive: true });
     const allPokemons = await fetchPokemons(localStorage.getItem('text') ?? '');
     this.setState({ pokemonArray: allPokemons });
+    this.setState({ isSpinnerActive: false });
   };
 
   render() {
     return (
       <>
         <Search onClick={this.handleClick}></Search>
+        {this.state.isSpinnerActive ? <Spinner></Spinner> : null}
         {this.state.pokemonArray.map((pokemon) => (
-          <Pokemon
+          <PokemonComponent
             key={pokemon.name}
             name={pokemon.name}
             image={pokemon.image}
             description={pokemon.description}
-          ></Pokemon>
+          ></PokemonComponent>
         ))}
       </>
     );
