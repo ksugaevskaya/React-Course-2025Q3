@@ -58,12 +58,12 @@ class App extends Component<unknown, AppState> {
     return (
       <>
         <Search onClick={this.handleClick}></Search>
-        {this.state.pokemonArray.length === 0
-          ? 'No Pokemons found. Please try a new search.'
-          : null}
-        {this.state.isSpinnerActive ? <Spinner></Spinner> : null}
+        {this.state.isSpinnerActive ? <Spinner></Spinner> : null}{' '}
+        {this.state.pokemonArray.length === 0 ? (
+          <div>No Pokemons found. Please try a new search.</div>
+        ) : null}
         {this.state.isErrorActive ? (
-          'Failed to render Pokemons. Please try again.'
+          <div>Failed to render Pokemons. Please try again.</div>
         ) : (
           <PokemonList pokemonArray={this.state.pokemonArray}></PokemonList>
         )}

@@ -28,6 +28,8 @@ type FullPokemon = {
   description: string;
 };
 
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export default async function fetchPokemons(
   searchQuery: string = '',
   limit: number = 20
@@ -36,6 +38,8 @@ export default async function fetchPokemons(
   const speciesUrl = 'https://pokeapi.co/api/v2/pokemon-species';
 
   try {
+    await delay(1000);
+
     const response = await fetch(`${apiUrl}?limit=1000`);
     const data: { results: Pokemon[] } = await response.json();
 
