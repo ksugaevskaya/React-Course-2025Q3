@@ -13,6 +13,7 @@ type Pokemon = {
 };
 
 type AppState = {
+  isErrorActive: boolean;
   isSpinnerActive: boolean;
   pokemonArray: Pokemon[];
 };
@@ -20,6 +21,7 @@ class App extends Component<unknown, AppState> {
   state: AppState = {
     isSpinnerActive: false,
     pokemonArray: [],
+    isErrorActive: false,
   };
 
   componentDidMount(): void {
@@ -29,24 +31,37 @@ class App extends Component<unknown, AppState> {
   handleClick = async () => {
     console.log("Hello, I'm pokemon");
     this.setState({ isSpinnerActive: true });
-    const allPokemons = await fetchPokemons(localStorage.getItem('text') ?? '');
-    this.setState({ pokemonArray: allPokemons });
-    this.setState({ isSpinnerActive: false });
+    try {
+      const allPokemons = await fetchPokemons(
+        localStorage.getItem('text') ?? ''
+      );
+      this.setState({ pokemonArray: allPokemons });
+      this.setState({ isSpinnerActive: false });
+      this.setState({ isErrorActive: false });
+    } catch {
+      this.setState({ isErrorActive: true });
+      this.setState({ isSpinnerActive: false });
+    }
   };
 
   render() {
     return (
       <>
         <Search onClick={this.handleClick}></Search>
+        {this.state.pokemonArray.length === 0
+          ? 'No Pokemons found. Please try a new search.'
+          : null}
         {this.state.isSpinnerActive ? <Spinner></Spinner> : null}
-        {this.state.pokemonArray.map((pokemon) => (
-          <PokemonComponent
-            key={pokemon.name}
-            name={pokemon.name}
-            image={pokemon.image}
-            description={pokemon.description}
-          ></PokemonComponent>
-        ))}
+        {this.state.isErrorActive
+          ? 'Failed to render Pokemons. Please try again.'
+          : this.state.pokemonArray.map((pokemon) => (
+              <PokemonComponent
+                key={pokemon.name}
+                name={pokemon.name}
+                image={pokemon.image}
+                description={pokemon.description}
+              ></PokemonComponent>
+            ))}
       </>
     );
   }

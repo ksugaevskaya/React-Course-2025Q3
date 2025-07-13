@@ -45,6 +45,6 @@ export default async function fetchPokemons(searchQuery = '', limit = 20) {
     return detailedPokemons;
   } catch (error) {
     console.error('Error fetching Pokémon data:', error);
-    return [];
+    throw error;
   }
 }
