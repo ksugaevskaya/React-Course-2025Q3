@@ -40,3 +40,14 @@
 .read-the-docs {
   color: #888;
 }
+
+.error-button {
+  text-align: end;
+}
+
+.message {
+  margin: 15px;
+  font-size: 22px;
+  font-style: italic;
+  color: rgb(203, 24, 24);
+}

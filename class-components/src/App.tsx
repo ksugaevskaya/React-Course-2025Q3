@@ -60,14 +60,20 @@ class App extends Component<unknown, AppState> {
         <Search onClick={this.handleClick}></Search>
         {this.state.isSpinnerActive ? <Spinner></Spinner> : null}{' '}
         {this.state.pokemonArray.length === 0 ? (
-          <div>No Pokemons found. Please try a new search.</div>
+          <div className="message">
+            No Pokemons found. Please try a new search.
+          </div>
         ) : null}
         {this.state.isErrorActive ? (
-          <div>Failed to render Pokemons. Please try again.</div>
+          <div className="message">
+            Failed to render Pokemons. Please try again.
+          </div>
         ) : (
           <PokemonList pokemonArray={this.state.pokemonArray}></PokemonList>
         )}
-        <button onClick={this.errorClick}> Error button </button>
+        <div className="error-button">
+          <button onClick={this.errorClick}>Error Button </button>
+        </div>
       </>
     );
   }

@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import './search.css';
 
 type Props = {
   onClick: () => void;
@@ -10,8 +11,9 @@ export default class Search extends Component<Props> {
   };
   render() {
     return (
-      <div>
+      <div className="top-container">
         <input
+          className="input"
           defaultValue={localStorage.getItem('text') ?? ''}
           onChange={this.onInputChange}
           placeholder="Start your search"

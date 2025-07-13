@@ -1,4 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
+import './error.css';
 
 type ErrorBoundaryProps = {
   children: ReactNode;
@@ -22,9 +23,19 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     console.error('Error caught by ErrorBoundary:', error, errorInfo);
   }
 
+  handleClick = () => {
+    this.setState({ hasError: false });
+  };
+
   render(): ReactNode {
     if (this.state.hasError) {
-      return <h1>Something went wrong.</h1>;
+      return (
+        <div className="error-container">
+          <i className="error-text">Oops... Something went wrong...</i>
+
+          <button onClick={this.handleClick}>Try again </button>
+        </div>
+      );
     }
 
     return this.props.children;
