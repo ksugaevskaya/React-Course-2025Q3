@@ -6,7 +6,7 @@ type Props = {
 
 export default class Search extends Component<Props> {
   onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    localStorage.setItem('text', event.target.value);
+    localStorage.setItem('text', event.target.value.trim());
   };
   render() {
     return (
