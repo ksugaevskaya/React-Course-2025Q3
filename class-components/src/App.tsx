@@ -13,12 +13,15 @@ type Pokemon = {
 };
 
 type AppState = {
+  shouldThrow: boolean;
+
   isErrorActive: boolean;
   isSpinnerActive: boolean;
   pokemonArray: Pokemon[];
 };
 class App extends Component<unknown, AppState> {
   state: AppState = {
+    shouldThrow: false,
     isSpinnerActive: false,
     pokemonArray: [],
     isErrorActive: false,
@@ -44,7 +47,14 @@ class App extends Component<unknown, AppState> {
     }
   };
 
+  errorClick = () => {
+    this.setState({ shouldThrow: true });
+  };
+
   render() {
+    if (this.state.shouldThrow) {
+      throw new Error('Test error');
+    }
     return (
       <>
         <Search onClick={this.handleClick}></Search>
@@ -57,6 +67,7 @@ class App extends Component<unknown, AppState> {
         ) : (
           <PokemonList pokemonArray={this.state.pokemonArray}></PokemonList>
         )}
+        <button onClick={this.errorClick}> Error button </button>
       </>
     );
   }
