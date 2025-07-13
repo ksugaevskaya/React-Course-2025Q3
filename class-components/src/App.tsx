@@ -2,9 +2,9 @@ import { Component } from 'react';
 
 import './App.css';
 import Search from './search-component';
-import PokemonComponent from './pokemon';
 import fetchPokemons from './api';
 import Spinner from './spinner';
+import PokemonList from './pokemon-list-component';
 
 type Pokemon = {
   name: string;
@@ -52,16 +52,11 @@ class App extends Component<unknown, AppState> {
           ? 'No Pokemons found. Please try a new search.'
           : null}
         {this.state.isSpinnerActive ? <Spinner></Spinner> : null}
-        {this.state.isErrorActive
-          ? 'Failed to render Pokemons. Please try again.'
-          : this.state.pokemonArray.map((pokemon) => (
-              <PokemonComponent
-                key={pokemon.name}
-                name={pokemon.name}
-                image={pokemon.image}
-                description={pokemon.description}
-              ></PokemonComponent>
-            ))}
+        {this.state.isErrorActive ? (
+          'Failed to render Pokemons. Please try again.'
+        ) : (
+          <PokemonList pokemonArray={this.state.pokemonArray}></PokemonList>
+        )}
       </>
     );
   }
