@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import PokemonComponent from './pokemon';
+import PokemonComponent from '../pokemon/pokemon';
 
 type Props = {
   pokemonArray: {

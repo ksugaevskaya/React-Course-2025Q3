@@ -1,10 +1,10 @@
 import { Component } from 'react';
 
 import './App.css';
-import Search from './search-component';
-import fetchPokemons from './api';
-import Spinner from './spinner';
-import PokemonList from './pokemon-list-component';
+import Search from '../search/search-component';
+import fetchPokemons from '../../api/api';
+import Spinner from '../spinner/spinner';
+import PokemonList from '../pokemon-list/pokemon-list-component';
 
 type Pokemon = {
   name: string;
