@@ -8,11 +8,11 @@ test('correct pokemon rendering', () => {
     <Pokemon
       name="Pikachu"
       image="https//:google.com/imgage"
-      description="Blalal bka bla bla"
+      description="yellow pokemon"
     ></Pokemon>
   );
-  expect(screen.queryByText('Pikachu')).toBeDefined();
-  expect(screen.queryByText('Blalal bka bla bla')).toBeDefined();
+  expect(screen.queryByText('Pikachu')).not.toBeNull();
+  expect(screen.queryByText('yellow pokemon')).not.toBeNull();
 
   expect(screen).toMatchSnapshot();
 });
