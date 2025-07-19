@@ -21,3 +21,13 @@ test('check onClick functionality', () => {
 
   expect(onClick).toHaveBeenCalled();
 });
+
+test('check data saved to LS', () => {
+  const onClick = vitest.fn();
+  render(<Search onClick={onClick}></Search>);
+
+  const input = screen.getByPlaceholderText('Start your search');
+
+  fireEvent.change(input, { target: { value: 'Pikachu' } });
+  expect(localStorage.getItem('text')).toBe('Pikachu');
+});
