@@ -7,14 +7,14 @@ import { Component, type ReactNode } from 'react';
 afterEach(cleanup);
 
 test('check renderring children if no error', () => {
-  render(
+  const { container } = render(
     <ErrorBoundary>
       <h1>Hello, world</h1>
     </ErrorBoundary>
   );
 
   expect(screen.queryByText('Hello, world')).not.toBeNull();
-  expect(screen).toMatchSnapshot();
+  expect(container).toMatchSnapshot();
 });
 
 class ErrorComponent extends Component {

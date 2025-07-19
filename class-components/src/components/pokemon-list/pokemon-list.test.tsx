@@ -4,7 +4,7 @@ import PokemonList from './pokemon-list-component';
 import { expect, test } from 'vitest';
 
 test('correct pokemon list rendering', () => {
-  render(
+  const { container } = render(
     <PokemonList
       pokemonArray={[
         {
@@ -19,5 +19,5 @@ test('correct pokemon list rendering', () => {
   expect(screen.queryByText('Pikachu')).not.toBeNull();
   expect(screen.queryByText('yellow pokemon')).not.toBeNull();
 
-  expect(screen).toMatchSnapshot();
+  expect(container).toMatchSnapshot();
 });

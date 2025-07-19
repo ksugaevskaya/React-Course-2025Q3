@@ -1,9 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import Spinner from './spinner';
 import { expect, test } from 'vitest';
 
 test('check spinner loading', () => {
-  render(<Spinner></Spinner>);
+  const { container } = render(<Spinner></Spinner>);
 
-  expect(screen).toMatchSnapshot();
+  expect(container).toMatchSnapshot();
 });

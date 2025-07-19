@@ -4,7 +4,7 @@ import Pokemon from './pokemon';
 import { expect, test } from 'vitest';
 
 test('correct pokemon rendering', () => {
-  render(
+  const { container } = render(
     <Pokemon
       name="Pikachu"
       image="https//:google.com/imgage"
@@ -14,5 +14,5 @@ test('correct pokemon rendering', () => {
   expect(screen.queryByText('Pikachu')).not.toBeNull();
   expect(screen.queryByText('yellow pokemon')).not.toBeNull();
 
-  expect(screen).toMatchSnapshot();
+  expect(container).toMatchSnapshot();
 });

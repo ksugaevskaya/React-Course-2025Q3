@@ -6,11 +6,11 @@ import { cleanup } from '@testing-library/react';
 afterEach(cleanup);
 
 test('correct search rendering', () => {
-  render(<Search onClick={vitest.fn()}></Search>);
+  const { container } = render(<Search onClick={vitest.fn()}></Search>);
 
   expect(screen.queryByPlaceholderText('Start your search')).not.toBeNull();
   expect(screen.queryByText('Search')).not.toBeNull();
-  expect(screen).toMatchSnapshot();
+  expect(container).toMatchSnapshot();
 });
 
 test('check onClick functionality', () => {
