@@ -1,10 +1,11 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import ErrorBoundary from './error-boundary';
 
-import { afterEach, expect, test } from 'vitest';
+import { afterEach, expect, test, vitest } from 'vitest';
 import { Component, type ReactNode } from 'react';
 
 afterEach(cleanup);
+vitest.spyOn(console, 'error').mockImplementation(() => {});
 
 test('check renderring children if no error', () => {
   const { container } = render(

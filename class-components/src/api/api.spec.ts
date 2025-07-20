@@ -1,6 +1,8 @@
 import { expect, test, vitest } from 'vitest';
 import fetchPokemons from './api';
 
+vitest.spyOn(console, 'error').mockImplementation(() => {});
+
 const mockFetch = vitest.fn();
 
 globalThis.fetch = mockFetch;
