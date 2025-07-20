@@ -58,3 +58,9 @@ test('show error message if api failed', async () => {
     ).not.toBeNull()
   );
 });
+
+test('show spinner on initial mount', () => {
+  const { container } = render(<App></App>);
+
+  expect(container).toMatchSnapshot();
+});

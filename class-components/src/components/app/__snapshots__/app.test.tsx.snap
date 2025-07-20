@@ -47,3 +47,36 @@ exports[`check correct rendering 1`] = `
   </div>
 </div>
 `;
+
+exports[`show spinner on initial mount 1`] = `
+<div>
+  <div
+    class="top-container"
+  >
+    <input
+      class="input"
+      placeholder="Start your search"
+      value=""
+    />
+    <button>
+       Search 
+    </button>
+  </div>
+  <div
+    class="loading"
+  />
+   
+  <div
+    class="message"
+  >
+    No Pokemons found. Please try a new search.
+  </div>
+  <div
+    class="error-button"
+  >
+    <button>
+      Error Button 
+    </button>
+  </div>
+</div>
+`;
