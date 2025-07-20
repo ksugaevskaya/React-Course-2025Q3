@@ -28,6 +28,13 @@ test('check data saved to LS', () => {
 
   const input = screen.getByPlaceholderText('Start your search');
 
-  fireEvent.change(input, { target: { value: 'Pikachu' } });
+  fireEvent.change(input, { target: { value: ' Pikachu ' } });
   expect(localStorage.getItem('text')).toBe('Pikachu');
+});
+
+test('displays previously saved search term from localStorage on mount', () => {
+  localStorage.setItem('text', 'Bulbasaur');
+  const onClick = vitest.fn();
+  render(<Search onClick={onClick}></Search>);
+  expect(screen.queryAllByText('Bulbasaur')).not.toBeNull();
 });
