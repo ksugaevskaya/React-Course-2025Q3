@@ -1,10 +1,9 @@
-import { Component } from 'react';
-
 import './App.css';
 import Search from '../search/search-component';
 import fetchPokemons from '../../api/api';
 import Spinner from '../spinner/spinner';
 import PokemonList from '../pokemon-list/pokemon-list-component';
+import { useEffect, useState } from 'react';
 
 type Pokemon = {
   name: string;
@@ -12,71 +11,58 @@ type Pokemon = {
   description: string;
 };
 
-type AppState = {
-  shouldThrow: boolean;
+export default function App() {
+  const [shouldThrow, setShouldThrow] = useState(false);
+  const [isSpinnerActive, setSpinner] = useState(false);
+  const [pokemonArray, setPokemonArray] = useState<Pokemon[]>([]);
+  const [isErrorActive, setError] = useState(false);
 
-  isErrorActive: boolean;
-  isSpinnerActive: boolean;
-  pokemonArray: Pokemon[];
-};
-class App extends Component<unknown, AppState> {
-  state: AppState = {
-    shouldThrow: false,
-    isSpinnerActive: false,
-    pokemonArray: [],
-    isErrorActive: false,
-  };
+  useEffect(() => {
+    handleClick();
+  }, []);
 
-  componentDidMount(): void {
-    this.handleClick();
-  }
-
-  handleClick = async () => {
+  const handleClick = async () => {
     console.log("Hello, I'm pokemon");
-    this.setState({ isSpinnerActive: true });
+    setSpinner(true);
     try {
       const allPokemons = await fetchPokemons(
         localStorage.getItem('text') ?? ''
       );
-      this.setState({ pokemonArray: allPokemons });
-      this.setState({ isSpinnerActive: false });
-      this.setState({ isErrorActive: false });
+      setPokemonArray(allPokemons);
+      setSpinner(false);
+      setError(false);
     } catch {
-      this.setState({ isErrorActive: true });
-      this.setState({ isSpinnerActive: false });
+      setError(true);
+      setSpinner(false);
     }
   };
 
-  errorClick = () => {
-    this.setState({ shouldThrow: true });
+  const errorClick = () => {
+    setShouldThrow(true);
   };
 
-  render() {
-    if (this.state.shouldThrow) {
-      throw new Error('Test error');
-    }
-    return (
-      <>
-        <Search onClick={this.handleClick}></Search>
-        {this.state.isSpinnerActive ? <Spinner></Spinner> : null}{' '}
-        {this.state.pokemonArray.length === 0 ? (
-          <div className="message">
-            No Pokemons found. Please try a new search.
-          </div>
-        ) : null}
-        {this.state.isErrorActive ? (
-          <div className="message">
-            Failed to render Pokemons. Please try again.
-          </div>
-        ) : (
-          <PokemonList pokemonArray={this.state.pokemonArray}></PokemonList>
-        )}
-        <div className="error-button">
-          <button onClick={this.errorClick}>Error Button </button>
-        </div>
-      </>
-    );
+  if (shouldThrow) {
+    throw new Error('Test error');
   }
+  return (
+    <>
+      <Search onClick={handleClick}></Search>
+      {isSpinnerActive ? <Spinner></Spinner> : null}{' '}
+      {pokemonArray.length === 0 ? (
+        <div className="message">
+          No Pokemons found. Please try a new search.
+        </div>
+      ) : null}
+      {isErrorActive ? (
+        <div className="message">
+          Failed to render Pokemons. Please try again.
+        </div>
+      ) : (
+        <PokemonList pokemonArray={pokemonArray}></PokemonList>
+      )}
+      <div className="error-button">
+        <button onClick={errorClick}>Error Button </button>
+      </div>
+    </>
+  );
 }
-
-export default App;
