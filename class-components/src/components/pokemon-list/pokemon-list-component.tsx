@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import PokemonComponent from '../pokemon/pokemon';
 
 type Props = {
@@ -9,15 +8,13 @@ type Props = {
   }[];
 };
 
-export default class PokemonList extends Component<Props> {
-  render() {
-    return this.props.pokemonArray.map((pokemon) => (
-      <PokemonComponent
-        key={pokemon.name}
-        name={pokemon.name}
-        image={pokemon.image}
-        description={pokemon.description}
-      ></PokemonComponent>
-    ));
-  }
+export default function PokemonList({ pokemonArray }: Props) {
+  return pokemonArray.map((pokemon) => (
+    <PokemonComponent
+      key={pokemon.name}
+      name={pokemon.name}
+      image={pokemon.image}
+      description={pokemon.description}
+    ></PokemonComponent>
+  ));
 }
