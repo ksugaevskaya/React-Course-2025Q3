@@ -1,0 +1,29 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`correct pokemon rendering 1`] = `
+<div>
+  <div
+    class="pokemon-container"
+  >
+    <img
+      src="https//:google.com/imgage"
+    />
+    <div
+      class="pokemon-text-container"
+    >
+      <h2
+        class="h2"
+      >
+         
+        Pikachu
+         
+      </h2>
+      <span
+        class="pokemon-desription"
+      >
+        yellow pokemon
+      </span>
+    </div>
+  </div>
+</div>
+`;
