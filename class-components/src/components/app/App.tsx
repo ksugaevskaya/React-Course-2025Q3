@@ -4,6 +4,7 @@ import fetchPokemons from '../../api/api';
 import Spinner from '../spinner/spinner';
 import PokemonList from '../pokemon-list/pokemon-list-component';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router';
 
 type Pokemon = {
   name: string;
@@ -46,6 +47,9 @@ export default function App() {
   }
   return (
     <>
+      <Link to="/about" className="navigation">
+        About
+      </Link>
       <Search onClick={handleClick}></Search>
       {isSpinnerActive ? <Spinner></Spinner> : null}{' '}
       {pokemonArray.length === 0 ? (
