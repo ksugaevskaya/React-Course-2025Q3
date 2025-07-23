@@ -1,8 +1,8 @@
 import './App.css';
-import Search from '../search/search-component';
+import Search from '../../components/search/search-component';
 import fetchPokemons from '../../api/api';
-import Spinner from '../spinner/spinner';
-import PokemonList from '../pokemon-list/pokemon-list-component';
+import Spinner from '../../components/spinner/spinner';
+import PokemonList from '../../components/pokemon-list/pokemon-list-component';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 

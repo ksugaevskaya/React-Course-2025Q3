@@ -1,5 +1,5 @@
-import RSlogo from '../assets/rss-logo.svg';
-import KG from '../assets/KG.png';
+import RSlogo from '../../assets/rss-logo.svg';
+import KG from '../../assets/KG.png';
 import './about.css';
 
 export default function About() {
@@ -10,7 +10,13 @@ export default function About() {
           <img className="KG-image" src={KG} />
         </div>
         <div className="text-container">
-          <div className="name">Ksenia Gaevskaya </div>
+          <a
+            href="https://github.com/ksugaevskaya"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <div className="name">Ksenia Gaevskaya </div>
+          </a>
 
           <div className="text">
             I am a Frontend Engineer with a passion for crafting intuitive,
@@ -22,9 +28,11 @@ export default function About() {
           </div>
         </div>
       </div>
-      <div className="logo">
-        <img src={RSlogo} />
-      </div>
+      <a href="https://rs.school/" rel="noreferrer" target="_blank">
+        <div className="logo">
+          <img src={RSlogo} />
+        </div>
+      </a>
     </>
   );
 }
