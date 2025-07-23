@@ -51,3 +51,16 @@
   font-style: italic;
   color: rgb(203, 24, 24);
 }
+.navigation {
+  display: flex;
+  flex-direction: row;
+  color: white;
+  text-align: center;
+  font-size: 20px;
+  font-family: Involve;
+  font-weight: 400;
+  letter-spacing: 0.1rem;
+  margin-bottom: 5px;
+  cursor: pointer;
+  margin-left: 30px;
+}
