@@ -6,6 +6,7 @@ import App from './components/app/App.tsx';
 import ErrorBoundary from './components/error-boundary/error-boundary.tsx';
 import About from './pages/about-component.tsx';
 import NotFound from './pages/not-found-component.tsx';
+import Details from './pages/details.tsx';
 
 const root = document.getElementById('root');
 if (root) {
@@ -17,6 +18,7 @@ if (root) {
             <Route path="/" element={<App />} />
             <Route path="about" element={<About />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="details" element={<Details />}></Route>
           </Routes>
         </BrowserRouter>
       </ErrorBoundary>
