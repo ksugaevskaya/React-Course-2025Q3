@@ -14,6 +14,7 @@ export default function About() {
             href="https://github.com/ksugaevskaya"
             rel="noreferrer"
             target="_blank"
+            data-testid="github-link"
           >
             <div className="name">Ksenia Gaevskaya </div>
           </a>
@@ -28,7 +29,12 @@ export default function About() {
           </div>
         </div>
       </div>
-      <a href="https://rs.school/" rel="noreferrer" target="_blank">
+      <a
+        href="https://rs.school/"
+        rel="noreferrer"
+        target="_blank"
+        data-testid="rss-github-link"
+      >
         <div className="logo">
           <img src={RSlogo} />
         </div>
