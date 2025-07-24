@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`check not-found component rendering 1`] = `
+<div>
+  <div
+    class="title"
+  >
+    404 Not found
+  </div>
+</div>
+`;
