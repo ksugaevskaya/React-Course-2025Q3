@@ -2,6 +2,13 @@
 
 exports[`check correct rendering 1`] = `
 <div>
+  <a
+    class="navigation"
+    data-discover="true"
+    href="/about"
+  >
+    About
+  </a>
   <div
     class="top-container"
   >
@@ -39,17 +46,33 @@ exports[`check correct rendering 1`] = `
     </div>
   </div>
   <div
-    class="error-button"
+    class="bottom-container"
   >
-    <button>
-      Error Button 
-    </button>
+    <div
+      class="pagination"
+    >
+       1 
+    </div>
+    <div
+      class="error-button"
+    >
+      <button>
+        Error Button 
+      </button>
+    </div>
   </div>
 </div>
 `;
 
 exports[`show spinner on initial mount 1`] = `
 <div>
+  <a
+    class="navigation"
+    data-discover="true"
+    href="/about"
+  >
+    About
+  </a>
   <div
     class="top-container"
   >
@@ -72,11 +95,20 @@ exports[`show spinner on initial mount 1`] = `
     No Pokemons found. Please try a new search.
   </div>
   <div
-    class="error-button"
+    class="bottom-container"
   >
-    <button>
-      Error Button 
-    </button>
+    <div
+      class="pagination"
+    >
+       1 
+    </div>
+    <div
+      class="error-button"
+    >
+      <button>
+        Error Button 
+      </button>
+    </div>
   </div>
 </div>
 `;

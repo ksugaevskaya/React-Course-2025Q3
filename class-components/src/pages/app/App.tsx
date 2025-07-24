@@ -64,8 +64,11 @@ export default function App() {
       ) : (
         <PokemonList pokemonArray={pokemonArray}></PokemonList>
       )}
-      <div className="error-button">
-        <button onClick={errorClick}>Error Button </button>
+      <div className="bottom-container">
+        <div className="pagination"> 1 </div>
+        <div className="error-button">
+          <button onClick={errorClick}>Error Button </button>
+        </div>
       </div>
     </>
   );
