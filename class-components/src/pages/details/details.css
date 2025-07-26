@@ -18,8 +18,23 @@
   font-size: 2rem;
 }
 
+.pokemon-details-container {
+  margin: 50px;
+}
+
 .pokemon-details-text-container {
-  height: 520px;
   width: 520px;
   text-align: left;
+}
+
+.close-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  margin-left: 50px;
+}
+
+.main-container {
+  width: 400px;
+  margin-left: 20px;
 }

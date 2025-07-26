@@ -1,34 +1,95 @@
+import { useNavigate, useParams } from 'react-router';
 import './details.css';
+import { useEffect, useState } from 'react';
+import { fetchPokemonById } from '../../api/api';
+import Pokemon from '../../components/pokemon/pokemon';
+import Spinner from '../../components/spinner/spinner';
 
-export default function Details() {
+type Pokemon = {
+  name: string;
+  image: string;
+  description: string;
+  experience: number;
+  weight: number;
+  height: number;
+  types: string;
+};
+
+function Details({
+  name,
+  image,
+  description,
+  experience,
+  weight,
+  height,
+  types,
+}: Pokemon) {
   return (
     <>
       <div>
-        <div>
+        <div className="pokemon-details-container">
           <div>
-            <img
-              className="details-img"
-              src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/1.png
-"
-            />
+            <img className="details-img" src={image} />
           </div>
           <div className="pokemon-details-text-container">
-            <h2 className="h2"> BULBASAUR </h2>
+            <h2 className="h2"> {name.toUpperCase()} </h2>
             <h3 className="h3">
-              Description:{' '}
-              <i>
-                {' '}
-                When the bulb on its back grows large, it appears to lose the
-                ability to stand on its hind legs.
-              </i>
+              Description:
+              <i>{description}</i>
             </h3>
-            <h3 className="h3"> Base experience: 64</h3>
-            <h3 className="h3"> Weight: 69</h3>
-            <h3 className="h3"> Height: 7 </h3>
-            <h3 className="h3"> Types: grass, poison</h3>
+            <h3 className="h3"> Base experience: {experience}</h3>
+            <h3 className="h3"> Weight: {weight}</h3>
+            <h3 className="h3"> Height: {height} </h3>
+            <h3 className="h3"> Types: {types}</h3>
           </div>
         </div>
       </div>
     </>
+  );
+}
+
+export default function DetailsPage() {
+  const { pokemonId } = useParams();
+  const navigate = useNavigate();
+
+  const [isSpinnerActive, setSpinner] = useState(false);
+  const [pokemon, setPokemon] = useState<Pokemon>();
+
+  const close = () => {
+    navigate('..');
+  };
+
+  const handleUpdate = async () => {
+    setSpinner(true);
+    const showPokenom = await fetchPokemonById(Number(pokemonId));
+    setSpinner(false);
+    setPokemon(showPokenom);
+  };
+
+  useEffect(() => {
+    handleUpdate();
+  }, [pokemonId]);
+
+  return (
+    <div className="main-container">
+      {isSpinnerActive ? (
+        <Spinner></Spinner>
+      ) : (
+        <>
+          <Details
+            image={pokemon ? pokemon.image : ' '}
+            name={pokemon ? pokemon.name : ' '}
+            description={pokemon ? pokemon.description : ' '}
+            experience={pokemon ? pokemon.experience : NaN}
+            weight={pokemon ? pokemon.weight : NaN}
+            height={pokemon ? pokemon.height : NaN}
+            types={pokemon ? pokemon.types : ''}
+          ></Details>
+          <div className="close-button">
+            <button onClick={close}>Close </button>
+          </div>
+        </>
+      )}
+    </div>
   );
 }
