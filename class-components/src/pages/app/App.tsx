@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 
 type Pokemon = {
+  id: number;
   name: string;
   image: string;
   description: string;

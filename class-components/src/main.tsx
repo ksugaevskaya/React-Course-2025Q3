@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router';
 import './index.css';
-import App from './pages/app/App.tsx';
+import App from './pages/app/AppPage.tsx';
 import ErrorBoundary from './components/error-boundary/error-boundary.tsx';
 import About from './pages/about/about-component.tsx';
 import NotFound from './pages/not-found/not-found-component.tsx';
@@ -15,10 +15,11 @@ if (root) {
       <ErrorBoundary>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<App />} />
+            <Route path="/:pageId" element={<App />}>
+              <Route path=":pokemonId" element={<Details />} />
+            </Route>
             <Route path="about" element={<About />} />
             <Route path="*" element={<NotFound />} />
-            <Route path="details" element={<Details />}></Route>
           </Routes>
         </BrowserRouter>
       </ErrorBoundary>
