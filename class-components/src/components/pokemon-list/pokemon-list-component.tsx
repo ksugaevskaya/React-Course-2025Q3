@@ -1,7 +1,9 @@
+import { Link } from 'react-router';
 import PokemonComponent from '../pokemon/pokemon';
 
 type Props = {
   pokemonArray: {
+    id: number;
     name: string;
     image: string;
     description: string;
@@ -10,11 +12,18 @@ type Props = {
 
 export default function PokemonList({ pokemonArray }: Props) {
   return pokemonArray.map((pokemon) => (
-    <PokemonComponent
+    <Link
       key={pokemon.name}
-      name={pokemon.name}
-      image={pokemon.image}
-      description={pokemon.description}
-    ></PokemonComponent>
+      to={{
+        pathname: `${pokemon.id}`,
+      }}
+    >
+      <PokemonComponent
+        key={pokemon.id}
+        name={pokemon.name}
+        image={pokemon.image}
+        description={pokemon.description}
+      ></PokemonComponent>
+    </Link>
   ));
 }
