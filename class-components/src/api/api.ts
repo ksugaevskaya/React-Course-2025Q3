@@ -23,9 +23,19 @@ type FlavorTextEntry = {
 };
 
 type FullPokemon = {
+  id: number;
   name: string;
   image: string;
   description: string;
+};
+type DetailedPokemon = {
+  name: string;
+  description: string;
+  image: string;
+  experience: number;
+  weight: number;
+  height: number;
+  types: string;
 };
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -65,6 +75,7 @@ export default async function fetchPokemons(
           : 'No description available.';
 
         return {
+          id: pokemonDetails.id,
           name: pokemonDetails.name,
           image: pokemonDetails.sprites.front_default,
           description,
@@ -75,6 +86,50 @@ export default async function fetchPokemons(
     return detailedPokemons;
   } catch (error) {
     console.error('Error fetching Pokémon data:', error);
+    throw error;
+  }
+}
+
+export async function fetchPokemonById(id: number): Promise<DetailedPokemon> {
+  const detailsUrl = `https://pokeapi.co/api/v2/pokemon/${id}`;
+  const speciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${id}`;
+
+  try {
+    await delay(2000);
+    const [detailsRes, speciesRes] = await Promise.all([
+      fetch(detailsUrl),
+      fetch(speciesUrl),
+    ]);
+
+    if (!detailsRes.ok || !speciesRes.ok) {
+      throw new Error('Failed to fetch Pokémon data.');
+    }
+
+    const detailsData = await detailsRes.json();
+    const speciesData = await speciesRes.json();
+
+    const descriptionEntry = speciesData.flavor_text_entries.find(
+      (entry: FlavorTextEntry) => entry.language.name === 'en'
+    );
+    const description = descriptionEntry
+      ? descriptionEntry.flavor_text.replace(/\n|\f/g, ' ')
+      : 'No description available.';
+
+    const types = detailsData.types
+      .map((t: { type: { name: string } }) => t.type.name)
+      .join(', ');
+
+    return {
+      name: detailsData.name,
+      description,
+      image: detailsData.sprites.other.home.front_default,
+      experience: detailsData.base_experience,
+      weight: detailsData.weight,
+      height: detailsData.height,
+      types,
+    };
+  } catch (error) {
+    console.error(`Error fetching Pokémon with ID ${id}:`, error);
     throw error;
   }
 }
