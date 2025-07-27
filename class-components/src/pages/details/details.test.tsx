@@ -34,11 +34,22 @@ test('check detail component rendering', () => {
   expect(screen.queryByText('Types: electricity')).not.toBeNull();
 });
 
-let mockedFetchPokemonFn = vitest.fn();
+const mockedFetchPokemonFn = vitest.fn();
 
 vitest.mock('../../api/api', () => ({
   fetchPokemonById: () => mockedFetchPokemonFn(),
 }));
+
+const mockedNavigate = vitest.fn();
+
+vitest.mock('react-router', async () => {
+  const actual =
+    await vitest.importActual<typeof import('react-router')>('react-router');
+  return {
+    ...actual,
+    useNavigate: () => mockedNavigate,
+  };
+});
 
 test('check page rendering', async () => {
   mockedFetchPokemonFn.mockResolvedValue({
@@ -81,4 +92,6 @@ test('check if the close button clicked', async () => {
   );
   await waitFor(() => expect(screen.queryByText('Close')).not.toBeNull());
   fireEvent.click(screen.getByText('Close'));
+
+  expect(mockedNavigate).toHaveBeenCalledWith('..');
 });
