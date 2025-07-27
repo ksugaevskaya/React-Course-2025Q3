@@ -40,10 +40,16 @@ type DetailedPokemon = {
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+type AllPokemons = {
+  data: FullPokemon[];
+  pages: number;
+};
+
 export default async function fetchPokemons(
   searchQuery: string = '',
-  limit: number = 20
-): Promise<FullPokemon[]> {
+  page: number = 1
+): Promise<AllPokemons> {
+  const pokemonsPerPage = 20;
   const apiUrl = 'https://pokeapi.co/api/v2/pokemon';
   const speciesUrl = 'https://pokeapi.co/api/v2/pokemon-species';
 
@@ -53,11 +59,13 @@ export default async function fetchPokemons(
     const response = await fetch(`${apiUrl}?limit=1000`);
     const data: { results: Pokemon[] } = await response.json();
 
-    const filtered = data.results
-      .filter((pokemon: Pokemon) =>
-        pokemon.name.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-      .slice(0, limit);
+    const allFiltered = data.results.filter((pokemon: Pokemon) =>
+      pokemon.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    const filtered = allFiltered.slice(
+      (page - 1) * pokemonsPerPage,
+      page * pokemonsPerPage
+    );
 
     const detailedPokemons: FullPokemon[] = await Promise.all(
       filtered.map(async (pokemon: Pokemon) => {
@@ -83,9 +91,12 @@ export default async function fetchPokemons(
       })
     );
 
-    return detailedPokemons;
+    return {
+      data: detailedPokemons,
+      pages: Math.ceil(allFiltered.length / pokemonsPerPage),
+    };
   } catch (error) {
-    console.error('Error fetching Pokémon data:', error);
+    console.error('Error fetching Pokemon data:', error);
     throw error;
   }
 }
@@ -102,7 +113,7 @@ export async function fetchPokemonById(id: number): Promise<DetailedPokemon> {
     ]);
 
     if (!detailsRes.ok || !speciesRes.ok) {
-      throw new Error('Failed to fetch Pokémon data.');
+      throw new Error('Failed to fetch Pokemon data.');
     }
 
     const detailsData = await detailsRes.json();
@@ -129,7 +140,7 @@ export async function fetchPokemonById(id: number): Promise<DetailedPokemon> {
       types,
     };
   } catch (error) {
-    console.error(`Error fetching Pokémon with ID ${id}:`, error);
+    console.error(`Error fetching Pokemon with ID ${id}:`, error);
     throw error;
   }
 }
