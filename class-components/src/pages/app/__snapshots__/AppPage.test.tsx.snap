@@ -6,10 +6,14 @@ exports[`check AppPAge component rendering 1`] = `
     class="app-page-container"
   >
     <div>
-      <app />
+      <div>
+        App
+      </div>
     </div>
     <div>
-      <outlet />
+      <div>
+        Outlet
+      </div>
     </div>
   </div>
 </div>

@@ -3,11 +3,11 @@ import { render } from '@testing-library/react';
 import { expect, test, vitest } from 'vitest';
 
 vitest.mock('./App', () => ({
-  default: 'App',
+  default: () => <div>App</div>,
 }));
 
 vitest.mock('react-router', () => ({
-  Outlet: 'Outlet',
+  Outlet: () => <div>Outlet</div>,
 }));
 
 test('check AppPAge component rendering', () => {
