@@ -16,7 +16,7 @@ afterEach(() => {
 });
 
 test('displays no results message when data array is empty', async () => {
-  mockedApiFn.mockResolvedValue([]);
+  mockedApiFn.mockResolvedValue({ data: [], pages: 0 });
   render(
     <MemoryRouter>
       <App></App>
@@ -31,13 +31,16 @@ test('displays no results message when data array is empty', async () => {
 });
 
 test('check correct rendering', async () => {
-  mockedApiFn.mockResolvedValue([
-    {
-      name: 'bulbasaur',
-      image: 'https://example.com/bulbasaur.png',
-      description: 'A strange seed was planted on its back at birth.',
-    },
-  ]);
+  mockedApiFn.mockResolvedValue({
+    data: [
+      {
+        name: 'bulbasaur',
+        image: 'https://example.com/bulbasaur.png',
+        description: 'A strange seed was planted on its back at birth.',
+      },
+    ],
+    pages: 1,
+  });
   const { container } = render(
     <MemoryRouter>
       <App></App>
@@ -50,7 +53,7 @@ test('check correct rendering', async () => {
 });
 
 test('check making initial API call on component mount', async () => {
-  const apiSpy = vitest.fn().mockResolvedValue([]);
+  const apiSpy = vitest.fn().mockResolvedValue({ data: [], pages: 0 });
   mockedApiFn = apiSpy;
   render(
     <MemoryRouter>
@@ -76,12 +79,14 @@ test('show error message if api failed', async () => {
   );
 });
 
-test('show spinner on initial mount', () => {
+test('show spinner on initial mount', async () => {
   const { container } = render(
     <MemoryRouter>
       <App></App>
     </MemoryRouter>
   );
 
-  expect(container).toMatchSnapshot();
+  await waitFor(() => {
+    expect(container).toMatchSnapshot();
+  });
 });

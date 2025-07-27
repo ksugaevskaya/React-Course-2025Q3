@@ -4,7 +4,7 @@ import fetchPokemons from '../../api/api';
 import Spinner from '../../components/spinner/spinner';
 import PokemonList from '../../components/pokemon-list/pokemon-list-component';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useParams } from 'react-router';
 import useSearchQuery from '../../hooks/useSearchQuery';
 
 type Pokemon = {
@@ -15,14 +15,16 @@ type Pokemon = {
 };
 
 export default function App() {
-  const [shouldThrow, setShouldThrow] = useState(false);
   const [isSpinnerActive, setSpinner] = useState(false);
   const [pokemonArray, setPokemonArray] = useState<Pokemon[]>([]);
   const [isErrorActive, setError] = useState(false);
+  const [page, setPage] = useState(1);
+
+  const { pageId } = useParams();
 
   useEffect(() => {
     handleClick();
-  }, []);
+  }, [pageId]);
 
   const [, get] = useSearchQuery();
 
@@ -30,8 +32,9 @@ export default function App() {
     console.log("Hello, I'm pokemon");
     setSpinner(true);
     try {
-      const allPokemons = await fetchPokemons(get());
-      setPokemonArray(allPokemons);
+      const allPokemons = await fetchPokemons(get(), Number(pageId));
+      setPage(allPokemons.pages);
+      setPokemonArray(allPokemons.data);
       setSpinner(false);
       setError(false);
     } catch {
@@ -40,13 +43,6 @@ export default function App() {
     }
   };
 
-  const errorClick = () => {
-    setShouldThrow(true);
-  };
-
-  if (shouldThrow) {
-    throw new Error('Test error');
-  }
   return (
     <>
       <Link to="/about" className="navigation">
@@ -66,12 +62,20 @@ export default function App() {
       ) : (
         <PokemonList pokemonArray={pokemonArray}></PokemonList>
       )}
-      <div className="bottom-container">
-        <div className="pagination"> 1 </div>
-        <div className="error-button">
-          <button onClick={errorClick}>Error Button </button>
+      {pokemonArray.length !== 0 ? (
+        <div className="bottom-container">
+          {new Array(page).fill(1).map((_, i) => (
+            <Link
+              key={i + 1}
+              to={{
+                pathname: `/${i + 1}`,
+              }}
+            >
+              <div className="pagination"> {i + 1} </div>
+            </Link>
+          ))}
         </div>
-      </div>
+      ) : null}
     </>
   );
 }
