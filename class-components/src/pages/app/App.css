@@ -88,3 +88,7 @@
   font-weight: 800;
   background-color: #ac8e8e15;
 }
+
+.app-page-container {
+  display: flex;
+}

@@ -1,9 +1,10 @@
 import { Outlet } from 'react-router';
 import App from './App';
+import './App.css';
 
 export default function SearchPage() {
   return (
-    <div style={{ display: 'flex' }}>
+    <div className="app-page-container">
       <div>
         <App />
       </div>
