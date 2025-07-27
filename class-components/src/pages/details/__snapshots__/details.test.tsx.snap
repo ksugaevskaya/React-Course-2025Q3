@@ -60,3 +60,15 @@ exports[`check detail component rendering 1`] = `
   </div>
 </div>
 `;
+
+exports[`check page rendering 1`] = `
+<div>
+  <div
+    class="main-container"
+  >
+    <div
+      class="loading"
+    />
+  </div>
+</div>
+`;
