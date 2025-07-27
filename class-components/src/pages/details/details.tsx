@@ -50,6 +50,7 @@ export function Details({
 
 export default function DetailsPage() {
   const { pokemonId } = useParams();
+
   const navigate = useNavigate();
 
   const [isSpinnerActive, setSpinner] = useState(false);
