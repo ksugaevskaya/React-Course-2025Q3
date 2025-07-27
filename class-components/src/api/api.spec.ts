@@ -47,6 +47,7 @@ test('fetches and maps full Pokemon data', async () => {
 
   expect(result).toEqual([
     {
+      id: 1,
       name: 'bulbasaur',
       image: 'https://example.com/bulbasaur.png',
       description: 'A strange seed was planted on its back at birth.',

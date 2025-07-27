@@ -12,6 +12,7 @@
     "format:fix": "prettier --write .",
     "prepare": "husky",
     "test": "vitest",
+    "test:snapshot": "vitest -u",
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {

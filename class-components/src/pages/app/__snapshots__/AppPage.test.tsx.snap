@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`check AppPAge component rendering 1`] = `
+<div>
+  <div
+    class="app-page-container"
+  >
+    <div>
+      <app />
+    </div>
+    <div>
+      <outlet />
+    </div>
+  </div>
+</div>
+`;

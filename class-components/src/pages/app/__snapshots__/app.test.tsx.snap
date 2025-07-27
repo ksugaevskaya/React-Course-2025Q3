@@ -22,29 +22,34 @@ exports[`check correct rendering 1`] = `
     </button>
   </div>
    
-  <div
-    class="pokemon-container"
+  <a
+    data-discover="true"
+    href="/undefined"
   >
-    <img
-      src="https://example.com/bulbasaur.png"
-    />
     <div
-      class="pokemon-text-container"
+      class="pokemon-container"
     >
-      <h2
-        class="h2"
+      <img
+        src="https://example.com/bulbasaur.png"
+      />
+      <div
+        class="pokemon-text-container"
       >
-         
-        bulbasaur
-         
-      </h2>
-      <span
-        class="pokemon-desription"
-      >
-        A strange seed was planted on its back at birth.
-      </span>
+        <h2
+          class="h2"
+        >
+           
+          bulbasaur
+           
+        </h2>
+        <span
+          class="pokemon-desription"
+        >
+          A strange seed was planted on its back at birth.
+        </span>
+      </div>
     </div>
-  </div>
+  </a>
   <div
     class="bottom-container"
   >

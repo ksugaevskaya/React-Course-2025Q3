@@ -15,7 +15,7 @@ type Pokemon = {
   types: string;
 };
 
-function Details({
+export function Details({
   name,
   image,
   description,
