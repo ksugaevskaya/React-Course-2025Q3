@@ -4,8 +4,9 @@ import { defineConfig, type UserConfig } from 'vite';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/React-Course-2025Q3/class-components/',
+  base: '/',
   test: {
+    globals: true,
     environment: 'jsdom',
     coverage: {
       reporter: ['text', 'lcov'],

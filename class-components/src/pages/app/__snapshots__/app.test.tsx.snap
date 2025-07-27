@@ -1,0 +1,103 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`check correct rendering 1`] = `
+<div>
+  <a
+    class="navigation"
+    data-discover="true"
+    href="/about"
+  >
+    About
+  </a>
+  <div
+    class="top-container"
+  >
+    <input
+      class="input"
+      placeholder="Start your search"
+      value=""
+    />
+    <button>
+       Search 
+    </button>
+  </div>
+   
+  <a
+    data-discover="true"
+    href="/undefined"
+  >
+    <div
+      class="pokemon-container"
+    >
+      <img
+        src="https://example.com/bulbasaur.png"
+      />
+      <div
+        class="pokemon-text-container"
+      >
+        <h2
+          class="h2"
+        >
+           
+          bulbasaur
+           
+        </h2>
+        <span
+          class="pokemon-desription"
+        >
+          A strange seed was planted on its back at birth.
+        </span>
+      </div>
+    </div>
+  </a>
+  <div
+    class="bottom-container"
+  >
+    <a
+      data-discover="true"
+      href="/1"
+    >
+      <div
+        class="pagination"
+      >
+         
+        1
+         
+      </div>
+    </a>
+  </div>
+</div>
+`;
+
+exports[`show spinner on initial mount 1`] = `
+<div>
+  <a
+    class="navigation"
+    data-discover="true"
+    href="/about"
+  >
+    About
+  </a>
+  <div
+    class="top-container"
+  >
+    <input
+      class="input"
+      placeholder="Start your search"
+      value=""
+    />
+    <button>
+       Search 
+    </button>
+  </div>
+  <div
+    class="loading"
+  />
+   
+  <div
+    class="message"
+  >
+    No Pokemons found. Please try a new search.
+  </div>
+</div>
+`;

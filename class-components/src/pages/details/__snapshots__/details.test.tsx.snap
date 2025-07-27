@@ -1,0 +1,74 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`check detail component rendering 1`] = `
+<div>
+  <div>
+    <div
+      class="pokemon-details-container"
+    >
+      <div>
+        <img
+          class="details-img"
+          src="https:/image.com"
+        />
+      </div>
+      <div
+        class="pokemon-details-text-container"
+      >
+        <h2
+          class="h2"
+        >
+           
+          PIKACHU
+           
+        </h2>
+        <h3
+          class="h3"
+        >
+          Description:
+          <i>
+            yellow pokemon
+          </i>
+        </h3>
+        <h3
+          class="h3"
+        >
+           Base experience: 
+          29
+        </h3>
+        <h3
+          class="h3"
+        >
+           Weight: 
+          20
+        </h3>
+        <h3
+          class="h3"
+        >
+           Height: 
+          20
+           
+        </h3>
+        <h3
+          class="h3"
+        >
+           Types: 
+          electricity
+        </h3>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`check page rendering 1`] = `
+<div>
+  <div
+    class="main-container"
+  >
+    <div
+      class="loading"
+    />
+  </div>
+</div>
+`;

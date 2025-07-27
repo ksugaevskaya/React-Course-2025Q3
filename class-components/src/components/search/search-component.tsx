@@ -1,25 +1,24 @@
-import { Component } from 'react';
 import './search.css';
+import useSearchQuery from '../../hooks/useSearchQuery';
 
 type Props = {
   onClick: () => void;
 };
 
-export default class Search extends Component<Props> {
-  onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    localStorage.setItem('text', event.target.value.trim());
+export default function Search({ onClick }: Props) {
+  const [set, get] = useSearchQuery();
+  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    set(event.target.value.trim());
   };
-  render() {
-    return (
-      <div className="top-container">
-        <input
-          className="input"
-          defaultValue={localStorage.getItem('text') ?? ''}
-          onChange={this.onInputChange}
-          placeholder="Start your search"
-        ></input>
-        <button onClick={this.props.onClick}> Search </button>
-      </div>
-    );
-  }
+  return (
+    <div className="top-container">
+      <input
+        className="input"
+        defaultValue={get()}
+        onChange={onInputChange}
+        placeholder="Start your search"
+      ></input>
+      <button onClick={onClick}> Search </button>
+    </div>
+  );
 }

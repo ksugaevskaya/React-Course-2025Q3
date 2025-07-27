@@ -1,5 +1,6 @@
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, expect, test, vitest } from 'vitest';
+import { MemoryRouter } from 'react-router';
 
 let mockedApiFn = vitest.fn();
 
@@ -15,8 +16,12 @@ afterEach(() => {
 });
 
 test('displays no results message when data array is empty', async () => {
-  mockedApiFn.mockResolvedValue([]);
-  render(<App></App>);
+  mockedApiFn.mockResolvedValue({ data: [], pages: 0 });
+  render(
+    <MemoryRouter>
+      <App></App>
+    </MemoryRouter>
+  );
 
   await waitFor(() =>
     expect(
@@ -26,14 +31,21 @@ test('displays no results message when data array is empty', async () => {
 });
 
 test('check correct rendering', async () => {
-  mockedApiFn.mockResolvedValue([
-    {
-      name: 'bulbasaur',
-      image: 'https://example.com/bulbasaur.png',
-      description: 'A strange seed was planted on its back at birth.',
-    },
-  ]);
-  const { container } = render(<App></App>);
+  mockedApiFn.mockResolvedValue({
+    data: [
+      {
+        name: 'bulbasaur',
+        image: 'https://example.com/bulbasaur.png',
+        description: 'A strange seed was planted on its back at birth.',
+      },
+    ],
+    pages: 1,
+  });
+  const { container } = render(
+    <MemoryRouter>
+      <App></App>
+    </MemoryRouter>
+  );
 
   await waitFor(() => expect(screen.queryByText(/bulbasaur/i)).not.toBeNull());
 
@@ -41,16 +53,24 @@ test('check correct rendering', async () => {
 });
 
 test('check making initial API call on component mount', async () => {
-  const apiSpy = vitest.fn().mockResolvedValue([]);
+  const apiSpy = vitest.fn().mockResolvedValue({ data: [], pages: 0 });
   mockedApiFn = apiSpy;
-  render(<App></App>);
+  render(
+    <MemoryRouter>
+      <App></App>
+    </MemoryRouter>
+  );
 
   await waitFor(() => expect(apiSpy).toBeCalledTimes(1));
 });
 
 test('show error message if api failed', async () => {
   mockedApiFn.mockRejectedValue('Error!');
-  render(<App></App>);
+  render(
+    <MemoryRouter>
+      <App></App>
+    </MemoryRouter>
+  );
 
   await waitFor(() =>
     expect(
@@ -59,8 +79,14 @@ test('show error message if api failed', async () => {
   );
 });
 
-test('show spinner on initial mount', () => {
-  const { container } = render(<App></App>);
+test('show spinner on initial mount', async () => {
+  const { container } = render(
+    <MemoryRouter>
+      <App></App>
+    </MemoryRouter>
+  );
 
-  expect(container).toMatchSnapshot();
+  await waitFor(() => {
+    expect(container).toMatchSnapshot();
+  });
 });

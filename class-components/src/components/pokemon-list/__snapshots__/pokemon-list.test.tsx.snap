@@ -2,28 +2,33 @@
 
 exports[`correct pokemon list rendering 1`] = `
 <div>
-  <div
-    class="pokemon-container"
+  <a
+    data-discover="true"
+    href="/1"
   >
-    <img
-      src="https//google.com/image"
-    />
     <div
-      class="pokemon-text-container"
+      class="pokemon-container"
     >
-      <h2
-        class="h2"
+      <img
+        src="https//google.com/image"
+      />
+      <div
+        class="pokemon-text-container"
       >
-         
-        Pikachu
-         
-      </h2>
-      <span
-        class="pokemon-desription"
-      >
-        yellow pokemon
-      </span>
+        <h2
+          class="h2"
+        >
+           
+          Pikachu
+           
+        </h2>
+        <span
+          class="pokemon-desription"
+        >
+          yellow pokemon
+        </span>
+      </div>
     </div>
-  </div>
+  </a>
 </div>
 `;
