@@ -5,6 +5,7 @@ import Spinner from '../../components/spinner/spinner';
 import PokemonList from '../../components/pokemon-list/pokemon-list-component';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
+import useSearchQuery from '../../hooks/useSearchQuery';
 
 type Pokemon = {
   id: number;
@@ -23,13 +24,13 @@ export default function App() {
     handleClick();
   }, []);
 
+  const [, get] = useSearchQuery();
+
   const handleClick = async () => {
     console.log("Hello, I'm pokemon");
     setSpinner(true);
     try {
-      const allPokemons = await fetchPokemons(
-        localStorage.getItem('text') ?? ''
-      );
+      const allPokemons = await fetchPokemons(get());
       setPokemonArray(allPokemons);
       setSpinner(false);
       setError(false);
