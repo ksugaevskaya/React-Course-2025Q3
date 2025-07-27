@@ -53,18 +53,18 @@ exports[`check correct rendering 1`] = `
   <div
     class="bottom-container"
   >
-    <div
-      class="pagination"
+    <a
+      data-discover="true"
+      href="/1"
     >
-       1 
-    </div>
-    <div
-      class="error-button"
-    >
-      <button>
-        Error Button 
-      </button>
-    </div>
+      <div
+        class="pagination"
+      >
+         
+        1
+         
+      </div>
+    </a>
   </div>
 </div>
 `;
@@ -98,22 +98,6 @@ exports[`show spinner on initial mount 1`] = `
     class="message"
   >
     No Pokemons found. Please try a new search.
-  </div>
-  <div
-    class="bottom-container"
-  >
-    <div
-      class="pagination"
-    >
-       1 
-    </div>
-    <div
-      class="error-button"
-    >
-      <button>
-        Error Button 
-      </button>
-    </div>
   </div>
 </div>
 `;
