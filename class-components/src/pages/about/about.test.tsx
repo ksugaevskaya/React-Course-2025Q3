@@ -29,6 +29,6 @@ test('check the link to rss with data-test-id', () => {
   render(<About></About>);
   const link = screen.getByTestId('rss-github-link');
   expect(link).not.toBeNull();
-  expect(link).toHaveAttribute('href', 'https://rs.school/');
+  expect(link).toHaveAttribute('href', 'https://rs.school/courses/reactjs');
   expect(link).toHaveAttribute('target', '_blank');
 });

@@ -30,7 +30,7 @@ export default function About() {
         </div>
       </div>
       <a
-        href="https://rs.school/"
+        href="https://rs.school/courses/reactjs"
         rel="noreferrer"
         target="_blank"
         data-testid="rss-github-link"

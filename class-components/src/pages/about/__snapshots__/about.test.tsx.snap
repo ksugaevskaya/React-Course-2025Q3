@@ -35,7 +35,7 @@ exports[`check about component rendering 1`] = `
   </div>
   <a
     data-testid="rss-github-link"
-    href="https://rs.school/"
+    href="https://rs.school/courses/reactjs"
     rel="noreferrer"
     target="_blank"
   >
