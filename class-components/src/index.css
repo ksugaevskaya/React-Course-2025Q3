@@ -1,3 +1,27 @@
+[data-theme='light'] {
+  --bg-color: #f9f9f9;
+  --tx-color: #433e3e;
+  --bt-color: #cccc;
+  --h2-color: #4a4646;
+  --border-color: 2px solid #a7a3a3;
+  --img-border-color: 5px solid #a7a3a3ab;
+  --KG-border-color: 12px solid #d9d2d2;
+  --logo-color: #d9d2d2;
+  --logo-hover-color: #d2d4f0aa;
+}
+
+[data-theme='dark'] {
+  --bg-color: #292323;
+  --tx-color: aliceblue;
+  --bt-color: #f9f9f9;
+  --h2-color: white;
+  --border-color: 2px solid aliceblue;
+  --img-border-color: 5px solid aliceblue;
+  --KG-border-color: 12px solid white;
+  --logo-color: white;
+  --logo-hover-color: #646cffaa;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -14,7 +38,7 @@
 }
 
 body {
-  background-color: #292323;
+  background-color: var(--bg-color);
 }
 
 a {
@@ -46,7 +70,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--bt-color);
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -67,6 +91,6 @@ button:focus-visible {
     color: #747bff;
   }
   button {
-    background-color: #f9f9f9;
+    background-color: var(--bt-color);
   }
 }

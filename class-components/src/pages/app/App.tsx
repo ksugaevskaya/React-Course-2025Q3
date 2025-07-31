@@ -6,6 +6,7 @@ import PokemonList from '../../components/pokemon-list/pokemon-list-component';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router';
 import useSearchQuery from '../../hooks/useSearchQuery';
+import ThemeComponent from '../../components/theme-component/theme-component';
 
 type Pokemon = {
   id: number;
@@ -48,6 +49,7 @@ export default function App() {
       <Link to="/about" className="navigation">
         About
       </Link>
+      <ThemeComponent></ThemeComponent>
       <Search onClick={handleClick}></Search>
       {isSpinnerActive ? <Spinner></Spinner> : null}{' '}
       {pokemonArray.length === 0 ? (
