@@ -20,6 +20,7 @@ export default function PokemonList({ pokemonArray }: Props) {
     >
       <PokemonComponent
         key={pokemon.id}
+        id={pokemon.id}
         name={pokemon.name}
         image={pokemon.image}
         description={pokemon.description}
