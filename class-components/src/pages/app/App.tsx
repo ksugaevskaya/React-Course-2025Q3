@@ -49,7 +49,6 @@ export default function App() {
       <Link to="/about" className="navigation">
         About
       </Link>
-      <ThemeComponent></ThemeComponent>
       <Search onClick={handleClick}></Search>
       {isSpinnerActive ? <Spinner></Spinner> : null}{' '}
       {pokemonArray.length === 0 ? (

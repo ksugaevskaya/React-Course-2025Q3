@@ -6,9 +6,6 @@ import ThemeComponent from '../../components/theme-component/theme-component';
 export default function About() {
   return (
     <>
-      <div className="theme">
-        <ThemeComponent></ThemeComponent>
-      </div>
       <div className="card-container">
         <div>
           <img className="KG-image" src={KG} />
