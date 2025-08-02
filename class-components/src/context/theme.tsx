@@ -7,13 +7,16 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem('theme') === 'dark'
+  );
 
   const toggleTheme = () => {
     setDarkMode((mode) => !mode);
   };
 
   useEffect(() => {
+    localStorage.setItem('theme', darkMode ? 'dark' : 'light');
     document.documentElement.setAttribute(
       'data-theme',
       darkMode ? 'dark' : 'light'
