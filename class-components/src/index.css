@@ -8,6 +8,7 @@
   --KG-border-color: 12px solid #d9d2d2;
   --logo-color: #d9d2d2;
   --logo-hover-color: #d2d4f0aa;
+  --flyout-bn-color: linear-gradient(to bottom, white, #b3c2e3c2);
 }
 
 [data-theme='dark'] {
@@ -20,6 +21,7 @@
   --KG-border-color: 12px solid white;
   --logo-color: white;
   --logo-hover-color: #646cffaa;
+  --flyout-bn-color: linear-gradient(to bottom, white, #292323);
 }
 
 :root {

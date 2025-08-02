@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router';
 import useSearchQuery from '../../hooks/useSearchQuery';
 import ThemeComponent from '../../components/theme-component/theme-component';
+import FlyOutComponent from '../../components/flyout-component/flyout-component';
 
 type Pokemon = {
   id: number;
@@ -77,6 +78,9 @@ export default function App() {
           ))}
         </div>
       ) : null}
+      <div>
+        <FlyOutComponent></FlyOutComponent>
+      </div>
     </>
   );
 }
