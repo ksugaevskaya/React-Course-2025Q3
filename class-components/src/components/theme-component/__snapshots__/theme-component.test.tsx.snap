@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`check correct theme rendering 1`] = `
+<div>
+  <div
+    class="theme"
+  >
+    <button>
+       Switch theme 
+    </button>
+  </div>
+</div>
+`;
