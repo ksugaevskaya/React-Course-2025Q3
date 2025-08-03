@@ -8,6 +8,7 @@
 }
 
 .details-img {
+  width: 350px;
   border: var(--img-border-color);
   border-radius: 20px;
   margin-bottom: 0px;
@@ -23,7 +24,7 @@
 }
 
 .pokemon-details-text-container {
-  width: 520px;
+  width: 350px;
   text-align: left;
 }
 
