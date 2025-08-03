@@ -53,6 +53,7 @@ test('fetches and maps full Pokemon data', async () => {
     data: [
       {
         id: 1,
+        url: 'https://pokeapi.co/api/v2/pokemon-species/1',
         name: 'bulbasaur',
         image: 'https://example.com/bulbasaur.png',
         description: 'A strange seed was planted on its back at birth.',
