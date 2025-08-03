@@ -26,6 +26,7 @@ if (root) {
                   <Route path=":pokemonId" element={<Details />} />
                 </Route>
                 <Route path="about" element={<About />} />
+                <Route path="not-found" element={<NotFound />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>

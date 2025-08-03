@@ -4,7 +4,7 @@ import fetchPokemons from '../../api/api';
 import Spinner from '../../components/spinner/spinner';
 import PokemonList from '../../components/pokemon-list/pokemon-list-component';
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router';
+import { Link, Navigate, useParams } from 'react-router';
 import useSearchQuery from '../../hooks/useSearchQuery';
 import FlyOutComponent from '../../components/flyout-component/flyout-component';
 
@@ -23,6 +23,7 @@ export default function App() {
   const [page, setPage] = useState(1);
 
   const { pageId } = useParams();
+  const isValidPageId = /^\d+$/.test(pageId || '');
 
   useEffect(() => {
     handleClick();
@@ -44,6 +45,10 @@ export default function App() {
       setSpinner(false);
     }
   };
+
+  if (pageId !== undefined && !isValidPageId) {
+    return <Navigate to="/not-found" replace />;
+  }
 
   return (
     <>
