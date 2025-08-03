@@ -1,7 +1,6 @@
 import RSlogo from '../../assets/rss-logo.svg';
 import KG from '../../assets/KG.png';
 import './about.css';
-import ThemeComponent from '../../components/theme-component/theme-component';
 
 export default function About() {
   return (

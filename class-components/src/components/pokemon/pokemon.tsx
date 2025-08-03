@@ -15,13 +15,15 @@ export default function Pokemon({ name, image, description, id, url }: Props) {
   const dispatch = useDispatch();
   const ids = useSelector((state: RootState) => state.selectedPokemon.ids);
 
-  const handleClick = (e) => {
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
   };
-  const handleChange = (e) => {
-    ids.includes(id)
-      ? dispatch(unselect(id))
-      : dispatch(select({ id, description, url }));
+  const handleChange = () => {
+    if (ids.includes(id)) {
+      dispatch(unselect(id));
+    } else {
+      dispatch(select({ id, description, url }));
+    }
   };
   return (
     <div className="pokemon-container">
