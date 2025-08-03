@@ -8,6 +8,11 @@ vitest.mock('../../api/api', () => ({
   default: () => mockedApiFn(),
 }));
 
+vitest.mock('react-redux', () => ({
+  useSelector: vitest.fn().mockReturnValue([]),
+  useDispatch: vitest.fn(),
+}));
+
 import App from './App';
 
 afterEach(() => {
