@@ -5,7 +5,7 @@ import './App.css';
 export default function SearchPage() {
   return (
     <div className="app-page-container">
-      <div>
+      <div className="app-page">
         <App />
       </div>
 

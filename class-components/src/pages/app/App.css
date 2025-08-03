@@ -5,6 +5,10 @@
   text-align: center;
 }
 
+.app-page {
+  max-width: 650px;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -66,9 +70,8 @@
 }
 
 .bottom-container {
-  max-width: 650px;
   flex-wrap: wrap;
-  margin-top: 40px;
+  margin: 40px;
   display: flex;
   flex-direction: row;
   justify-content: center;
