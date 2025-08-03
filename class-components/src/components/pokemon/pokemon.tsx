@@ -7,10 +7,11 @@ type Props = {
   name: string;
   image: string;
   description: string;
+  url: string;
   id: number;
 };
 
-export default function Pokemon({ name, image, description, id }: Props) {
+export default function Pokemon({ name, image, description, id, url }: Props) {
   const dispatch = useDispatch();
   const ids = useSelector((state: RootState) => state.selectedPokemon.ids);
 
@@ -18,7 +19,9 @@ export default function Pokemon({ name, image, description, id }: Props) {
     e.stopPropagation();
   };
   const handleChange = (e) => {
-    ids.includes(id) ? dispatch(unselect(id)) : dispatch(select(id));
+    ids.includes(id)
+      ? dispatch(unselect(id))
+      : dispatch(select({ id, description, url }));
   };
   return (
     <div className="pokemon-container">

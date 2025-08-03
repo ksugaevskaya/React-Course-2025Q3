@@ -11,6 +11,7 @@ import FlyOutComponent from '../../components/flyout-component/flyout-component'
 
 type Pokemon = {
   id: number;
+  url: string;
   name: string;
   image: string;
   description: string;
