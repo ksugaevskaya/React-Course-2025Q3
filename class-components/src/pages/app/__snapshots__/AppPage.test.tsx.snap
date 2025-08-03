@@ -5,7 +5,9 @@ exports[`check AppPAge component rendering 1`] = `
   <div
     class="app-page-container"
   >
-    <div>
+    <div
+      class="app-page"
+    >
       <div>
         App
       </div>

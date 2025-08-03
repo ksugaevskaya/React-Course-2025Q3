@@ -24,6 +24,7 @@ type FlavorTextEntry = {
 
 type FullPokemon = {
   id: number;
+  url: string;
   name: string;
   image: string;
   description: string;
@@ -72,7 +73,8 @@ export default async function fetchPokemons(
         const pokemonDetailsRes = await fetch(pokemon.url);
         const pokemonDetails: PokemonDetails = await pokemonDetailsRes.json();
 
-        const speciesRes = await fetch(`${speciesUrl}/${pokemonDetails.id}`);
+        const url = `${speciesUrl}/${pokemonDetails.id}`;
+        const speciesRes = await fetch(url);
         const speciesData: PokemonSpecies = await speciesRes.json();
 
         const descriptionEntry = speciesData.flavor_text_entries.find(
@@ -85,6 +87,7 @@ export default async function fetchPokemons(
         return {
           id: pokemonDetails.id,
           name: pokemonDetails.name,
+          url: url,
           image: pokemonDetails.sprites.front_default,
           description,
         };

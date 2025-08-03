@@ -3,7 +3,7 @@
   flex-direction: row;
   justify-content: center;
   gap: 5px;
-  border: 2px solid aliceblue;
+  border: var(--border-color);
   border-radius: 20px;
   margin: 15px;
   padding: 15px;
@@ -12,7 +12,7 @@
 .h2 {
   margin: 0%;
   text-transform: uppercase;
-  color: white;
+  color: var(--h2-color);
 }
 
 .pokemon-text-container {
@@ -22,11 +22,47 @@
   text-align: left;
 }
 
-.pokemon-desription {
-  color: aliceblue;
+.pokemon-description {
+  color: var(--tx-color);
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   max-width: 500px;
   font-style: italic;
+}
+
+.checkbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  padding-left: 20px;
+  border-left: var(--border-color);
+}
+
+.custom-checkbox {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+.custom-checkbox:checked {
+  background-color: #4caf50;
+  border-color: #4caf50;
+  position: relative;
+}
+
+.custom-checkbox:checked::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
 }

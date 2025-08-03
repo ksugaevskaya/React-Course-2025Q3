@@ -43,10 +43,19 @@ exports[`check correct rendering 1`] = `
            
         </h2>
         <span
-          class="pokemon-desription"
+          class="pokemon-description"
         >
           A strange seed was planted on its back at birth.
         </span>
+      </div>
+      <div
+        class="checkbox"
+      >
+        <input
+          class="custom-checkbox"
+          data-testid="checkbox"
+          type="checkbox"
+        />
       </div>
     </div>
   </a>
@@ -65,6 +74,39 @@ exports[`check correct rendering 1`] = `
          
       </div>
     </a>
+  </div>
+  <div>
+    <div
+      class="flyout hide"
+    >
+       
+      <span
+        class="bn-text"
+      >
+        Selected: 
+        0
+      </span>
+       
+      <button
+        class="bn-text"
+      >
+         
+        Unselect all
+         
+      </button>
+      <button
+        class="bn-text"
+      >
+         
+        Download
+         
+      </button>
+      <a
+        class="hidden"
+      >
+        Hidden download link
+      </a>
+    </div>
   </div>
 </div>
 `;
@@ -98,6 +140,39 @@ exports[`show spinner on initial mount 1`] = `
     class="message"
   >
     No Pokemons found. Please try a new search.
+  </div>
+  <div>
+    <div
+      class="flyout hide"
+    >
+       
+      <span
+        class="bn-text"
+      >
+        Selected: 
+        0
+      </span>
+       
+      <button
+        class="bn-text"
+      >
+         
+        Unselect all
+         
+      </button>
+      <button
+        class="bn-text"
+      >
+         
+        Download
+         
+      </button>
+      <a
+        class="hidden"
+      >
+        Hidden download link
+      </a>
+    </div>
   </div>
 </div>
 `;

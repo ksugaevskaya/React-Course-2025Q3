@@ -1,13 +1,13 @@
 .KG-image {
   width: 300px;
   height: 300px;
-  border: 12px solid white;
+  border: var(--KG-border-color);
   object-fit: cover;
   border-radius: 50px;
 }
 
 .name {
-  color: white;
+  color: var(--tx-color);
   text-align: center;
   font-size: 40px;
   font-family: Involve;
@@ -18,7 +18,7 @@
 }
 
 .text {
-  color: white;
+  color: var(--tx-color);
   font-family: Involve;
   text-transform: uppercase;
   font-size: 0.8rem;
@@ -31,7 +31,7 @@
   flex-direction: row;
   justify-content: center;
   height: 50px;
-  background-color: white;
+  background-color: var(--logo-color);
 }
 
 .card-container {

@@ -5,6 +5,10 @@
   text-align: center;
 }
 
+.app-page {
+  max-width: 650px;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -12,7 +16,7 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em var(--logo-hover-color));
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
@@ -54,7 +58,7 @@
 .navigation {
   display: flex;
   flex-direction: row;
-  color: white;
+  color: var(--tx-color);
   text-align: center;
   font-size: 20px;
   font-family: Involve;
@@ -66,9 +70,8 @@
 }
 
 .bottom-container {
-  max-width: 650px;
   flex-wrap: wrap;
-  margin-top: 40px;
+  margin: 40px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -85,7 +88,7 @@
   cursor: pointer;
   transition: all 0.5s ease-in-out;
   padding: 1.5%;
-  color: white;
+  color: var(--tx-color);
   width: 20px;
   height: 30px;
 }

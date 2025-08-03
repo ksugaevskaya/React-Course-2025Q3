@@ -1,5 +1,5 @@
 .h3 {
-  color: white;
+  color: var(--tx-color);
   font-family: Involve;
   text-transform: uppercase;
   font-size: 1.2rem;
@@ -8,13 +8,14 @@
 }
 
 .details-img {
-  border: 5px solid aliceblue;
+  width: 350px;
+  border: var(--img-border-color);
   border-radius: 20px;
   margin-bottom: 0px;
 }
 
 .h2 {
-  color: white;
+  color: var(--h2-color);
   font-size: 2rem;
 }
 
@@ -23,7 +24,7 @@
 }
 
 .pokemon-details-text-container {
-  width: 520px;
+  width: 350px;
   text-align: left;
 }
 
