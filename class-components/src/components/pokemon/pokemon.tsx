@@ -37,6 +37,7 @@ export default function Pokemon({ name, image, description, id, url }: Props) {
           onChange={handleChange}
           onClick={handleClick}
           className="custom-checkbox"
+          data-testid="checkbox"
           type="checkbox"
           checked={ids.includes(id)}
         ></input>

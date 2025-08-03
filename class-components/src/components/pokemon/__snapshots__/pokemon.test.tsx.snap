@@ -19,10 +19,19 @@ exports[`correct pokemon rendering 1`] = `
          
       </h2>
       <span
-        class="pokemon-desription"
+        class="pokemon-description"
       >
         yellow pokemon
       </span>
+    </div>
+    <div
+      class="checkbox"
+    >
+      <input
+        class="custom-checkbox"
+        data-testid="checkbox"
+        type="checkbox"
+      />
     </div>
   </div>
 </div>
