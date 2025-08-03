@@ -57,7 +57,7 @@ export default function FlyOutComponent() {
           {' '}
           Download{' '}
         </button>
-        <a ref={downloadLinkRef} style={{ display: 'none' }}>
+        <a ref={downloadLinkRef} className="hidden">
           Hidden download link
         </a>
       </div>
