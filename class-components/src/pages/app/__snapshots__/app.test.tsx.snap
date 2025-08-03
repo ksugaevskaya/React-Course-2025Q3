@@ -102,7 +102,7 @@ exports[`check correct rendering 1`] = `
          
       </button>
       <a
-        style="display: none;"
+        class="hidden"
       >
         Hidden download link
       </a>
@@ -168,7 +168,7 @@ exports[`show spinner on initial mount 1`] = `
          
       </button>
       <a
-        style="display: none;"
+        class="hidden"
       >
         Hidden download link
       </a>
