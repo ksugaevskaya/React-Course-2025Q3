@@ -1,0 +1,37 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`check correct FlyOutComponent rendering 1`] = `
+<div>
+  <div
+    class="flyout hide"
+  >
+     
+    <span
+      class="bn-text"
+    >
+      Selected: 
+      0
+    </span>
+     
+    <button
+      class="bn-text"
+    >
+       
+      Unselect all
+       
+    </button>
+    <button
+      class="bn-text"
+    >
+       
+      Download
+       
+    </button>
+    <a
+      style="display: none;"
+    >
+      Hidden download link
+    </a>
+  </div>
+</div>
+`;
