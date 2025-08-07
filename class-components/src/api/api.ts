@@ -1,9 +1,9 @@
-type Pokemon = {
+export type Pokemon = {
   name: string;
   url: string;
 };
 
-type PokemonDetails = {
+export type PokemonDetails = {
   id: number;
   name: string;
   sprites: {
@@ -11,7 +11,7 @@ type PokemonDetails = {
   };
 };
 
-type PokemonSpecies = {
+export type PokemonSpecies = {
   flavor_text_entries: FlavorTextEntry[];
 };
 
@@ -22,14 +22,14 @@ type FlavorTextEntry = {
   };
 };
 
-type FullPokemon = {
+export type FullPokemon = {
   id: number;
   url: string;
   name: string;
   image: string;
   description: string;
 };
-type DetailedPokemon = {
+export type DetailedPokemon = {
   name: string;
   description: string;
   image: string;
