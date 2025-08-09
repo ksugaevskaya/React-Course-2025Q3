@@ -1,9 +1,8 @@
 import { useNavigate, useParams } from 'react-router';
 import './details.css';
-import { useEffect, useState } from 'react';
-import { fetchPokemonById } from '../../api/api';
 import Pokemon from '../../components/pokemon/pokemon';
 import Spinner from '../../components/spinner/spinner';
+import { useGetPokemonByIdQuery } from '../../redux/services/pokemonApi';
 
 type Pokemon = {
   name: string;
@@ -50,26 +49,15 @@ export function Details({
 
 export default function DetailsPage() {
   const { pokemonId } = useParams();
+  const { data: pokemon, isFetching: isSpinnerActive } = useGetPokemonByIdQuery(
+    Number(pokemonId)
+  );
 
   const navigate = useNavigate();
-
-  const [isSpinnerActive, setSpinner] = useState(false);
-  const [pokemon, setPokemon] = useState<Pokemon>();
 
   const close = () => {
     navigate('..');
   };
-
-  const handleUpdate = async () => {
-    setSpinner(true);
-    const showPokenom = await fetchPokemonById(Number(pokemonId));
-    setSpinner(false);
-    setPokemon(showPokenom);
-  };
-
-  useEffect(() => {
-    handleUpdate();
-  }, [pokemonId]);
 
   return (
     <div className="main-container">
