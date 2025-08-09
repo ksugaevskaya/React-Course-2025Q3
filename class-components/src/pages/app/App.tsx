@@ -6,11 +6,16 @@ import { useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router';
 import useSearchQuery from '../../hooks/useSearchQuery';
 import FlyOutComponent from '../../components/flyout-component/flyout-component';
-import { useGetPokemonsQuery } from '../../redux/services/pokemonApi';
+import {
+  pokemonApi,
+  useGetPokemonsQuery,
+} from '../../redux/services/pokemonApi';
+import { useDispatch } from 'react-redux';
 
 export default function App() {
   const [, get] = useSearchQuery();
   const { pageId } = useParams();
+  const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState(get());
   const {
     data: pokemonArray,
@@ -24,6 +29,10 @@ export default function App() {
     setSearchQuery(get());
   };
 
+  const handleInvalidateCache = () => {
+    dispatch(pokemonApi.util.resetApiState());
+  };
+
   if (pageId !== undefined && !isValidPageId) {
     return <Navigate to="/not-found" replace />;
   }
@@ -34,6 +43,7 @@ export default function App() {
         About
       </Link>
       <Search onClick={handleClick}></Search>
+      <button onClick={handleInvalidateCache}>Invalidate ALL Cache</button>
       {isSpinnerActive ? <Spinner></Spinner> : null}{' '}
       {pokemonArray?.data.length === 0 ? (
         <div className="message">
