@@ -21,7 +21,14 @@ export default function App() {
     data: pokemonArray,
     error: isErrorActive,
     isLoading: isSpinnerActive,
-  } = useGetPokemonsQuery({ searchQuery, page: Number(pageId) });
+  } = useGetPokemonsQuery(
+    { searchQuery, page: Number(pageId) },
+    {
+      refetchOnFocus: true,
+      refetchOnReconnect: true,
+      refetchOnMountOrArgChange: 60 * 5,
+    }
+  );
 
   const isValidPageId = /^\d+$/.test(pageId || '');
 

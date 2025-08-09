@@ -50,7 +50,12 @@ export function Details({
 export default function DetailsPage() {
   const { pokemonId } = useParams();
   const { data: pokemon, isFetching: isSpinnerActive } = useGetPokemonByIdQuery(
-    Number(pokemonId)
+    Number(pokemonId),
+    {
+      refetchOnFocus: true,
+      refetchOnReconnect: true,
+      refetchOnMountOrArgChange: 60 * 5,
+    }
   );
 
   const navigate = useNavigate();
