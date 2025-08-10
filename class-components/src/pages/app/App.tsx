@@ -1,49 +1,43 @@
 import './App.css';
 import Search from '../../components/search/search-component';
-import fetchPokemons from '../../api/api';
 import Spinner from '../../components/spinner/spinner';
 import PokemonList from '../../components/pokemon-list/pokemon-list-component';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router';
 import useSearchQuery from '../../hooks/useSearchQuery';
 import FlyOutComponent from '../../components/flyout-component/flyout-component';
-
-type Pokemon = {
-  id: number;
-  url: string;
-  name: string;
-  image: string;
-  description: string;
-};
+import {
+  pokemonApi,
+  useGetPokemonsQuery,
+} from '../../redux/services/pokemonApi';
+import { useDispatch } from 'react-redux';
 
 export default function App() {
-  const [isSpinnerActive, setSpinner] = useState(false);
-  const [pokemonArray, setPokemonArray] = useState<Pokemon[]>([]);
-  const [isErrorActive, setError] = useState(false);
-  const [page, setPage] = useState(1);
-
+  const [, get] = useSearchQuery();
   const { pageId } = useParams();
+  const dispatch = useDispatch();
+  const [searchQuery, setSearchQuery] = useState(get());
+  const {
+    data: pokemonArray,
+    error: isErrorActive,
+    isLoading: isSpinnerActive,
+  } = useGetPokemonsQuery(
+    { searchQuery, page: Number(pageId) },
+    {
+      refetchOnFocus: true,
+      refetchOnReconnect: true,
+      refetchOnMountOrArgChange: 60 * 5,
+    }
+  );
+
   const isValidPageId = /^\d+$/.test(pageId || '');
 
-  useEffect(() => {
-    handleClick();
-  }, [pageId]);
-
-  const [, get] = useSearchQuery();
-
   const handleClick = async () => {
-    console.log("Hello, I'm pokemon");
-    setSpinner(true);
-    try {
-      const allPokemons = await fetchPokemons(get(), Number(pageId));
-      setPage(allPokemons.pages);
-      setPokemonArray(allPokemons.data);
-      setSpinner(false);
-      setError(false);
-    } catch {
-      setError(true);
-      setSpinner(false);
-    }
+    setSearchQuery(get());
+  };
+
+  const handleInvalidateCache = () => {
+    dispatch(pokemonApi.util.resetApiState());
   };
 
   if (pageId !== undefined && !isValidPageId) {
@@ -56,8 +50,9 @@ export default function App() {
         About
       </Link>
       <Search onClick={handleClick}></Search>
+      <button onClick={handleInvalidateCache}>Invalidate ALL Cache</button>
       {isSpinnerActive ? <Spinner></Spinner> : null}{' '}
-      {pokemonArray.length === 0 ? (
+      {!pokemonArray?.data.length ? (
         <div className="message">
           No Pokemons found. Please try a new search.
         </div>
@@ -67,11 +62,11 @@ export default function App() {
           Failed to render Pokemons. Please try again.
         </div>
       ) : (
-        <PokemonList pokemonArray={pokemonArray}></PokemonList>
+        <PokemonList pokemonArray={pokemonArray?.data || []}></PokemonList>
       )}
-      {pokemonArray.length !== 0 ? (
+      {pokemonArray?.data.length !== 0 ? (
         <div className="bottom-container">
-          {new Array(page).fill(1).map((_, i) => (
+          {new Array(pokemonArray?.pages).fill(1).map((_, i) => (
             <Link
               key={i + 1}
               to={{

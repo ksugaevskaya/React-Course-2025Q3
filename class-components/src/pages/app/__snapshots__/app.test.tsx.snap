@@ -21,6 +21,9 @@ exports[`check correct rendering 1`] = `
        Search 
     </button>
   </div>
+  <button>
+    Invalidate ALL Cache
+  </button>
    
   <a
     data-discover="true"
@@ -132,6 +135,9 @@ exports[`show spinner on initial mount 1`] = `
        Search 
     </button>
   </div>
+  <button>
+    Invalidate ALL Cache
+  </button>
   <div
     class="loading"
   />
@@ -140,6 +146,22 @@ exports[`show spinner on initial mount 1`] = `
     class="message"
   >
     No Pokemons found. Please try a new search.
+  </div>
+  <div
+    class="bottom-container"
+  >
+    <a
+      data-discover="true"
+      href="/1"
+    >
+      <div
+        class="pagination"
+      >
+         
+        1
+         
+      </div>
+    </a>
   </div>
   <div>
     <div
