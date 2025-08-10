@@ -1,6 +1,12 @@
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import { afterEach, expect, test, vitest } from 'vitest';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter, Route, Routes } from 'react-router';
 import { configureStore } from '@reduxjs/toolkit';
 
 let mockedApiFn = vitest.fn();
@@ -117,4 +123,45 @@ test('show spinner on initial mount', async () => {
   await waitFor(() => {
     expect(container).toMatchSnapshot();
   });
+});
+
+test('re-opening same page uses cache', async () => {
+  mockedApiFn.mockImplementation((_search = '', _page = 1) =>
+    Promise.resolve({
+      data: [
+        {
+          name: 'bulbasaur',
+          image: 'https://example.com/bulbasaur.png',
+          description: 'A strange seed was planted on its back at birth.',
+        },
+      ],
+      pages: 2,
+    })
+  );
+
+  const store = makeStore();
+
+  render(
+    <Provider store={store}>
+      <MemoryRouter initialEntries={['/1']}>
+        <Routes>
+          <Route path="/:pageId" element={<App />} />
+        </Routes>
+      </MemoryRouter>
+    </Provider>
+  );
+
+  await waitFor(() => expect(mockedApiFn).toHaveBeenCalledTimes(1));
+  await waitFor(() => expect(screen.queryByText('2')).not.toBeNull);
+
+  const page2Link = screen.getByText('2');
+  fireEvent.click(page2Link);
+  await waitFor(() => expect(mockedApiFn).toHaveBeenCalledTimes(2));
+
+  const page1Link = screen.getByText('1');
+  fireEvent.click(page1Link);
+
+  expect(mockedApiFn).toHaveBeenCalledTimes(2);
+
+  expect(screen.queryByText(/bulbasaur/i)).not.toBeNull();
 });
