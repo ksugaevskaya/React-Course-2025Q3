@@ -7,10 +7,17 @@ import {
   waitFor,
 } from '@testing-library/react';
 import DetailsPage, { Details } from './details';
-import { afterEach, expect, test, vitest } from 'vitest';
+import { afterEach, beforeEach, expect, test, vitest } from 'vitest';
 import { MemoryRouter } from 'react-router';
+import { Provider } from 'react-redux';
+import { store } from '../../redux/store';
+import { pokemonApi } from '../../redux/services/pokemonApi';
 
 afterEach(cleanup);
+
+beforeEach(() => {
+  store.dispatch(pokemonApi.util.resetApiState());
+});
 
 test('check detail component rendering', () => {
   const { container } = render(
@@ -64,7 +71,9 @@ test('check page rendering', async () => {
   });
   const { container } = render(
     <MemoryRouter>
-      <DetailsPage></DetailsPage>
+      <Provider store={store}>
+        <DetailsPage></DetailsPage>
+      </Provider>
     </MemoryRouter>
   );
 
@@ -87,7 +96,9 @@ test('check page rendering', async () => {
 test('check if the close button clicked', async () => {
   render(
     <MemoryRouter>
-      <DetailsPage></DetailsPage>
+      <Provider store={store}>
+        <DetailsPage></DetailsPage>
+      </Provider>
     </MemoryRouter>
   );
   await waitFor(() => expect(screen.queryByText('Close')).not.toBeNull());

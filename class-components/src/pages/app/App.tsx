@@ -52,7 +52,7 @@ export default function App() {
       <Search onClick={handleClick}></Search>
       <button onClick={handleInvalidateCache}>Invalidate ALL Cache</button>
       {isSpinnerActive ? <Spinner></Spinner> : null}{' '}
-      {pokemonArray?.data.length === 0 ? (
+      {!pokemonArray?.data.length ? (
         <div className="message">
           No Pokemons found. Please try a new search.
         </div>
