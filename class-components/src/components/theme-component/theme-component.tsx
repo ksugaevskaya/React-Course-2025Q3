@@ -1,3 +1,5 @@
+'use client';
+
 import { useTheme } from '../../context/theme';
 import './theme-component.css';
 

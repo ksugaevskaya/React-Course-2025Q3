@@ -1,3 +1,5 @@
+'use client';
+
 import {
   useState,
   createContext,
@@ -25,9 +27,12 @@ type ThemeProviderProps = {
 };
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [darkMode, setDarkMode] = useState(
-    localStorage.getItem('theme') === 'dark'
-  );
+  const [darkMode, setDarkMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('theme') === 'dark';
+    }
+    return false;
+  });
 
   const toggleTheme = () => {
     setDarkMode((mode) => !mode);
