@@ -49,7 +49,7 @@ export function Details({
 
 export default function DetailsPage() {
   const { pokemonId } = useParams();
-  const { data: pokemon, isFetching: isSpinnerActive } = useGetPokemonByIdQuery(
+  const { data: pokemon, isLoading: isSpinnerActive } = useGetPokemonByIdQuery(
     Number(pokemonId),
     {
       refetchOnFocus: true,
