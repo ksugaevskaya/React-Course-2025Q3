@@ -2,6 +2,7 @@ import './pokemon.css';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../redux/store';
 import { select, unselect } from '../../redux/slices/selected-pokemon-slice';
+import Image from 'next/image';
 
 type Props = {
   name: string;
@@ -27,7 +28,7 @@ export default function Pokemon({ name, image, description, id, url }: Props) {
   };
   return (
     <div className="pokemon-container">
-      <img src={image}></img>
+      <Image width={96} height={96} alt="pokemon image" src={image}></Image>
       <div className="pokemon-text-container">
         <h2 className="h2"> {name} </h2>
         <span className="pokemon-description">{description}</span>

@@ -3,6 +3,7 @@ import './details.css';
 import Pokemon from '../../components/pokemon/pokemon';
 import Spinner from '../../components/spinner/spinner';
 import { useGetPokemonByIdQuery } from '../../redux/services/pokemonApi';
+import Image from 'next/image';
 
 type Pokemon = {
   name: string;
@@ -28,7 +29,13 @@ export function Details({
       <div>
         <div className="pokemon-details-container">
           <div>
-            <img className="details-img" src={image} />
+            <Image
+              alt="pokemon image"
+              width={350}
+              height={350}
+              className="details-img"
+              src={image}
+            />
           </div>
           <div className="pokemon-details-text-container">
             <h2 className="h2"> {name.toUpperCase()} </h2>
