@@ -11,6 +11,7 @@ import {
 } from '../../redux/services/pokemonApi';
 import { useDispatch } from 'react-redux';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 export default function App() {
   const [, get] = useSearchQuery();
@@ -37,24 +38,21 @@ export default function App() {
   const handleInvalidateCache = () => {
     dispatch(pokemonApi.util.resetApiState());
   };
+  const t = useTranslations('MainPage');
 
   return (
     <>
       <Link href="/about" className="navigation">
-        About
+        {t('about')}
       </Link>
       <Search onClick={handleClick}></Search>
-      <button onClick={handleInvalidateCache}>Invalidate ALL Cache</button>
+      <button onClick={handleInvalidateCache}>{t('cache')}</button>
       {isSpinnerActive ? <Spinner></Spinner> : null}{' '}
       {!pokemonArray?.data.length ? (
-        <div className="message">
-          No Pokemons found. Please try a new search.
-        </div>
+        <div className="message">{t('notfound')}</div>
       ) : null}
       {isErrorActive ? (
-        <div className="message">
-          Failed to render Pokemons. Please try again.
-        </div>
+        <div className="message">{t('error')}</div>
       ) : (
         <PokemonList pokemonArray={pokemonArray?.data || []}></PokemonList>
       )}
