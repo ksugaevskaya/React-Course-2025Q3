@@ -21,5 +21,11 @@
     "height": "Высота",
     "type": "Тип",
     "closeButton": "Закрыть"
+  },
+
+  "SelectButton": {
+    "select": "Выбрано",
+    "all": "Убрать все",
+    "download": "Скачать"
   }
 }

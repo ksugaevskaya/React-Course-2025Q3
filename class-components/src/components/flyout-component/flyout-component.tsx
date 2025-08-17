@@ -3,6 +3,7 @@ import './flyout-component.css';
 import type { RootState } from '../../redux/store';
 import { unselectAll } from '../../redux/slices/selected-pokemon-slice';
 import { useRef } from 'react';
+import { useTranslations } from 'next-intl';
 
 type CsvRow = {
   id: number;
@@ -44,18 +45,22 @@ export default function FlyOutComponent() {
     }
   };
 
+  const t = useTranslations('SelectButton');
+
   return (
     <>
       <div className={`flyout ${ids.length >= 1 ? 'show' : 'hide'}`}>
         {' '}
-        <span className="bn-text">Selected: {ids.length}</span>{' '}
+        <span className="bn-text">
+          {t('select')}: {ids.length}
+        </span>{' '}
         <button onClick={handleClick} className="bn-text">
           {' '}
-          Unselect all{' '}
+          {t('all')}{' '}
         </button>
         <button className="bn-text" onClick={handleDownload}>
           {' '}
-          Download{' '}
+          {t('download')}{' '}
         </button>
         <a ref={downloadLinkRef} className="hidden">
           Hidden download link
