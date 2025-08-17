@@ -10,20 +10,24 @@ import {
   useGetPokemonsQuery,
 } from '../../redux/services/pokemonApi';
 import { useDispatch } from 'react-redux';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+import { Link, usePathname, useRouter } from '../../i18n/navigation';
+import { useSearchParams } from 'next/navigation';
 
 export default function App() {
   const [, get] = useSearchQuery();
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState(get());
-  const pageId = 1;
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const page = searchParams?.get('page') || 1;
   const {
     data: pokemonArray,
     error: isErrorActive,
     isLoading: isSpinnerActive,
   } = useGetPokemonsQuery(
-    { searchQuery, page: Number(pageId) },
+    { searchQuery, page: Number(page) },
     {
       refetchOnFocus: true,
       refetchOnReconnect: true,
@@ -37,6 +41,12 @@ export default function App() {
 
   const handleInvalidateCache = () => {
     dispatch(pokemonApi.util.resetApiState());
+  };
+  const handlePageClick = (page: number) => {
+    router.replace({
+      pathname: pathname,
+      query: { page: page },
+    });
   };
   const t = useTranslations('MainPage');
 
@@ -59,7 +69,11 @@ export default function App() {
       {pokemonArray?.data.length !== 0 ? (
         <div className="bottom-container">
           {new Array(pokemonArray?.pages).fill(1).map((_, i) => (
-            <div key={i} className="pagination">
+            <div
+              key={i}
+              className="pagination"
+              onClick={() => handlePageClick(i + 1)}
+            >
               {' '}
               {i + 1}{' '}
             </div>
