@@ -6,6 +6,7 @@ import Spinner from '../../components/spinner/spinner';
 import { useGetPokemonByIdQuery } from '../../redux/services/pokemonApi';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 type Pokemon = {
   name: string;
@@ -26,6 +27,7 @@ export function Details({
   height,
   types,
 }: Pokemon) {
+  const t = useTranslations('DetailsPage');
   return (
     <>
       <div>
@@ -42,13 +44,25 @@ export function Details({
           <div className="pokemon-details-text-container">
             <h2 className="h2"> {name.toUpperCase()} </h2>
             <h3 className="h3">
-              Description:
+              {t('text')}
               <i>{description}</i>
             </h3>
-            <h3 className="h3"> Base experience: {experience}</h3>
-            <h3 className="h3"> Weight: {weight}</h3>
-            <h3 className="h3"> Height: {height} </h3>
-            <h3 className="h3"> Types: {types}</h3>
+            <h3 className="h3">
+              {' '}
+              {t('experience')}: {experience}
+            </h3>
+            <h3 className="h3">
+              {' '}
+              {t('weight')}: {weight}
+            </h3>
+            <h3 className="h3">
+              {' '}
+              {t('height')}: {height}{' '}
+            </h3>
+            <h3 className="h3">
+              {' '}
+              {t('type')}: {types}
+            </h3>
           </div>
         </div>
       </div>
@@ -62,6 +76,7 @@ type DetailsPageProps = {
 
 export default function DetailsPage({ pokemonId }: DetailsPageProps) {
   const router = useRouter();
+  const t = useTranslations('DetailsPage');
   const { data: pokemon, isLoading: isSpinnerActive } = useGetPokemonByIdQuery(
     Number(pokemonId),
     {
@@ -91,7 +106,7 @@ export default function DetailsPage({ pokemonId }: DetailsPageProps) {
             types={pokemon ? pokemon.types : ''}
           ></Details>
           <div className="close-button">
-            <button onClick={close}>Close </button>
+            <button onClick={close}> {t('closeButton')} </button>
           </div>
         </>
       )}

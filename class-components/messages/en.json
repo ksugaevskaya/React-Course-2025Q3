@@ -12,5 +12,14 @@
     "cache": "Invalidate all cache",
     "notfound": " No Pokemons found. Please try a new search.",
     "error": " Failed to render Pokemons. Please try again."
+  },
+
+  "DetailsPage": {
+    "text": "Description",
+    "experience": "Base experience",
+    "weight": "Weight",
+    "height": "Height",
+    "type": "Type",
+    "closeButton": "Close"
   }
 }
