@@ -1,8 +1,12 @@
-import { useNavigate, useParams } from 'react-router';
+'use client';
+
 import './details.css';
 import Pokemon from '../../components/pokemon/pokemon';
 import Spinner from '../../components/spinner/spinner';
 import { useGetPokemonByIdQuery } from '../../redux/services/pokemonApi';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 type Pokemon = {
   name: string;
@@ -23,23 +27,42 @@ export function Details({
   height,
   types,
 }: Pokemon) {
+  const t = useTranslations('DetailsPage');
   return (
     <>
       <div>
         <div className="pokemon-details-container">
           <div>
-            <img className="details-img" src={image} />
+            <Image
+              alt="pokemon image"
+              width={350}
+              height={350}
+              className="details-img"
+              src={image}
+            />
           </div>
           <div className="pokemon-details-text-container">
             <h2 className="h2"> {name.toUpperCase()} </h2>
             <h3 className="h3">
-              Description:
+              {t('text')}
               <i>{description}</i>
             </h3>
-            <h3 className="h3"> Base experience: {experience}</h3>
-            <h3 className="h3"> Weight: {weight}</h3>
-            <h3 className="h3"> Height: {height} </h3>
-            <h3 className="h3"> Types: {types}</h3>
+            <h3 className="h3">
+              {' '}
+              {t('experience')}: {experience}
+            </h3>
+            <h3 className="h3">
+              {' '}
+              {t('weight')}: {weight}
+            </h3>
+            <h3 className="h3">
+              {' '}
+              {t('height')}: {height}{' '}
+            </h3>
+            <h3 className="h3">
+              {' '}
+              {t('type')}: {types}
+            </h3>
           </div>
         </div>
       </div>
@@ -47,9 +70,14 @@ export function Details({
   );
 }
 
-export default function DetailsPage() {
-  const { pokemonId } = useParams();
-  const { data: pokemon, isFetching: isSpinnerActive } = useGetPokemonByIdQuery(
+type DetailsPageProps = {
+  pokemonId: string;
+};
+
+export default function DetailsPage({ pokemonId }: DetailsPageProps) {
+  const router = useRouter();
+  const t = useTranslations('DetailsPage');
+  const { data: pokemon, isLoading: isSpinnerActive } = useGetPokemonByIdQuery(
     Number(pokemonId),
     {
       refetchOnFocus: true,
@@ -58,10 +86,8 @@ export default function DetailsPage() {
     }
   );
 
-  const navigate = useNavigate();
-
   const close = () => {
-    navigate('..');
+    router.back();
   };
 
   return (
@@ -80,7 +106,7 @@ export default function DetailsPage() {
             types={pokemon ? pokemon.types : ''}
           ></Details>
           <div className="close-button">
-            <button onClick={close}>Close </button>
+            <button onClick={close}> {t('closeButton')} </button>
           </div>
         </>
       )}

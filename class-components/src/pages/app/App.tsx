@@ -3,7 +3,6 @@ import Search from '../../components/search/search-component';
 import Spinner from '../../components/spinner/spinner';
 import PokemonList from '../../components/pokemon-list/pokemon-list-component';
 import { useState } from 'react';
-import { Link, Navigate, useParams } from 'react-router';
 import useSearchQuery from '../../hooks/useSearchQuery';
 import FlyOutComponent from '../../components/flyout-component/flyout-component';
 import {
@@ -11,26 +10,30 @@ import {
   useGetPokemonsQuery,
 } from '../../redux/services/pokemonApi';
 import { useDispatch } from 'react-redux';
+import { useTranslations } from 'next-intl';
+import { Link, usePathname, useRouter } from '../../i18n/navigation';
+import { useSearchParams } from 'next/navigation';
 
 export default function App() {
   const [, get] = useSearchQuery();
-  const { pageId } = useParams();
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState(get());
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const page = searchParams?.get('page') || 1;
   const {
     data: pokemonArray,
     error: isErrorActive,
     isLoading: isSpinnerActive,
   } = useGetPokemonsQuery(
-    { searchQuery, page: Number(pageId) },
+    { searchQuery, page: Number(page) },
     {
       refetchOnFocus: true,
       refetchOnReconnect: true,
       refetchOnMountOrArgChange: 60 * 5,
     }
   );
-
-  const isValidPageId = /^\d+$/.test(pageId || '');
 
   const handleClick = async () => {
     setSearchQuery(get());
@@ -39,42 +42,41 @@ export default function App() {
   const handleInvalidateCache = () => {
     dispatch(pokemonApi.util.resetApiState());
   };
-
-  if (pageId !== undefined && !isValidPageId) {
-    return <Navigate to="/not-found" replace />;
-  }
+  const handlePageClick = (page: number) => {
+    router.replace({
+      pathname: pathname,
+      query: { page: page },
+    });
+  };
+  const t = useTranslations('MainPage');
 
   return (
     <>
-      <Link to="/about" className="navigation">
-        About
+      <Link href="/about" className="navigation">
+        {t('about')}
       </Link>
       <Search onClick={handleClick}></Search>
-      <button onClick={handleInvalidateCache}>Invalidate ALL Cache</button>
+      <button onClick={handleInvalidateCache}>{t('cache')}</button>
       {isSpinnerActive ? <Spinner></Spinner> : null}{' '}
       {!pokemonArray?.data.length ? (
-        <div className="message">
-          No Pokemons found. Please try a new search.
-        </div>
+        <div className="message">{t('notfound')}</div>
       ) : null}
       {isErrorActive ? (
-        <div className="message">
-          Failed to render Pokemons. Please try again.
-        </div>
+        <div className="message">{t('error')}</div>
       ) : (
         <PokemonList pokemonArray={pokemonArray?.data || []}></PokemonList>
       )}
       {pokemonArray?.data.length !== 0 ? (
         <div className="bottom-container">
           {new Array(pokemonArray?.pages).fill(1).map((_, i) => (
-            <Link
-              key={i + 1}
-              to={{
-                pathname: `/${i + 1}`,
-              }}
+            <div
+              key={i}
+              className="pagination"
+              onClick={() => handlePageClick(i + 1)}
             >
-              <div className="pagination"> {i + 1} </div>
-            </Link>
+              {' '}
+              {i + 1}{' '}
+            </div>
           ))}
         </div>
       ) : null}

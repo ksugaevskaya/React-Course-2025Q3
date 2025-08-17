@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
-import About from './about-component';
+import About from './page';
 import { afterEach, expect, test } from 'vitest';
 
 afterEach(cleanup);

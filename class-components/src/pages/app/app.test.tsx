@@ -126,7 +126,7 @@ test('show spinner on initial mount', async () => {
 });
 
 test('re-opening same page uses cache', async () => {
-  mockedApiFn.mockImplementation((_search = '', _page = 1) =>
+  mockedApiFn.mockImplementation(() =>
     Promise.resolve({
       data: [
         {

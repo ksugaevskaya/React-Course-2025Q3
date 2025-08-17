@@ -26,12 +26,13 @@
   font-weight: 400;
 }
 
-.logo {
+.rs-logo {
   display: flex;
   flex-direction: row;
   justify-content: center;
   height: 50px;
   background-color: var(--logo-color);
+  padding: 24px;
 }
 
 .card-container {

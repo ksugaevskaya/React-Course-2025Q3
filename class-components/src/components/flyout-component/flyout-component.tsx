@@ -3,23 +3,8 @@ import './flyout-component.css';
 import type { RootState } from '../../redux/store';
 import { unselectAll } from '../../redux/slices/selected-pokemon-slice';
 import { useRef } from 'react';
-
-type CsvRow = {
-  id: number;
-  description: string;
-  url: string;
-};
-
-function convertToCSV(items: CsvRow[]): string {
-  if (items.length === 0) return '';
-
-  const headers = ['id', 'description', 'url'];
-  const rows = items.map((item) =>
-    [item.id, item.description.replaceAll(',', ''), item.url].join(',')
-  );
-
-  return [headers.join(','), ...rows].join('\n');
-}
+import { useTranslations } from 'next-intl';
+import { compileCsvAction } from '../../app/actions/exportCsv';
 
 export default function FlyOutComponent() {
   const downloadLinkRef = useRef<HTMLAnchorElement | null>(null);
@@ -29,33 +14,38 @@ export default function FlyOutComponent() {
   const handleClick = () => {
     dispatch(unselectAll());
   };
-  const handleDownload = () => {
+  const handleDownload = async () => {
     if (!csv || csv.length === 0) return;
 
-    const csvContent = convertToCSV(csv);
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const csvContent = await compileCsvAction(csv);
+    const blob = new Blob([csvContent.csv], {
+      type: 'text/csv;charset=utf-8;',
+    });
     const url = URL.createObjectURL(blob);
-    const fileName = `${csv.length}_items.csv`;
 
     if (downloadLinkRef.current) {
       downloadLinkRef.current.href = url;
-      downloadLinkRef.current.download = fileName;
+      downloadLinkRef.current.download = csvContent.filename;
       downloadLinkRef.current.click();
     }
   };
+
+  const t = useTranslations('SelectButton');
 
   return (
     <>
       <div className={`flyout ${ids.length >= 1 ? 'show' : 'hide'}`}>
         {' '}
-        <span className="bn-text">Selected: {ids.length}</span>{' '}
+        <span className="bn-text">
+          {t('select')}: {ids.length}
+        </span>{' '}
         <button onClick={handleClick} className="bn-text">
           {' '}
-          Unselect all{' '}
+          {t('all')}{' '}
         </button>
         <button className="bn-text" onClick={handleDownload}>
           {' '}
-          Download{' '}
+          {t('download')}{' '}
         </button>
         <a ref={downloadLinkRef} className="hidden">
           Hidden download link

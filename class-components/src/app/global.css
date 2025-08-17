@@ -96,3 +96,18 @@ button:focus-visible {
     background-color: var(--bt-color);
   }
 }
+
+.app-page {
+  max-width: 650px;
+}
+
+.app-page-container {
+  display: flex;
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}

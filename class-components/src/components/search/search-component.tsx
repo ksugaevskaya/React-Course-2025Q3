@@ -1,5 +1,6 @@
 import './search.css';
 import useSearchQuery from '../../hooks/useSearchQuery';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   onClick: () => void;
@@ -7,6 +8,7 @@ type Props = {
 
 export default function Search({ onClick }: Props) {
   const [set, get] = useSearchQuery();
+  const t = useTranslations('MainPage');
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     set(event.target.value.trim());
   };
@@ -16,9 +18,9 @@ export default function Search({ onClick }: Props) {
         className="input"
         defaultValue={get()}
         onChange={onInputChange}
-        placeholder="Start your search"
+        placeholder={t('placeholder')}
       ></input>
-      <button onClick={onClick}> Search </button>
+      <button onClick={onClick}> {t('search')} </button>
     </div>
   );
 }
