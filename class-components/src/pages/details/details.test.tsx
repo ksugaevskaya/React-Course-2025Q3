@@ -72,7 +72,7 @@ test('check page rendering', async () => {
   const { container } = render(
     <MemoryRouter>
       <Provider store={store}>
-        <DetailsPage></DetailsPage>
+        <DetailsPage pokemonId="1"></DetailsPage>
       </Provider>
     </MemoryRouter>
   );
@@ -97,7 +97,7 @@ test('check if the close button clicked', async () => {
   render(
     <MemoryRouter>
       <Provider store={store}>
-        <DetailsPage></DetailsPage>
+        <DetailsPage pokemonId="1"></DetailsPage>
       </Provider>
     </MemoryRouter>
   );

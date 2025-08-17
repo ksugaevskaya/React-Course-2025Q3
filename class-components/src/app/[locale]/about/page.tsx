@@ -4,10 +4,6 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import LanguageSwitcher from '../../../components/locale-switcher/LocaleSwitcher';
 
-export function generateStaticParams() {
-  return [{ slug: [''] }];
-}
-
 export default function About() {
   const t = useTranslations('AboutPage');
   return (

@@ -1,3 +1,4 @@
+import React from 'react';
 import './not-found.css';
 
 export default function NotFound() {
