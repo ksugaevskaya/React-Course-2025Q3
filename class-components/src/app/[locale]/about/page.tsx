@@ -2,13 +2,11 @@ import './about.css';
 import Image from 'next/image';
 
 import { useTranslations } from 'next-intl';
-import LanguageSwitcher from '../../../components/locale-switcher/LocaleSwitcher';
 
 export default function About() {
   const t = useTranslations('AboutPage');
   return (
     <>
-      <LanguageSwitcher />
       <div className="card-container">
         <div>
           {' '}

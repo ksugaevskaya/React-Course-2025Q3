@@ -4,6 +4,8 @@ import ThemeComponent from '../components/theme-component/theme-component';
 import Providers from './[locale]/providers';
 import { getLocale } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
+import LanguageSwitcher from '../components/locale-switcher/LocaleSwitcher';
+import './layout.css';
 
 export const metadata: Metadata = {
   title: 'Pokemon search',
@@ -24,10 +26,11 @@ export default async function RootLayout({
           <NextIntlClientProvider>
             <Providers>
               <ThemeProvider>
-                <>
+                <div className="languageButton">
                   <ThemeComponent></ThemeComponent>
-                  {children}
-                </>
+                  <LanguageSwitcher></LanguageSwitcher>
+                </div>
+                {children}
               </ThemeProvider>
             </Providers>
           </NextIntlClientProvider>

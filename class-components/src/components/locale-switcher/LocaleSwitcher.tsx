@@ -12,14 +12,18 @@ export default function LanguageSwitcher() {
   const handleLanguageSwitcher = () => {
     if (locale === 'en') {
       router.replace(pathname, { locale: 'ru' });
+      router.refresh();
     } else {
       router.replace(pathname, { locale: 'en' });
+      router.refresh();
     }
   };
 
   return (
-    <>
-      <button onClick={handleLanguageSwitcher}> {locale}</button>
-    </>
+    <div className="theme">
+      <button onClick={handleLanguageSwitcher}>
+        {locale === 'ru' ? '🇷🇺' : '🇬🇧'}
+      </button>
+    </div>
   );
 }
