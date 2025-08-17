@@ -1,9 +1,11 @@
-import { useNavigate, useParams } from 'react-router';
+'use client';
+
 import './details.css';
 import Pokemon from '../../components/pokemon/pokemon';
 import Spinner from '../../components/spinner/spinner';
 import { useGetPokemonByIdQuery } from '../../redux/services/pokemonApi';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 type Pokemon = {
   name: string;
@@ -54,8 +56,12 @@ export function Details({
   );
 }
 
-export default function DetailsPage() {
-  const { pokemonId } = useParams();
+type DetailsPageProps = {
+  pokemonId: string;
+};
+
+export default function DetailsPage({ pokemonId }: DetailsPageProps) {
+  const router = useRouter();
   const { data: pokemon, isLoading: isSpinnerActive } = useGetPokemonByIdQuery(
     Number(pokemonId),
     {
@@ -65,10 +71,8 @@ export default function DetailsPage() {
     }
   );
 
-  const navigate = useNavigate();
-
   const close = () => {
-    navigate('..');
+    router.back();
   };
 
   return (

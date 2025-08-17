@@ -1,4 +1,5 @@
 import PokemonComponent from '../pokemon/pokemon';
+import { Link } from '../../i18n/navigation';
 
 type Props = {
   pokemonArray: {
@@ -12,13 +13,15 @@ type Props = {
 
 export default function PokemonList({ pokemonArray }: Props) {
   return pokemonArray.map((pokemon) => (
-    <PokemonComponent
-      key={pokemon.id}
-      id={pokemon.id}
-      name={pokemon.name}
-      url={pokemon.url}
-      image={pokemon.image}
-      description={pokemon.description}
-    ></PokemonComponent>
+    <Link key={pokemon.id} href={`/${pokemon.id}`}>
+      <PokemonComponent
+        key={pokemon.id}
+        id={pokemon.id}
+        name={pokemon.name}
+        url={pokemon.url}
+        image={pokemon.image}
+        description={pokemon.description}
+      ></PokemonComponent>
+    </Link>
   ));
 }
