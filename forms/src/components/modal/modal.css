@@ -1,0 +1,32 @@
+.modal-content {
+  position: relative;
+  min-height: 50%;
+  width: 75%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: row;
+  background-color: #fafafa;
+  border-radius: 10px;
+}
+
+.modal-container {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #181c29cc;
+}
+
+.cross {
+  z-index: 3;
+  position: absolute;
+  right: 0px;
+  padding-top: 12px;
+  padding-right: 12px;
+  cursor: pointer;
+}
