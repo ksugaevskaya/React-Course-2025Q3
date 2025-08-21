@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import Modal from "./components/modal/modal";
+import UncontrolledForm from "./components/uncontrolled/uncontrolled";
 
 function App() {
   const [controlled, setControlled] = useState(false);
@@ -36,8 +37,7 @@ function App() {
         привет ксю
       </Modal>
       <Modal visible={uncontrolled} onClose={handleCloseButtonUncontrolled}>
-        {" "}
-        привет
+        <UncontrolledForm></UncontrolledForm>
       </Modal>
     </>
   );
