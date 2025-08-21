@@ -1,4 +1,10 @@
+import { useState } from "react";
+import "./uncontrolled.css";
+
 export default function UncontrolledForm() {
+  const [firstNameError, setFirstNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -7,6 +13,35 @@ export default function UncontrolledForm() {
 
     console.log(values);
     // values.fname, values.age, values.email и т.д.
+
+    if (values.fname === "") {
+      setFirstNameError("First name is required");
+    }
+
+    if (values.fname[0] !== values.fname[0]?.toUpperCase?.()) {
+      setFirstNameError("The first letter should be capitalized");
+    }
+
+    if (values.email !== values.email.trim()) {
+      setEmailError(
+        "Email address must not contain leading or trailing whitespace"
+      );
+    }
+    if (!values.email.includes("@")) {
+      setEmailError("Email address must contain @");
+    }
+    const parts = values.email.split("@");
+    if (parts.length !== 2 || !parts[1]) {
+      setEmailError(
+        "Email address must contain a domain name (e.g., example.com)"
+      );
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(values.email)) {
+      setEmailError(
+        "Email address must be properly formatted (e.g., user@example.com)"
+      );
+    }
   }
   return (
     <>
@@ -18,11 +53,16 @@ export default function UncontrolledForm() {
           name="fname"
           placeholder="Write your name"
         />
+
+        {firstNameError && <div className="error"> {firstNameError}</div>}
+
         <label htmlFor="age">Age:</label>
         <input type="number" id="age" name="age" placeholder="Write your age" />
 
         <label htmlFor="email">Email:</label>
         <input type="text" id="email" name="email" />
+
+        {emailError && <div className="error">{emailError}</div>}
 
         <label htmlFor="password">Password:</label>
         <input type="password" id="password" name="password" />
