@@ -1,9 +1,28 @@
-import { useState } from "react";
-import "./uncontrolled.css";
+import { useState } from 'react';
+import './uncontrolled.css';
+
+export const hasAtLeastOneSymbol = (
+  string: string,
+  symbols: string
+): boolean => {
+  for (let i = 0; i < symbols.length; i++) {
+    if (string.includes(symbols[i])) {
+      return true;
+    }
+  }
+
+  return false;
+};
 
 export default function UncontrolledForm() {
-  const [firstNameError, setFirstNameError] = useState("");
-  const [emailError, setEmailError] = useState("");
+  const [firstNameError, setFirstNameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [ageError, setAgeError] = useState('');
+  const [genderError, setGenderError] = useState('');
+  const [termsError, setTermsError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [passwordRepeatError, setPasswordRepeatError] = useState('');
+  const [fileError, setFileError] = useState('');
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -14,33 +33,83 @@ export default function UncontrolledForm() {
     console.log(values);
     // values.fname, values.age, values.email и т.д.
 
-    if (values.fname === "") {
-      setFirstNameError("First name is required");
+    if (values.fname === '') {
+      setFirstNameError('First name is required');
     }
 
     if (values.fname[0] !== values.fname[0]?.toUpperCase?.()) {
-      setFirstNameError("The first letter should be capitalized");
+      setFirstNameError('The first letter should be capitalized');
+    }
+
+    for (let i = 0; i < values.age.length; i++) {
+      if (!'0123456789'.includes(values.age[i])) {
+        setAgeError('Age should be a number');
+      }
     }
 
     if (values.email !== values.email.trim()) {
       setEmailError(
-        "Email address must not contain leading or trailing whitespace"
+        'Email address must not contain leading or trailing whitespace'
       );
     }
-    if (!values.email.includes("@")) {
-      setEmailError("Email address must contain @");
+    if (!values.email.includes('@')) {
+      setEmailError('Email address must contain @');
     }
-    const parts = values.email.split("@");
+    const parts = values.email.split('@');
     if (parts.length !== 2 || !parts[1]) {
       setEmailError(
-        "Email address must contain a domain name (e.g., example.com)"
+        'Email address must contain a domain name (e.g., example.com)'
       );
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(values.email)) {
       setEmailError(
-        "Email address must be properly formatted (e.g., user@example.com)"
+        'Email address must be properly formatted (e.g., user@example.com)'
       );
+    }
+
+    if (!hasAtLeastOneSymbol(values.password, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')) {
+      setPasswordError(
+        'Password must contain at least one uppercase letter (A-Z).'
+      );
+    }
+    if (!hasAtLeastOneSymbol(values.password, 'abcdefghijklmnopqrstuvwxyz')) {
+      setPasswordError(
+        'Password must contain at least one lowercase letter (a-z).'
+      );
+    }
+    if (!hasAtLeastOneSymbol(values.password, '0123456789')) {
+      setPasswordError('Password must contain at least one digit');
+    }
+    if (
+      !hasAtLeastOneSymbol(
+        values.password,
+        `!"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~'`
+      )
+    ) {
+      setPasswordError(
+        'Password must contain at least one special character !@#$%^&*'
+      );
+    }
+
+    if (values.password !== values.passwordRepeat) {
+      setPasswordRepeatError('Repeat password should match password');
+    }
+
+    if (values.gender === undefined) {
+      setGenderError('Gender should be selected');
+    }
+
+    if (values.checkbox === undefined) {
+      setTermsError('Please accept terms and conditions agreement');
+    }
+
+    if (values.file.type !== 'image/png' && values.file.type !== 'image/jpeg') {
+      setFileError('File extension should be png or jpeg only');
+    }
+
+    if (values.file.size > 1_000_000) {
+      setFileError('File size should be less than 1MB');
     }
   }
   return (
@@ -57,7 +126,9 @@ export default function UncontrolledForm() {
         {firstNameError && <div className="error"> {firstNameError}</div>}
 
         <label htmlFor="age">Age:</label>
-        <input type="number" id="age" name="age" placeholder="Write your age" />
+        <input type="text" id="age" name="age" placeholder="Write your age" />
+
+        {ageError && <div className="error"> {ageError}</div>}
 
         <label htmlFor="email">Email:</label>
         <input type="text" id="email" name="email" />
@@ -67,6 +138,8 @@ export default function UncontrolledForm() {
         <label htmlFor="password">Password:</label>
         <input type="password" id="password" name="password" />
 
+        {passwordError && <div className="error">{passwordError}</div>}
+
         <label htmlFor="passwordRepeat">Repeat password:</label>
         <input
           type="passwordRepeat"
@@ -74,17 +147,27 @@ export default function UncontrolledForm() {
           name="passwordRepeat"
         />
 
+        {passwordRepeatError && (
+          <div className="error">{passwordRepeatError}</div>
+        )}
+
         <p>Gender:</p>
         <input type="radio" id="female" name="gender" value="female" />
         <label htmlFor="female">Female</label>
         <input type="radio" id="male" name="gender" value="male" />
         <label htmlFor="male">Male</label>
 
+        {genderError && <div className="error">{genderError}</div>}
+
         <input type="checkbox" id="checkbox" name="checkbox" />
         <label htmlFor="checkbox"> Accept Terms and Conditions agreement</label>
 
-        <label htmlFor="myfile"> Upload picture:</label>
-        <input type="file" id="myfile" name="myfile"></input>
+        {termsError && <div className="error">{termsError}</div>}
+
+        <label htmlFor="file"> Upload picture:</label>
+        <input type="file" id="file" name="file"></input>
+
+        {fileError && <div className="error">{fileError}</div>}
 
         <input type="submit" value="Submit" />
       </form>
