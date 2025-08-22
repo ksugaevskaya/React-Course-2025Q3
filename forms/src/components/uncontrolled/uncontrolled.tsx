@@ -31,7 +31,6 @@ export default function UncontrolledForm() {
     const values = Object.fromEntries(formData.entries());
 
     console.log(values);
-    // values.fname, values.age, values.email и т.д.
 
     if (values.fname === '') {
       setFirstNameError('First name is required');
@@ -47,20 +46,6 @@ export default function UncontrolledForm() {
       }
     }
 
-    if (values.email !== values.email.trim()) {
-      setEmailError(
-        'Email address must not contain leading or trailing whitespace'
-      );
-    }
-    if (!values.email.includes('@')) {
-      setEmailError('Email address must contain @');
-    }
-    const parts = values.email.split('@');
-    if (parts.length !== 2 || !parts[1]) {
-      setEmailError(
-        'Email address must contain a domain name (e.g., example.com)'
-      );
-    }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(values.email)) {
       setEmailError(
@@ -68,6 +53,34 @@ export default function UncontrolledForm() {
       );
     }
 
+    if (values.email !== values.email.trim()) {
+      setEmailError(
+        'Email address must not contain leading or trailing whitespace'
+      );
+    }
+    const parts = values.email.split('@');
+    if (parts.length !== 2 || !parts[1]) {
+      setEmailError(
+        'Email address must contain a domain name (e.g., example.com)'
+      );
+    }
+    if (!values.email.includes('@')) {
+      setEmailError('Email address must contain @');
+    }
+
+    if (
+      !hasAtLeastOneSymbol(
+        values.password,
+        `!"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~'`
+      )
+    ) {
+      setPasswordError(
+        `Password must contain at least one special character !"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~'`
+      );
+    }
+    if (!hasAtLeastOneSymbol(values.password, '0123456789')) {
+      setPasswordError('Password must contain at least one digit');
+    }
     if (!hasAtLeastOneSymbol(values.password, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')) {
       setPasswordError(
         'Password must contain at least one uppercase letter (A-Z).'
@@ -78,22 +91,9 @@ export default function UncontrolledForm() {
         'Password must contain at least one lowercase letter (a-z).'
       );
     }
-    if (!hasAtLeastOneSymbol(values.password, '0123456789')) {
-      setPasswordError('Password must contain at least one digit');
-    }
-    if (
-      !hasAtLeastOneSymbol(
-        values.password,
-        `!"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~'`
-      )
-    ) {
-      setPasswordError(
-        'Password must contain at least one special character !@#$%^&*'
-      );
-    }
 
     if (values.password !== values.passwordRepeat) {
-      setPasswordRepeatError('Repeat password should match password');
+      setPasswordRepeatError('Repeat password should match current password');
     }
 
     if (values.gender === undefined) {
@@ -121,34 +121,66 @@ export default function UncontrolledForm() {
           id="fname"
           name="fname"
           placeholder="Write your name"
+          data-testid="fname"
         />
 
-        {firstNameError && <div className="error"> {firstNameError}</div>}
+        {firstNameError && (
+          <div className="error" data-testid="fname-error">
+            {firstNameError}
+          </div>
+        )}
 
         <label htmlFor="age">Age:</label>
-        <input type="text" id="age" name="age" placeholder="Write your age" />
+        <input
+          type="text"
+          id="age"
+          name="age"
+          placeholder="Write your age"
+          data-testid="age"
+        />
 
-        {ageError && <div className="error"> {ageError}</div>}
+        {ageError && (
+          <div className="error" data-testid="age-error">
+            {' '}
+            {ageError}
+          </div>
+        )}
 
         <label htmlFor="email">Email:</label>
-        <input type="text" id="email" name="email" />
+        <input type="text" id="email" name="email" data-testid="email" />
 
-        {emailError && <div className="error">{emailError}</div>}
+        {emailError && (
+          <div className="error" data-testid="email-error">
+            {emailError}
+          </div>
+        )}
 
         <label htmlFor="password">Password:</label>
-        <input type="password" id="password" name="password" />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          data-testid="password"
+        />
 
-        {passwordError && <div className="error">{passwordError}</div>}
+        {passwordError && (
+          <div className="error" data-testid="password-error">
+            {passwordError}
+          </div>
+        )}
 
         <label htmlFor="passwordRepeat">Repeat password:</label>
         <input
           type="passwordRepeat"
           id="passwordRepeat"
           name="passwordRepeat"
+          data-testid="passwordRepeated"
         />
 
         {passwordRepeatError && (
-          <div className="error">{passwordRepeatError}</div>
+          <div className="error" data-testid="passwordRepeated-error">
+            {passwordRepeatError}{' '}
+          </div>
         )}
 
         <p>Gender:</p>
@@ -157,19 +189,27 @@ export default function UncontrolledForm() {
         <input type="radio" id="male" name="gender" value="male" />
         <label htmlFor="male">Male</label>
 
-        {genderError && <div className="error">{genderError}</div>}
+        {genderError && (
+          <div data-testid="gender-error" className="error">
+            {genderError}
+          </div>
+        )}
 
         <input type="checkbox" id="checkbox" name="checkbox" />
         <label htmlFor="checkbox"> Accept Terms and Conditions agreement</label>
 
-        {termsError && <div className="error">{termsError}</div>}
+        {termsError && (
+          <div data-testid="checkbox-error" className="error">
+            {termsError}
+          </div>
+        )}
 
         <label htmlFor="file"> Upload picture:</label>
         <input type="file" id="file" name="file"></input>
 
         {fileError && <div className="error">{fileError}</div>}
 
-        <input type="submit" value="Submit" />
+        <input data-testid="submit" type="submit" value="Submit" />
       </form>
     </>
   );
