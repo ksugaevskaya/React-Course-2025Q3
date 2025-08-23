@@ -1,7 +1,8 @@
-import "./App.css";
-import { useState } from "react";
-import Modal from "./components/modal/modal";
-import UncontrolledForm from "./components/uncontrolled/uncontrolled";
+import './App.css';
+import { useState } from 'react';
+import Modal from './components/modal/modal';
+import UncontrolledForm from './components/uncontrolled/uncontrolled';
+import ControlledForm from './components/controlled/controlled';
 
 function App() {
   const [controlled, setControlled] = useState(false);
@@ -29,12 +30,11 @@ function App() {
       </p>
       <button onClick={handleControlledButton}> Open Controlled Modal</button>
       <button onClick={handleUncontrolledButton}>
-        {" "}
+        {' '}
         Open Uncontrolled Modal
       </button>
       <Modal visible={controlled} onClose={handleCloseButtonControlled}>
-        {" "}
-        привет ксю
+        <ControlledForm></ControlledForm>
       </Modal>
       <Modal visible={uncontrolled} onClose={handleCloseButtonUncontrolled}>
         <UncontrolledForm></UncontrolledForm>
