@@ -75,7 +75,11 @@ exports[`uncontrolled component validation 1`] = `
           placeholder="Write your password"
           type="password"
         />
-         🔴 Weak
+        <span
+          data-testid="password-strength"
+        >
+           🔴 Weak
+        </span>
         <div
           class="error"
           data-testid="password-error"

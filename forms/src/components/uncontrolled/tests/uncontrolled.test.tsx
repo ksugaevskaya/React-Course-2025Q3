@@ -59,6 +59,9 @@ test('check password validation error', async () => {
   render(<UncontrolledForm onSubmitted={vitest.fn()}></UncontrolledForm>);
 
   const password = screen.getByTestId('password');
+  const passwordStrength = screen.getByTestId('password-strength');
+
+  expect(passwordStrength).toHaveTextContent('🔴 Weak');
 
   fireEvent.change(password, { target: { value: 'qweryu' } });
 
@@ -73,6 +76,7 @@ test('check password validation error', async () => {
     )
   );
 
+  expect(passwordStrength).toHaveTextContent('🔴 Weak');
   fireEvent.change(password, { target: { value: 'Asfdsgdfg' } });
   fireEvent.click(submit);
 
@@ -82,6 +86,8 @@ test('check password validation error', async () => {
     )
   );
 
+  expect(passwordStrength).toHaveTextContent('🟠 Medium');
+
   fireEvent.change(password, { target: { value: 'ADHF1234' } });
   fireEvent.click(submit);
 
@@ -90,6 +96,7 @@ test('check password validation error', async () => {
       'Password must contain at least one lowercase letter (a-z)'
     )
   );
+  expect(passwordStrength).toHaveTextContent('🟠 Medium');
 
   fireEvent.change(password, { target: { value: 'ADHFaa1234' } });
   fireEvent.click(submit);
@@ -99,6 +106,12 @@ test('check password validation error', async () => {
       `Password must contain at least one special character !"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~'`
     )
   );
+  expect(passwordStrength).toHaveTextContent('🟢 Strong');
+
+  fireEvent.change(password, { target: { value: 'ADHFaa1234!' } });
+  fireEvent.click(submit);
+
+  expect(passwordStrength).toHaveTextContent('🟣 Super strong');
 });
 
 test('check if password matches repeated password', async () => {

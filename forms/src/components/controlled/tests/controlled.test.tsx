@@ -93,6 +93,9 @@ test('check password validation error', async () => {
   render(<ControlledForm onSubmitted={vitest.fn()}></ControlledForm>);
 
   const password = screen.getByTestId('password');
+  const passwordStrength = screen.getByTestId('password-strength');
+
+  expect(passwordStrength).toHaveTextContent('🔴 Weak');
 
   fireEvent.change(password, { target: { value: 'qweryu' } });
 
@@ -104,6 +107,7 @@ test('check password validation error', async () => {
   expect(passwordError).toHaveTextContent(
     'Password must contain at least one uppercase letter (A-Z).'
   );
+  expect(passwordStrength).toHaveTextContent('🔴 Weak');
 
   fireEvent.change(password, { target: { value: 'Asfdsgdfg' } });
   fireEvent.click(submit);
@@ -113,6 +117,7 @@ test('check password validation error', async () => {
       'Password must contain at least one digit'
     )
   );
+  expect(passwordStrength).toHaveTextContent('🟠 Medium');
 
   fireEvent.change(password, { target: { value: 'ADHF1234' } });
   fireEvent.click(submit);
@@ -122,6 +127,7 @@ test('check password validation error', async () => {
       'Password must contain at least one lowercase letter (a-z)'
     )
   );
+  expect(passwordStrength).toHaveTextContent('🟠 Medium');
 
   fireEvent.change(password, { target: { value: 'ADHFaa1234' } });
   fireEvent.click(submit);
@@ -130,6 +136,14 @@ test('check password validation error', async () => {
     expect(passwordError).toHaveTextContent(
       `Password must contain at least one special character !"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~'`
     )
+  );
+  expect(passwordStrength).toHaveTextContent('🟢 Strong');
+
+  fireEvent.change(password, { target: { value: 'ADHFaa1234!' } });
+  fireEvent.click(submit);
+
+  await waitFor(() =>
+    expect(passwordStrength).toHaveTextContent('🟣 Super strong')
   );
 });
 

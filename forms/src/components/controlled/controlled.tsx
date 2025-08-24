@@ -101,10 +101,12 @@ export default function ControlledForm({ onSubmitted }: Props) {
             })}
             placeholder="Write your password"
           />
-          {strength === 0 && ' 🔴 Weak'}
-          {strength === 1 && ' 🟠 Medium'}
-          {strength === 2 && ' 🟢 Strong'}
-          {strength === 3 && ' 🟣 Super strong'}
+          <span data-testid="password-strength">
+            {strength <= 1 && ' 🔴 Weak'}
+            {strength === 2 && ' 🟠 Medium'}
+            {strength === 3 && ' 🟢 Strong'}
+            {strength === 4 && ' 🟣 Super strong'}
+          </span>
 
           <div className="error" data-testid="password-error">
             {errors.password?.message}
