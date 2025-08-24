@@ -1,9 +1,13 @@
 import UncontrolledForm from '../uncontrolled';
-import { beforeEach, expect, test } from 'vitest';
+import { beforeEach, expect, test, vitest } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 
 beforeEach(cleanup);
+
+vitest.mock('react-redux', () => ({
+  useDispatch: vitest.fn().mockReturnValue(vitest.fn()),
+}));
 
 test('uncontrolled component validation', () => {
   render(<UncontrolledForm></UncontrolledForm>);
