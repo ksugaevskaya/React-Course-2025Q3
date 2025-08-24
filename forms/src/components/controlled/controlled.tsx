@@ -1,6 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from '../../validation /form-validation';
+import { useDispatch } from 'react-redux';
+import { updateControlledForm } from '../../redux/slices/form';
 
 export default function ControlledForm() {
   const {
@@ -10,8 +12,9 @@ export default function ControlledForm() {
   } = useForm({
     resolver: yupResolver(schema),
   });
+  const dispatch = useDispatch();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => dispatch(updateControlledForm(data));
 
   return (
     <>

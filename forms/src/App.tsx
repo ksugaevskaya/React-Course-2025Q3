@@ -3,8 +3,11 @@ import { useState } from 'react';
 import Modal from './components/modal/modal';
 import UncontrolledForm from './components/uncontrolled/uncontrolled';
 import ControlledForm from './components/controlled/controlled';
+import { useSelector } from 'react-redux';
+import type { RootState } from './redux/store';
 
 function App() {
+  const form = useSelector((state: RootState) => state.form);
   const [controlled, setControlled] = useState(false);
   const [uncontrolled, setUncontrolled] = useState(false);
 
@@ -25,9 +28,6 @@ function App() {
   };
   return (
     <>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
       <button onClick={handleControlledButton}> Open Controlled Modal</button>
       <button onClick={handleUncontrolledButton}>
         {' '}
@@ -39,6 +39,14 @@ function App() {
       <Modal visible={uncontrolled} onClose={handleCloseButtonUncontrolled}>
         <UncontrolledForm></UncontrolledForm>
       </Modal>
+      <div>
+        <p>Controlled:</p>
+        <p>{JSON.stringify(form.controlled, null, 2)}</p>
+      </div>
+      <div>
+        <p>Uncontrolled:</p>
+        <p>{JSON.stringify(form.uncontrolled, null, 2)}</p>
+      </div>
     </>
   );
 }

@@ -1,5 +1,10 @@
 import { useState } from 'react';
 import './uncontrolled.css';
+import { useDispatch } from 'react-redux';
+import {
+  updateControlledForm,
+  updateUncontrolledForm,
+} from '../../redux/slices/form';
 
 export const hasAtLeastOneSymbol = (
   string: string,
@@ -15,6 +20,8 @@ export const hasAtLeastOneSymbol = (
 };
 
 export default function UncontrolledForm() {
+  const dispatch = useDispatch();
+
   const [firstNameError, setFirstNameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [ageError, setAgeError] = useState('');
@@ -111,6 +118,8 @@ export default function UncontrolledForm() {
     if (values.file.size > 1_000_000) {
       setFileError('File size should be less than 1MB');
     }
+
+    dispatch(updateUncontrolledForm(values));
   }
   return (
     <>

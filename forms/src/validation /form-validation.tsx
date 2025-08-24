@@ -57,15 +57,15 @@ export const schema = yup
       .test(
         'fileSize',
         'File too large, must be less than 1MB',
-        (value) => !value || (value && value[0].size <= 1_000_000)
+        (value) => !value || (value && value[0]?.size <= 1_000_000)
       )
       .test(
         'fileFormat',
         'Unsupported Format, only JPEG or PNG',
         (value) =>
           !value ||
-          (value && value[0].type === 'image/jpeg') ||
-          value[0].type === 'image/png'
+          (value && value[0]?.type === 'image/jpeg') ||
+          value[0]?.type === 'image/png'
       ),
   })
   .required();
