@@ -148,8 +148,10 @@ test('check if password matches repeated password', async () => {
   const passwordRepeatedError = await screen.findByTestId(
     'passwordRepeated-error'
   );
-  expect(passwordRepeatedError).toHaveTextContent(
-    'Repeat password should match current password'
+  await waitFor(() =>
+    expect(passwordRepeatedError).toHaveTextContent(
+      'Repeat password should match current password'
+    )
   );
 });
 

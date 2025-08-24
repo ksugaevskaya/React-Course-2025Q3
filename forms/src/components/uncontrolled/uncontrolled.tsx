@@ -5,6 +5,7 @@ import { updateUncontrolledForm } from '../../redux/slices/form';
 import { fileToBase64 } from '../../helpers/base64';
 import { schema } from '../../validation/form-validation';
 import * as yup from 'yup';
+import usePasswordStrength from '../../hooks/use-password-strength';
 
 type Errors = Record<string, string>;
 
@@ -15,6 +16,7 @@ type Props = {
 export default function UncontrolledForm({ onSubmitted }: Props) {
   const dispatch = useDispatch();
   const [errors, setErrors] = useState<Errors>({});
+  const [strength, handlePasswordChange] = usePasswordStrength();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -111,7 +113,12 @@ export default function UncontrolledForm({ onSubmitted }: Props) {
             name="password"
             data-testid="password"
             placeholder="Write your password"
+            onChange={handlePasswordChange}
           />
+          {strength === 0 && ' 🔴 Weak'}
+          {strength === 1 && ' 🟠 Medium'}
+          {strength === 2 && ' 🟢 Strong'}
+          {strength === 3 && ' 🟣 Super strong'}
 
           <div className="error" data-testid="password-error">
             {errors.password}

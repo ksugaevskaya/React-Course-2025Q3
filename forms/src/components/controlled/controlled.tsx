@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { updateControlledForm } from '../../redux/slices/form';
 import './controlled.css';
 import { fileToBase64 } from '../../helpers/base64';
+import usePasswordStrength from '../../hooks/use-password-strength';
 
 type FormValues = {
   checkbox?: string;
@@ -22,6 +23,8 @@ type Props = {
 };
 
 export default function ControlledForm({ onSubmitted }: Props) {
+  const [strength, handlePasswordChange] = usePasswordStrength();
+
   const {
     register,
     handleSubmit,
@@ -93,9 +96,15 @@ export default function ControlledForm({ onSubmitted }: Props) {
             type="password"
             id="password"
             data-testid="password"
-            {...register('password')}
+            {...register('password', {
+              onChange: (e) => handlePasswordChange(e),
+            })}
             placeholder="Write your password"
           />
+          {strength === 0 && ' 🔴 Weak'}
+          {strength === 1 && ' 🟠 Medium'}
+          {strength === 2 && ' 🟢 Strong'}
+          {strength === 3 && ' 🟣 Super strong'}
 
           <div className="error" data-testid="password-error">
             {errors.password?.message}
