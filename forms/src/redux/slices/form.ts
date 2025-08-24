@@ -9,7 +9,7 @@ interface Form {
   passwordRepeat: string;
   gender: string;
   checkbox: string;
-  file: unknown;
+  file: string;
 }
 
 export interface FormState {
