@@ -3,13 +3,19 @@ import cross from '../../assets/cross.svg';
 import { createPortal } from 'react-dom';
 import { useEffect } from 'react';
 
-export default function Modal({ visible, children, onClose }) {
-  const onStop = (e) => {
+type ModalProps = {
+  visible: boolean;
+  children: React.ReactNode;
+  onClose: () => void;
+};
+
+export default function Modal({ visible, children, onClose }: ModalProps) {
+  const onStop = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
   };
 
   useEffect(() => {
-    const onKeyDown = (e) => {
+    const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         onClose();
       }

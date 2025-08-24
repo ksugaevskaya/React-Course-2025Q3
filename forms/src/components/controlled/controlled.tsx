@@ -1,10 +1,21 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { schema } from '../../validation /form-validation';
+import { schema } from '../../validation/form-validation';
 import { useDispatch } from 'react-redux';
 import { updateControlledForm } from '../../redux/slices/form';
 import './controlled.css';
 import { fileToBase64 } from '../../helpers/base64';
+
+type FormValues = {
+  checkbox?: string;
+  fname: string;
+  age: number;
+  email: string;
+  password: string;
+  passwordRepeat: string;
+  gender: string;
+  file: FileList;
+};
 
 export default function ControlledForm() {
   const {
@@ -17,8 +28,7 @@ export default function ControlledForm() {
   });
   const dispatch = useDispatch();
 
-  const onSubmit = async (data) => {
-    console.log(data);
+  const onSubmit = async (data: FormValues) => {
     dispatch(
       updateControlledForm({ ...data, file: await fileToBase64(data.file[0]) })
     );

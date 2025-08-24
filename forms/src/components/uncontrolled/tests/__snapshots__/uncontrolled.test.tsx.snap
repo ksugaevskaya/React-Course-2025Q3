@@ -95,9 +95,7 @@ exports[`uncontrolled component validation 1`] = `
       <div
         class="error"
         data-testid="passwordRepeated-error"
-      >
-         
-      </div>
+      />
     </div>
     <div>
       <span>

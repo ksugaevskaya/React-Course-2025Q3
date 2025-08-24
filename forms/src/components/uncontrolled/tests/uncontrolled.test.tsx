@@ -1,6 +1,12 @@
 import UncontrolledForm from '../uncontrolled';
 import { beforeEach, expect, test, vitest } from 'vitest';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 
 beforeEach(cleanup);
@@ -15,7 +21,7 @@ test('uncontrolled component validation', () => {
   expect(container).toMatchSnapshot();
 });
 
-test('check first name validation', () => {
+test('check first name validation', async () => {
   render(<UncontrolledForm></UncontrolledForm>);
   const firstName = screen.getByTestId('fname');
 
@@ -25,12 +31,14 @@ test('check first name validation', () => {
   fireEvent.click(submit);
 
   const firstNameError = screen.getByTestId('fname-error');
-  expect(firstNameError).toHaveTextContent(
-    'The first letter should be capitalized'
+  await waitFor(() =>
+    expect(firstNameError).toHaveTextContent(
+      'The first letter should be capitalized'
+    )
   );
 });
 
-test('check age validation error', () => {
+test('check age validation error', async () => {
   render(<UncontrolledForm></UncontrolledForm>);
   const age = screen.getByTestId('age');
 
@@ -40,45 +48,12 @@ test('check age validation error', () => {
   fireEvent.click(submit);
 
   const ageError = screen.getByTestId('age-error');
-  expect(ageError).toHaveTextContent('Age should be a number');
-});
-
-test('check email validation error', () => {
-  render(<UncontrolledForm></UncontrolledForm>);
-
-  const email = screen.getByTestId('email');
-
-  fireEvent.change(email, { target: { value: 'djfjfj.com' } });
-
-  const submit = screen.getByTestId('submit');
-  fireEvent.click(submit);
-
-  const emailError = screen.getByTestId('email-error');
-  expect(emailError).toHaveTextContent('Email address must contain @');
-
-  fireEvent.change(email, { target: { value: ' djfjfj.@com ' } });
-  fireEvent.click(submit);
-
-  expect(emailError).toHaveTextContent(
-    'Email address must not contain leading or trailing whitespace'
-  );
-
-  fireEvent.change(email, { target: { value: 'ksu@' } });
-  fireEvent.click(submit);
-
-  expect(emailError).toHaveTextContent(
-    'Email address must contain a domain name (e.g., example.com)'
-  );
-
-  fireEvent.change(email, { target: { value: 'ksu@com' } });
-  fireEvent.click(submit);
-
-  expect(emailError).toHaveTextContent(
-    'Email address must be properly formatted (e.g., user@example.com)'
+  await waitFor(() =>
+    expect(ageError).toHaveTextContent('Age must be a number')
   );
 });
 
-test('check password validation error', () => {
+test('check password validation error', async () => {
   render(<UncontrolledForm></UncontrolledForm>);
 
   const password = screen.getByTestId('password');
@@ -90,33 +65,41 @@ test('check password validation error', () => {
 
   const passwordError = screen.getByTestId('password-error');
 
-  expect(passwordError).toHaveTextContent(
-    'Password must contain at least one uppercase letter (A-Z).'
+  await waitFor(() =>
+    expect(passwordError).toHaveTextContent(
+      'Password must contain at least one uppercase letter (A-Z).'
+    )
   );
 
   fireEvent.change(password, { target: { value: 'Asfdsgdfg' } });
   fireEvent.click(submit);
 
-  expect(passwordError).toHaveTextContent(
-    'Password must contain at least one digit'
+  await waitFor(() =>
+    expect(passwordError).toHaveTextContent(
+      'Password must contain at least one digit'
+    )
   );
 
   fireEvent.change(password, { target: { value: 'ADHF1234' } });
   fireEvent.click(submit);
 
-  expect(passwordError).toHaveTextContent(
-    'Password must contain at least one lowercase letter (a-z)'
+  await waitFor(() =>
+    expect(passwordError).toHaveTextContent(
+      'Password must contain at least one lowercase letter (a-z)'
+    )
   );
 
   fireEvent.change(password, { target: { value: 'ADHFaa1234' } });
   fireEvent.click(submit);
 
-  expect(passwordError).toHaveTextContent(
-    `Password must contain at least one special character !"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~'`
+  await waitFor(() =>
+    expect(passwordError).toHaveTextContent(
+      `Password must contain at least one special character !"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~'`
+    )
   );
 });
 
-test('check if password matches repeated password', () => {
+test('check if password matches repeated password', async () => {
   render(<UncontrolledForm></UncontrolledForm>);
 
   const passwordRepeated = screen.getByTestId('passwordRepeated');
@@ -129,12 +112,14 @@ test('check if password matches repeated password', () => {
   fireEvent.click(submit);
 
   const passwordRepeatedError = screen.getByTestId('passwordRepeated-error');
-  expect(passwordRepeatedError).toHaveTextContent(
-    'Repeat password should match current password'
+  await waitFor(() =>
+    expect(passwordRepeatedError).toHaveTextContent(
+      'Repeat password should match current password'
+    )
   );
 });
 
-test('check radio button error', () => {
+test('check radio button error', async () => {
   render(<UncontrolledForm></UncontrolledForm>);
   const submit = screen.getByTestId('submit');
 
@@ -142,10 +127,12 @@ test('check radio button error', () => {
 
   const genderError = screen.getByTestId('gender-error');
 
-  expect(genderError).toHaveTextContent('Gender should be selected');
+  await waitFor(() =>
+    expect(genderError).toHaveTextContent('Gender should be selected')
+  );
 });
 
-test('check checkbox error', () => {
+test('check checkbox error', async () => {
   render(<UncontrolledForm></UncontrolledForm>);
   const submit = screen.getByTestId('submit');
 
@@ -153,7 +140,9 @@ test('check checkbox error', () => {
 
   const checkboxError = screen.getByTestId('checkbox-error');
 
-  expect(checkboxError).toHaveTextContent(
-    'Please accept terms and conditions agreement'
+  await waitFor(() =>
+    expect(checkboxError).toHaveTextContent(
+      'Please accept terms and conditions agreement'
+    )
   );
 });

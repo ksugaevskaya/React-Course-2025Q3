@@ -1,140 +1,55 @@
 import { useState } from 'react';
 import './uncontrolled.css';
 import { useDispatch } from 'react-redux';
-import {
-  updateControlledForm,
-  updateUncontrolledForm,
-} from '../../redux/slices/form';
+import { updateUncontrolledForm } from '../../redux/slices/form';
 import { fileToBase64 } from '../../helpers/base64';
+import { schema } from '../../validation/form-validation';
+import * as yup from 'yup';
 
-export const hasAtLeastOneSymbol = (
-  string: string,
-  symbols: string
-): boolean => {
-  for (let i = 0; i < symbols.length; i++) {
-    if (string.includes(symbols[i])) {
-      return true;
-    }
-  }
-
-  return false;
-};
+type Errors = Record<string, string>;
 
 export default function UncontrolledForm() {
   const dispatch = useDispatch();
-
-  const [firstNameError, setFirstNameError] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [ageError, setAgeError] = useState('');
-  const [genderError, setGenderError] = useState('');
-  const [termsError, setTermsError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [passwordRepeatError, setPasswordRepeatError] = useState('');
-  const [fileError, setFileError] = useState('');
+  const [errors, setErrors] = useState<Errors>({});
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    setFirstNameError('');
-    setEmailError('');
-    setAgeError('');
-    setGenderError('');
-    setTermsError('');
-    setPasswordError('');
-    setPasswordRepeatError('');
-    setFileError('');
     e.preventDefault();
+    setErrors({});
 
-    const formData = new FormData(e.currentTarget);
-    const values = Object.fromEntries(formData.entries());
+    const fd = new FormData(e.currentTarget);
 
-    console.log(values);
+    const values = {
+      fname: fd.get('fname'),
+      age: fd.get('age'),
+      email: fd.get('email'),
+      password: fd.get('password'),
+      passwordRepeat: fd.get('passwordRepeat'),
+      gender: fd.get('gender'),
+      checkbox: fd.get('checkbox'),
+      file: fd.get('file'),
+    };
 
-    if (values.fname === '') {
-      setFirstNameError('First name is required');
-    }
+    try {
+      const validated = await schema.validate(values, { abortEarly: false });
+      const fileBase64 = await fileToBase64(validated.file[0]);
 
-    if (values.fname[0] !== values.fname[0]?.toUpperCase?.()) {
-      setFirstNameError('The first letter should be capitalized');
-    }
-
-    for (let i = 0; i < values.age.length; i++) {
-      if (!'0123456789'.includes(values.age[i])) {
-        setAgeError('Age should be a number');
+      dispatch(
+        updateUncontrolledForm({
+          ...validated,
+          file: fileBase64,
+        })
+      );
+    } catch (err) {
+      if (err instanceof yup.ValidationError) {
+        const next: Errors = {};
+        for (const issue of err.inner) {
+          if (issue.path && !next[issue.path]) next[issue.path] = issue.message;
+        }
+        setErrors(next);
       }
     }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(values.email)) {
-      setEmailError(
-        'Email address must be properly formatted (e.g., user@example.com)'
-      );
-    }
-
-    if (values.email !== values.email.trim()) {
-      setEmailError(
-        'Email address must not contain leading or trailing whitespace'
-      );
-    }
-    const parts = values.email.split('@');
-    if (parts.length !== 2 || !parts[1]) {
-      setEmailError(
-        'Email address must contain a domain name (e.g., example.com)'
-      );
-    }
-    if (!values.email.includes('@')) {
-      setEmailError('Email address must contain @');
-    }
-
-    if (
-      !hasAtLeastOneSymbol(
-        values.password,
-        `!"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~'`
-      )
-    ) {
-      setPasswordError(
-        `Password must contain at least one special character !"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~'`
-      );
-    }
-    if (!hasAtLeastOneSymbol(values.password, '0123456789')) {
-      setPasswordError('Password must contain at least one digit');
-    }
-    if (!hasAtLeastOneSymbol(values.password, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')) {
-      setPasswordError(
-        'Password must contain at least one uppercase letter (A-Z).'
-      );
-    }
-    if (!hasAtLeastOneSymbol(values.password, 'abcdefghijklmnopqrstuvwxyz')) {
-      setPasswordError(
-        'Password must contain at least one lowercase letter (a-z).'
-      );
-    }
-
-    if (values.password !== values.passwordRepeat) {
-      setPasswordRepeatError('Repeat password should match current password');
-    }
-
-    if (values.gender === undefined) {
-      setGenderError('Gender should be selected');
-    }
-
-    if (values.checkbox === undefined) {
-      setTermsError('Please accept terms and conditions agreement');
-    }
-
-    if (values.file.type !== 'image/png' && values.file.type !== 'image/jpeg') {
-      setFileError('File extension should be png or jpeg only');
-    }
-
-    if (values.file.size > 1_000_000) {
-      setFileError('File size should be less than 1MB');
-    }
-
-    dispatch(
-      updateUncontrolledForm({
-        ...values,
-        file: await fileToBase64(values.file),
-      })
-    );
   }
+
   return (
     <>
       <form className="uncontrolled-container" onSubmit={handleSubmit}>
@@ -149,7 +64,7 @@ export default function UncontrolledForm() {
           />
 
           <div className="error" data-testid="fname-error">
-            {firstNameError}
+            {errors.fname}
           </div>
         </div>
         <div>
@@ -164,7 +79,7 @@ export default function UncontrolledForm() {
 
           <div className="error" data-testid="age-error">
             {' '}
-            {ageError}
+            {errors.age}
           </div>
         </div>
 
@@ -179,7 +94,7 @@ export default function UncontrolledForm() {
           />
 
           <div className="error" data-testid="email-error">
-            {emailError}
+            {errors.emailError}
           </div>
         </div>
 
@@ -194,7 +109,7 @@ export default function UncontrolledForm() {
           />
 
           <div className="error" data-testid="password-error">
-            {passwordError}
+            {errors.password}
           </div>
         </div>
 
@@ -209,7 +124,7 @@ export default function UncontrolledForm() {
           />
 
           <div className="error" data-testid="passwordRepeated-error">
-            {passwordRepeatError}{' '}
+            {errors.passwordRepeat}
           </div>
         </div>
         <div>
@@ -220,7 +135,7 @@ export default function UncontrolledForm() {
           <label htmlFor="male">Male</label>
 
           <div data-testid="gender-error" className="error">
-            {genderError}
+            {errors.gender}
           </div>
         </div>
 
@@ -228,7 +143,7 @@ export default function UncontrolledForm() {
           <label htmlFor="file"> Upload picture: </label>
           <input type="file" id="file" name="file"></input>
 
-          <div className="error">{fileError}</div>
+          <div className="error">{errors.file}</div>
         </div>
         <div>
           <input type="checkbox" id="checkbox" name="checkbox" />
@@ -238,7 +153,7 @@ export default function UncontrolledForm() {
           </label>
 
           <div data-testid="checkbox-error" className="error">
-            {termsError}
+            {errors.checkbox}
           </div>
         </div>
         <div>

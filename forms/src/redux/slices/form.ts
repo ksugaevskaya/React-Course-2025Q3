@@ -3,12 +3,12 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 interface Form {
   fname: string;
-  age: string;
+  age: number;
   email: string;
   password: string;
   passwordRepeat: string;
   gender: string;
-  checkbox: string;
+  checkbox?: string;
   file: string;
 }
 

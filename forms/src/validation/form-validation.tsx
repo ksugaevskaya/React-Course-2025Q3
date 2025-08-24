@@ -7,9 +7,13 @@ export const schema = yup
       .test(
         'firstLetterCapitalized',
         'The first letter should be capitalized',
-        (value) =>
-          value?.[0] === value?.[0]?.toUpperCase?.() &&
-          !'0123456789'.includes(value[0])
+        (value) => {
+          if (!value) {
+            return false;
+          }
+          const first = value[0];
+          return first === first.toUpperCase() && !'0123456789'.includes(first);
+        }
       )
       .required('First name must not be empty!'),
     age: yup
@@ -50,9 +54,10 @@ export const schema = yup
     gender: yup.string().required('Gender should be selected'),
     checkbox: yup
       .string()
-      .oneOf(['true'], 'Please accept terms and conditions agreement'),
+      .oneOf(['true'], 'Please accept terms and conditions agreement')
+      .required('Please accept terms and conditions agreement'),
     file: yup
-      .mixed()
+      .mixed<FileList>()
       .required('A file is required')
       .test(
         'fileSize',
