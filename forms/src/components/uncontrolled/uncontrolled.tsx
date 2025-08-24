@@ -31,7 +31,7 @@ export default function UncontrolledForm({ onSubmitted }: Props) {
       password: fd.get('password'),
       passwordRepeat: fd.get('passwordRepeat'),
       gender: fd.get('gender'),
-      checkbox: fd.get('checkbox'),
+      checkbox: fd.get('checkbox') === 'on',
       file: fd.get('file'),
     };
 
