@@ -180,7 +180,7 @@ export default function UncontrolledForm() {
 
         <label htmlFor="passwordRepeat">Repeat password:</label>
         <input
-          type="passwordRepeat"
+          type="password"
           id="passwordRepeat"
           name="passwordRepeat"
           data-testid="passwordRepeated"

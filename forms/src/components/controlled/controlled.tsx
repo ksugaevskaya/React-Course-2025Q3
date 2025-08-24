@@ -8,9 +8,10 @@ export default function ControlledForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(schema),
+    mode: 'onChange',
   });
   const dispatch = useDispatch();
 
@@ -80,7 +81,7 @@ export default function ControlledForm() {
 
         <label htmlFor="passwordRepeat">Repeat password:</label>
         <input
-          type="passwordRepeat"
+          type="password"
           id="passwordRepeat"
           data-testid="passwordRepeated"
           {...register('passwordRepeat')}
@@ -125,7 +126,12 @@ export default function ControlledForm() {
           <div className="error">{errors.file?.message}</div>
         )}
 
-        <input data-testid="submit" type="submit" value="Submit" />
+        <input
+          data-testid="submit"
+          type="submit"
+          value="Submit"
+          disabled={!isValid}
+        />
       </form>
     </>
   );
