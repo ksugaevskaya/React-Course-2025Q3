@@ -86,6 +86,7 @@ exports[`uncontrolled component validation 1`] = `
       Male
     </label>
     <input
+      data-testid="check-box"
       id="checkbox"
       name="checkbox"
       type="checkbox"
@@ -107,6 +108,7 @@ exports[`uncontrolled component validation 1`] = `
     />
     <input
       data-testid="submit"
+      disabled=""
       type="submit"
       value="Submit"
     />

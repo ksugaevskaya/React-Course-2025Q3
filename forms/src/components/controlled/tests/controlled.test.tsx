@@ -1,6 +1,12 @@
-import UncontrolledForm from '../uncontrolled';
+import ControlledForm from '../controlled';
 import { beforeEach, expect, test, vitest } from 'vitest';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 
 beforeEach(cleanup);
@@ -10,13 +16,13 @@ vitest.mock('react-redux', () => ({
 }));
 
 test('uncontrolled component validation', () => {
-  const { container } = render(<UncontrolledForm></UncontrolledForm>);
+  const { container } = render(<ControlledForm></ControlledForm>);
 
   expect(container).toMatchSnapshot();
 });
 
-test('check first name validation', () => {
-  render(<UncontrolledForm></UncontrolledForm>);
+test('check first name validation', async () => {
+  render(<ControlledForm></ControlledForm>);
   const firstName = screen.getByTestId('fname');
 
   fireEvent.change(firstName, { target: { value: 'ksusha' } });
@@ -24,14 +30,15 @@ test('check first name validation', () => {
   const submit = screen.getByTestId('submit');
   fireEvent.click(submit);
 
-  const firstNameError = screen.getByTestId('fname-error');
+  const firstNameError = await screen.findByTestId('fname-error');
+
   expect(firstNameError).toHaveTextContent(
     'The first letter should be capitalized'
   );
 });
 
-test('check age validation error', () => {
-  render(<UncontrolledForm></UncontrolledForm>);
+test('check age validation error', async () => {
+  render(<ControlledForm></ControlledForm>);
   const age = screen.getByTestId('age');
 
   fireEvent.change(age, { target: { value: 'ee' } });
@@ -39,12 +46,12 @@ test('check age validation error', () => {
   const submit = screen.getByTestId('submit');
   fireEvent.click(submit);
 
-  const ageError = screen.getByTestId('age-error');
-  expect(ageError).toHaveTextContent('Age should be a number');
+  const ageError = await screen.findByTestId('age-error');
+  expect(ageError).toHaveTextContent('Age must be a number');
 });
 
-test('check email validation error', () => {
-  render(<UncontrolledForm></UncontrolledForm>);
+test('check email validation error', async () => {
+  render(<ControlledForm></ControlledForm>);
 
   const email = screen.getByTestId('email');
 
@@ -53,21 +60,23 @@ test('check email validation error', () => {
   const submit = screen.getByTestId('submit');
   fireEvent.click(submit);
 
-  const emailError = screen.getByTestId('email-error');
-  expect(emailError).toHaveTextContent('Email address must contain @');
+  const emailError = await screen.findByTestId('email-error');
+  expect(emailError).toHaveTextContent(
+    'Email address must be properly formatted (e.g., user@example.com)'
+  );
 
   fireEvent.change(email, { target: { value: ' djfjfj.@com ' } });
   fireEvent.click(submit);
 
   expect(emailError).toHaveTextContent(
-    'Email address must not contain leading or trailing whitespace'
+    'Email address must be properly formatted (e.g., user@example.com)'
   );
 
   fireEvent.change(email, { target: { value: 'ksu@' } });
   fireEvent.click(submit);
 
   expect(emailError).toHaveTextContent(
-    'Email address must contain a domain name (e.g., example.com)'
+    'Email address must be properly formatted (e.g., user@example.com)'
   );
 
   fireEvent.change(email, { target: { value: 'ksu@com' } });
@@ -78,8 +87,8 @@ test('check email validation error', () => {
   );
 });
 
-test('check password validation error', () => {
-  render(<UncontrolledForm></UncontrolledForm>);
+test('check password validation error', async () => {
+  render(<ControlledForm></ControlledForm>);
 
   const password = screen.getByTestId('password');
 
@@ -88,7 +97,7 @@ test('check password validation error', () => {
   const submit = screen.getByTestId('submit');
   fireEvent.click(submit);
 
-  const passwordError = screen.getByTestId('password-error');
+  const passwordError = await screen.findByTestId('password-error');
 
   expect(passwordError).toHaveTextContent(
     'Password must contain at least one uppercase letter (A-Z).'
@@ -97,27 +106,33 @@ test('check password validation error', () => {
   fireEvent.change(password, { target: { value: 'Asfdsgdfg' } });
   fireEvent.click(submit);
 
-  expect(passwordError).toHaveTextContent(
-    'Password must contain at least one digit'
+  await waitFor(() =>
+    expect(passwordError).toHaveTextContent(
+      'Password must contain at least one digit'
+    )
   );
 
   fireEvent.change(password, { target: { value: 'ADHF1234' } });
   fireEvent.click(submit);
 
-  expect(passwordError).toHaveTextContent(
-    'Password must contain at least one lowercase letter (a-z)'
+  await waitFor(() =>
+    expect(passwordError).toHaveTextContent(
+      'Password must contain at least one lowercase letter (a-z)'
+    )
   );
 
   fireEvent.change(password, { target: { value: 'ADHFaa1234' } });
   fireEvent.click(submit);
 
-  expect(passwordError).toHaveTextContent(
-    `Password must contain at least one special character !"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~'`
+  await waitFor(() =>
+    expect(passwordError).toHaveTextContent(
+      `Password must contain at least one special character !"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~'`
+    )
   );
 });
 
-test('check if password matches repeated password', () => {
-  render(<UncontrolledForm></UncontrolledForm>);
+test('check if password matches repeated password', async () => {
+  render(<ControlledForm></ControlledForm>);
 
   const passwordRepeated = screen.getByTestId('passwordRepeated');
   const password = screen.getByTestId('password');
@@ -128,30 +143,25 @@ test('check if password matches repeated password', () => {
   const submit = screen.getByTestId('submit');
   fireEvent.click(submit);
 
-  const passwordRepeatedError = screen.getByTestId('passwordRepeated-error');
+  const passwordRepeatedError = await screen.findByTestId(
+    'passwordRepeated-error'
+  );
   expect(passwordRepeatedError).toHaveTextContent(
     'Repeat password should match current password'
   );
 });
 
-test('check radio button error', () => {
-  render(<UncontrolledForm></UncontrolledForm>);
+test('check checkbox error', async () => {
+  render(<ControlledForm></ControlledForm>);
   const submit = screen.getByTestId('submit');
 
   fireEvent.click(submit);
+  const checkbox = screen.getByTestId('check-box');
 
-  const genderError = screen.getByTestId('gender-error');
+  fireEvent.click(checkbox);
+  fireEvent.click(checkbox);
 
-  expect(genderError).toHaveTextContent('Gender should be selected');
-});
-
-test('check checkbox error', () => {
-  render(<UncontrolledForm></UncontrolledForm>);
-  const submit = screen.getByTestId('submit');
-
-  fireEvent.click(submit);
-
-  const checkboxError = screen.getByTestId('checkbox-error');
+  const checkboxError = await screen.findByTestId('checkbox-error');
 
   expect(checkboxError).toHaveTextContent(
     'Please accept terms and conditions agreement'

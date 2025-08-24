@@ -110,7 +110,12 @@ export default function ControlledForm() {
           </div>
         )}
 
-        <input type="checkbox" id="checkbox" {...register('checkbox')} />
+        <input
+          type="checkbox"
+          id="checkbox"
+          data-testid="check-box"
+          {...register('checkbox')}
+        />
         <label htmlFor="checkbox"> Accept Terms and Conditions agreement</label>
 
         {errors.checkbox?.message && (
