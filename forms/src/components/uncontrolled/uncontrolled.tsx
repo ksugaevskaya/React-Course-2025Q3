@@ -101,7 +101,7 @@ export default function UncontrolledForm({ onSubmitted }: Props) {
           />
 
           <div className="error" data-testid="email-error">
-            {errors.emailError}
+            {errors.email}
           </div>
         </div>
 

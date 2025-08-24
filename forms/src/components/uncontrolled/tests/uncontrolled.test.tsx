@@ -55,6 +55,47 @@ test('check age validation error', async () => {
   );
 });
 
+test('check email validation error', async () => {
+  render(<UncontrolledForm onSubmitted={vitest.fn()}></UncontrolledForm>);
+
+  const email = screen.getByTestId('email');
+
+  fireEvent.change(email, { target: { value: 'djfjfj.com' } });
+
+  const submit = screen.getByTestId('submit');
+  fireEvent.click(submit);
+
+  const emailError = screen.getByTestId('email-error');
+  await waitFor(() =>
+    expect(emailError).toHaveTextContent(
+      'Email address must be properly formatted (e.g., user@example.com)'
+    )
+  );
+
+  fireEvent.change(email, { target: { value: ' djfjfj.@com ' } });
+  fireEvent.click(submit);
+
+  await waitFor(() =>
+    expect(emailError).toHaveTextContent(
+      'Email address must be properly formatted (e.g., user@example.com)'
+    )
+  );
+
+  fireEvent.change(email, { target: { value: 'ksu@' } });
+  fireEvent.click(submit);
+
+  await waitFor(() =>
+    expect(emailError).toHaveTextContent(
+      'Email address must be properly formatted (e.g., user@example.com)'
+    )
+  );
+
+  fireEvent.change(email, { target: { value: 'ksu@com' } });
+  fireEvent.click(submit);
+
+  await waitFor(() => expect(emailError).toHaveTextContent(''));
+});
+
 test('check password validation error', async () => {
   render(<UncontrolledForm onSubmitted={vitest.fn()}></UncontrolledForm>);
 
