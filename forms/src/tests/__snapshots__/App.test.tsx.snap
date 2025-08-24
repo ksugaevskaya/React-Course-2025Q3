@@ -1,0 +1,141 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`App renders 1`] = `
+<div>
+  <div
+    class="button-container"
+  >
+    <button>
+       Open Controlled Modal
+    </button>
+    <button>
+       
+      Open Uncontrolled Modal
+    </button>
+  </div>
+  <div>
+    <p>
+      Controlled:
+    </p>
+    <div
+      class="data-container"
+    >
+      <div
+        class="text-container"
+      >
+        <div>
+           
+          <b>
+            NAME :
+          </b>
+           
+        </div>
+        <div>
+          <b>
+            AGE 
+          </b>
+           
+        </div>
+        <div>
+          <b>
+            EMAIL: 
+          </b>
+        </div>
+        <div>
+          <b>
+            PASSWORD:
+          </b>
+           
+        </div>
+        <div>
+           
+          <b>
+            REPEAT PASSWORD: 
+          </b>
+        </div>
+        <div>
+           
+          <b>
+            GENDER: 
+          </b>
+        </div>
+        <div>
+           
+          <b>
+            T&C: 
+          </b>
+        </div>
+         
+      </div>
+      <div>
+        <img
+          alt="Base64 image"
+          style="width: 200px; height: 200px;"
+        />
+      </div>
+    </div>
+  </div>
+  <div>
+    <p>
+      Uncontrolled:
+    </p>
+    <div
+      class="data-container"
+    >
+      <div
+        class="text-container"
+      >
+        <div>
+           
+          <b>
+            NAME :
+          </b>
+           
+        </div>
+        <div>
+          <b>
+            AGE 
+          </b>
+           
+        </div>
+        <div>
+          <b>
+            EMAIL: 
+          </b>
+        </div>
+        <div>
+          <b>
+            PASSWORD:
+          </b>
+           
+        </div>
+        <div>
+           
+          <b>
+            REPEAT PASSWORD: 
+          </b>
+        </div>
+        <div>
+           
+          <b>
+            GENDER: 
+          </b>
+        </div>
+        <div>
+           
+          <b>
+            T&C: 
+          </b>
+        </div>
+         
+      </div>
+      <div>
+        <img
+          alt="Base64 image"
+          style="width: 200px; height: 200px;"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

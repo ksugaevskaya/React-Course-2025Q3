@@ -8,7 +8,11 @@ import * as yup from 'yup';
 
 type Errors = Record<string, string>;
 
-export default function UncontrolledForm() {
+type Props = {
+  onSubmitted: () => void;
+};
+
+export default function UncontrolledForm({ onSubmitted }: Props) {
   const dispatch = useDispatch();
   const [errors, setErrors] = useState<Errors>({});
 
@@ -39,6 +43,7 @@ export default function UncontrolledForm() {
           file: fileBase64,
         })
       );
+      onSubmitted();
     } catch (err) {
       if (err instanceof yup.ValidationError) {
         const next: Errors = {};

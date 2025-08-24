@@ -16,13 +16,15 @@ vitest.mock('react-redux', () => ({
 }));
 
 test('uncontrolled component validation', () => {
-  const { container } = render(<ControlledForm></ControlledForm>);
+  const { container } = render(
+    <ControlledForm onSubmitted={vitest.fn()}></ControlledForm>
+  );
 
   expect(container).toMatchSnapshot();
 });
 
 test('check first name validation', async () => {
-  render(<ControlledForm></ControlledForm>);
+  render(<ControlledForm onSubmitted={vitest.fn()}></ControlledForm>);
   const firstName = screen.getByTestId('fname');
 
   fireEvent.change(firstName, { target: { value: 'ksusha' } });
@@ -38,7 +40,7 @@ test('check first name validation', async () => {
 });
 
 test('check age validation error', async () => {
-  render(<ControlledForm></ControlledForm>);
+  render(<ControlledForm onSubmitted={vitest.fn()}></ControlledForm>);
   const age = screen.getByTestId('age');
 
   fireEvent.change(age, { target: { value: 'ee' } });
@@ -51,7 +53,7 @@ test('check age validation error', async () => {
 });
 
 test('check email validation error', async () => {
-  render(<ControlledForm></ControlledForm>);
+  render(<ControlledForm onSubmitted={vitest.fn()}></ControlledForm>);
 
   const email = screen.getByTestId('email');
 
@@ -88,7 +90,7 @@ test('check email validation error', async () => {
 });
 
 test('check password validation error', async () => {
-  render(<ControlledForm></ControlledForm>);
+  render(<ControlledForm onSubmitted={vitest.fn()}></ControlledForm>);
 
   const password = screen.getByTestId('password');
 
@@ -132,7 +134,7 @@ test('check password validation error', async () => {
 });
 
 test('check if password matches repeated password', async () => {
-  render(<ControlledForm></ControlledForm>);
+  render(<ControlledForm onSubmitted={vitest.fn()}></ControlledForm>);
 
   const passwordRepeated = screen.getByTestId('passwordRepeated');
   const password = screen.getByTestId('password');
@@ -152,7 +154,7 @@ test('check if password matches repeated password', async () => {
 });
 
 test('check checkbox error', async () => {
-  render(<ControlledForm></ControlledForm>);
+  render(<ControlledForm onSubmitted={vitest.fn()}></ControlledForm>);
   const submit = screen.getByTestId('submit');
 
   fireEvent.click(submit);

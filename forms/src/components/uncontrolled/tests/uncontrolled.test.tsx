@@ -16,13 +16,15 @@ vitest.mock('react-redux', () => ({
 }));
 
 test('uncontrolled component validation', () => {
-  const { container } = render(<UncontrolledForm></UncontrolledForm>);
+  const { container } = render(
+    <UncontrolledForm onSubmitted={vitest.fn()}></UncontrolledForm>
+  );
 
   expect(container).toMatchSnapshot();
 });
 
 test('check first name validation', async () => {
-  render(<UncontrolledForm></UncontrolledForm>);
+  render(<UncontrolledForm onSubmitted={vitest.fn()}></UncontrolledForm>);
   const firstName = screen.getByTestId('fname');
 
   fireEvent.change(firstName, { target: { value: 'ksusha' } });
@@ -39,7 +41,7 @@ test('check first name validation', async () => {
 });
 
 test('check age validation error', async () => {
-  render(<UncontrolledForm></UncontrolledForm>);
+  render(<UncontrolledForm onSubmitted={vitest.fn()}></UncontrolledForm>);
   const age = screen.getByTestId('age');
 
   fireEvent.change(age, { target: { value: 'ee' } });
@@ -54,7 +56,7 @@ test('check age validation error', async () => {
 });
 
 test('check password validation error', async () => {
-  render(<UncontrolledForm></UncontrolledForm>);
+  render(<UncontrolledForm onSubmitted={vitest.fn()}></UncontrolledForm>);
 
   const password = screen.getByTestId('password');
 
@@ -100,7 +102,7 @@ test('check password validation error', async () => {
 });
 
 test('check if password matches repeated password', async () => {
-  render(<UncontrolledForm></UncontrolledForm>);
+  render(<UncontrolledForm onSubmitted={vitest.fn()}></UncontrolledForm>);
 
   const passwordRepeated = screen.getByTestId('passwordRepeated');
   const password = screen.getByTestId('password');
@@ -120,7 +122,7 @@ test('check if password matches repeated password', async () => {
 });
 
 test('check radio button error', async () => {
-  render(<UncontrolledForm></UncontrolledForm>);
+  render(<UncontrolledForm onSubmitted={vitest.fn()}></UncontrolledForm>);
   const submit = screen.getByTestId('submit');
 
   fireEvent.click(submit);
@@ -133,7 +135,7 @@ test('check radio button error', async () => {
 });
 
 test('check checkbox error', async () => {
-  render(<UncontrolledForm></UncontrolledForm>);
+  render(<UncontrolledForm onSubmitted={vitest.fn()}></UncontrolledForm>);
   const submit = screen.getByTestId('submit');
 
   fireEvent.click(submit);

@@ -36,10 +36,14 @@ function App() {
         </button>
       </div>
       <Modal visible={controlled} onClose={handleCloseButtonControlled}>
-        <ControlledForm></ControlledForm>
+        <ControlledForm
+          onSubmitted={handleCloseButtonControlled}
+        ></ControlledForm>
       </Modal>
       <Modal visible={uncontrolled} onClose={handleCloseButtonUncontrolled}>
-        <UncontrolledForm></UncontrolledForm>
+        <UncontrolledForm
+          onSubmitted={handleCloseButtonUncontrolled}
+        ></UncontrolledForm>
       </Modal>
       <div>
         <p>Controlled:</p>

@@ -17,7 +17,11 @@ type FormValues = {
   file: FileList;
 };
 
-export default function ControlledForm() {
+type Props = {
+  onSubmitted: () => void;
+};
+
+export default function ControlledForm({ onSubmitted }: Props) {
   const {
     register,
     handleSubmit,
@@ -32,6 +36,7 @@ export default function ControlledForm() {
     dispatch(
       updateControlledForm({ ...data, file: await fileToBase64(data.file[0]) })
     );
+    onSubmitted();
   };
 
   return (
