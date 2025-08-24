@@ -1,0 +1,208 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`uncontrolled component validation 1`] = `
+<div>
+  <div>
+    <form
+      class="controlled-container"
+    >
+      <div>
+        <label
+          for="fname"
+        >
+          First name: 
+        </label>
+        <input
+          data-testid="fname"
+          id="fname"
+          name="fname"
+          placeholder="Write your name"
+          type="text"
+        />
+        <div
+          class="error"
+          data-testid="fname-error"
+        />
+      </div>
+      <div>
+        <label
+          for="age"
+        >
+          Age: 
+        </label>
+        <input
+          data-testid="age"
+          id="age"
+          name="age"
+          placeholder="Write your age"
+          type="text"
+        />
+        <div
+          class="error"
+          data-testid="age-error"
+        >
+           
+        </div>
+      </div>
+      <div>
+        <label
+          for="email"
+        >
+          Email: 
+        </label>
+        <input
+          data-testid="email"
+          id="email"
+          name="email"
+          placeholder="Write your email"
+          type="text"
+        />
+        <div
+          class="error"
+          data-testid="email-error"
+        />
+      </div>
+      <div>
+        <label
+          for="password"
+        >
+          Password: 
+        </label>
+        <input
+          data-testid="password"
+          id="password"
+          name="password"
+          placeholder="Write your password"
+          type="password"
+        />
+        <span
+          data-testid="password-strength"
+        >
+           🔴 Weak
+        </span>
+        <div
+          class="error"
+          data-testid="password-error"
+        />
+      </div>
+      <div>
+        <label
+          for="passwordRepeat"
+        >
+          Repeat password: 
+        </label>
+        <input
+          data-testid="passwordRepeated"
+          id="passwordRepeat"
+          name="passwordRepeat"
+          placeholder="Repeat your password"
+          type="password"
+        />
+        <div
+          class="error"
+          data-testid="passwordRepeated-error"
+        >
+           
+        </div>
+      </div>
+      <div>
+        <span>
+          Gender: 
+        </span>
+        <input
+          id="female"
+          name="gender"
+          type="radio"
+          value="female"
+        />
+        <label
+          for="female"
+        >
+          Female
+        </label>
+        <input
+          id="male"
+          name="gender"
+          type="radio"
+          value="male"
+        />
+        <label
+          for="male"
+        >
+          Male
+        </label>
+        <div
+          class="error"
+          data-testid="gender-error"
+        />
+      </div>
+      <div>
+        <div>
+          <label
+            for="country"
+          >
+            Country: 
+          </label>
+          <input
+            autocomplete="off"
+            data-testid="country"
+            id="country"
+            list="country-list"
+            name="country"
+            placeholder="Write a country..."
+            value=""
+          />
+          <datalist
+            id="country-list"
+          />
+        </div>
+        <div
+          class="error"
+          data-testid="country-error"
+        />
+      </div>
+      <div>
+        <label
+          for="file"
+        >
+           Upload picture: 
+        </label>
+        <input
+          id="file"
+          name="file"
+          type="file"
+        />
+        <div
+          class="error"
+        />
+      </div>
+      <div>
+        <input
+          data-testid="check-box"
+          id="checkbox"
+          name="checkbox"
+          type="checkbox"
+        />
+        <label
+          for="checkbox"
+        >
+           
+          Accept terms and conditions agreement
+        </label>
+        <div
+          class="error"
+          data-testid="checkbox-error"
+        />
+      </div>
+      <div>
+        <input
+          data-testid="submit"
+          disabled=""
+          type="submit"
+          value="Submit"
+        />
+      </div>
+    </form>
+  </div>
+</div>
+`;
