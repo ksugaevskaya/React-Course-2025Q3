@@ -6,6 +6,7 @@ import { fileToBase64 } from '../../helpers/base64';
 import { schema } from '../../validation/form-validation';
 import * as yup from 'yup';
 import usePasswordStrength from '../../hooks/use-password-strength';
+import CountryAutocomplete from '../autocomplete/autocomplete-input';
 
 type Errors = Record<string, string>;
 
@@ -31,6 +32,7 @@ export default function UncontrolledForm({ onSubmitted }: Props) {
       password: fd.get('password'),
       passwordRepeat: fd.get('passwordRepeat'),
       gender: fd.get('gender'),
+      country: fd.get('country'),
       checkbox: fd.get('checkbox') === 'on',
       file: [fd.get('file')],
     };
@@ -150,6 +152,13 @@ export default function UncontrolledForm({ onSubmitted }: Props) {
 
           <div data-testid="gender-error" className="error">
             {errors.gender}
+          </div>
+        </div>
+
+        <div>
+          <CountryAutocomplete />
+          <div data-testid="country-error" className="error">
+            {errors.country}
           </div>
         </div>
 

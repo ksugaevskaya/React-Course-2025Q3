@@ -134,6 +134,31 @@ exports[`uncontrolled component validation 1`] = `
       />
     </div>
     <div>
+      <div>
+        <label
+          for="country"
+        >
+          Country: 
+        </label>
+        <input
+          autocomplete="off"
+          data-testid="country"
+          id="country"
+          list="country-list"
+          name="country"
+          placeholder="Write a country..."
+          value=""
+        />
+        <datalist
+          id="country-list"
+        />
+      </div>
+      <div
+        class="error"
+        data-testid="country-error"
+      />
+    </div>
+    <div>
       <label
         for="file"
       >

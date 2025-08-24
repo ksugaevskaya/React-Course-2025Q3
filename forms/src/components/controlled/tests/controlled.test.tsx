@@ -13,6 +13,7 @@ beforeEach(cleanup);
 
 vitest.mock('react-redux', () => ({
   useDispatch: vitest.fn().mockReturnValue(vitest.fn()),
+  useSelector: vitest.fn().mockReturnValue([]),
 }));
 
 test('uncontrolled component validation', () => {
@@ -104,8 +105,10 @@ test('check password validation error', async () => {
 
   const passwordError = await screen.findByTestId('password-error');
 
-  expect(passwordError).toHaveTextContent(
-    'Password must contain at least one uppercase letter (A-Z).'
+  await waitFor(() =>
+    expect(passwordError).toHaveTextContent(
+      'Password must contain at least one uppercase letter (A-Z).'
+    )
   );
   expect(passwordStrength).toHaveTextContent('🔴 Weak');
 

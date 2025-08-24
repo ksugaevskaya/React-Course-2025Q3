@@ -52,6 +52,7 @@ export const schema = yup
         'Repeat password should match current password'
       ),
     gender: yup.string().required('Gender should be selected'),
+    country: yup.string().required('Country should be selected'),
     checkbox: yup
       .string()
       .oneOf(['true'], 'Please accept terms and conditions agreement')

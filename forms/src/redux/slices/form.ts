@@ -10,6 +10,7 @@ interface Form {
   gender: string;
   checkbox?: string;
   file: string;
+  country: string;
 }
 
 export interface FormState {

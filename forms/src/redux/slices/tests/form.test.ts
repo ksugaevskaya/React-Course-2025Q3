@@ -19,6 +19,7 @@ test('check updateControlledForm action', () => {
     password: 'Aa1!aaaa',
     passwordRepeat: 'Aa1!aaaa',
     gender: 'female',
+    country: 'Belarus',
     file: 'data:image/png;base64,AAA',
   };
 
@@ -40,6 +41,7 @@ test('check updateUncontrolledForm action', () => {
     passwordRepeat: 'Bb2!bbbb',
     gender: 'female',
     checkbox: 'on',
+    country: 'Belarus',
     file: 'data:image/png;base64,BBB',
   };
 

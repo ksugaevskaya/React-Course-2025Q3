@@ -13,6 +13,7 @@ beforeEach(cleanup);
 
 vitest.mock('react-redux', () => ({
   useDispatch: vitest.fn().mockReturnValue(vitest.fn()),
+  useSelector: vitest.fn().mockReturnValue([]),
 }));
 
 test('uncontrolled component validation', () => {

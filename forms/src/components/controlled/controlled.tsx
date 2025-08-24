@@ -6,6 +6,7 @@ import { updateControlledForm } from '../../redux/slices/form';
 import './controlled.css';
 import { fileToBase64 } from '../../helpers/base64';
 import usePasswordStrength from '../../hooks/use-password-strength';
+import Autocomplete from '../autocomplete/autocomplete-input';
 
 type FormValues = {
   checkbox?: string;
@@ -15,6 +16,7 @@ type FormValues = {
   password: string;
   passwordRepeat: string;
   gender: string;
+  country: string;
   file: FileList;
 };
 
@@ -142,6 +144,13 @@ export default function ControlledForm({ onSubmitted }: Props) {
 
           <div data-testid="gender-error" className="error">
             {errors.gender?.message}
+          </div>
+        </div>
+
+        <div>
+          <Autocomplete reg={register('country')} />
+          <div data-testid="country-error" className="error">
+            {errors.country?.message}
           </div>
         </div>
 

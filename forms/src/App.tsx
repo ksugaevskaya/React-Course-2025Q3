@@ -75,6 +75,11 @@ function App() {
             </div>
             <div>
               {' '}
+              <b>COUNTRY: </b>
+              {form.controlled?.country}
+            </div>
+            <div>
+              {' '}
               <b>T&C: </b>
               {form.controlled?.checkbox}
             </div>{' '}
@@ -115,6 +120,11 @@ function App() {
               {' '}
               <b>GENDER: </b>
               {form.uncontrolled?.gender}
+            </div>
+            <div>
+              {' '}
+              <b>COUNTRY: </b>
+              {form.uncontrolled?.country}
             </div>
             <div>
               {' '}

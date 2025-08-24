@@ -62,6 +62,12 @@ exports[`App renders 1`] = `
         <div>
            
           <b>
+            COUNTRY: 
+          </b>
+        </div>
+        <div>
+           
+          <b>
             T&C: 
           </b>
         </div>
@@ -119,6 +125,12 @@ exports[`App renders 1`] = `
            
           <b>
             GENDER: 
+          </b>
+        </div>
+        <div>
+           
+          <b>
+            COUNTRY: 
           </b>
         </div>
         <div>
