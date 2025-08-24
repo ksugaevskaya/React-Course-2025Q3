@@ -3,6 +3,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from '../../validation /form-validation';
 import { useDispatch } from 'react-redux';
 import { updateControlledForm } from '../../redux/slices/form';
+import './controlled.css';
+import { fileToBase64 } from '../../helpers/base64';
 
 export default function ControlledForm() {
   const {
@@ -15,129 +17,141 @@ export default function ControlledForm() {
   });
   const dispatch = useDispatch();
 
-  const onSubmit = (data) => dispatch(updateControlledForm(data));
+  const onSubmit = async (data) => {
+    console.log(data);
+    dispatch(
+      updateControlledForm({ ...data, file: await fileToBase64(data.file[0]) })
+    );
+  };
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="fname">First name:</label>
-        <input
-          type="text"
-          id="fname"
-          placeholder="Write your name"
-          data-testid="fname"
-          {...register('fname')}
-        />
+    <div>
+      <form className="controlled-container" onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <label htmlFor="fname">First name: </label>
+          <input
+            type="text"
+            id="fname"
+            placeholder="Write your name"
+            data-testid="fname"
+            {...register('fname')}
+          />
 
-        {errors.fname?.message && (
           <div className="error" data-testid="fname-error">
             {errors.fname?.message}
           </div>
-        )}
+        </div>
 
-        <label htmlFor="age">Age:</label>
-        <input
-          type="text"
-          id="age"
-          placeholder="Write your age"
-          data-testid="age"
-          {...register('age')}
-        />
+        <div>
+          <label htmlFor="age">Age: </label>
+          <input
+            type="text"
+            id="age"
+            placeholder="Write your age"
+            data-testid="age"
+            {...register('age')}
+          />
 
-        {errors.age?.message && (
           <div className="error" data-testid="age-error">
             {' '}
             {errors.age?.message}
           </div>
-        )}
+        </div>
 
-        <label htmlFor="email">Email:</label>
-        <input
-          type="text"
-          id="email"
-          data-testid="email"
-          {...register('email')}
-        />
+        <div>
+          <label htmlFor="email">Email: </label>
+          <input
+            type="text"
+            id="email"
+            data-testid="email"
+            {...register('email')}
+            placeholder="Write your email"
+          />
 
-        {errors.email?.message && (
           <div className="error" data-testid="email-error">
             {errors.email?.message}
           </div>
-        )}
+        </div>
+        <div>
+          <label htmlFor="password">Password: </label>
+          <input
+            type="password"
+            id="password"
+            data-testid="password"
+            {...register('password')}
+            placeholder="Write your password"
+          />
 
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          data-testid="password"
-          {...register('password')}
-        />
-
-        {errors.password?.message && (
           <div className="error" data-testid="password-error">
             {errors.password?.message}
           </div>
-        )}
+        </div>
 
-        <label htmlFor="passwordRepeat">Repeat password:</label>
-        <input
-          type="password"
-          id="passwordRepeat"
-          data-testid="passwordRepeated"
-          {...register('passwordRepeat')}
-        />
+        <div>
+          <label htmlFor="passwordRepeat">Repeat password: </label>
+          <input
+            type="password"
+            id="passwordRepeat"
+            data-testid="passwordRepeated"
+            {...register('passwordRepeat')}
+            placeholder="Repeat your password"
+          />
 
-        {errors.passwordRepeat?.message && (
           <div className="error" data-testid="passwordRepeated-error">
             {errors.passwordRepeat?.message}{' '}
           </div>
-        )}
+        </div>
 
-        <p>Gender:</p>
-        <input
-          type="radio"
-          id="female"
-          value="female"
-          {...register('gender')}
-        />
-        <label htmlFor="female">Female</label>
-        <input type="radio" id="male" value="male" {...register('gender')} />
-        <label htmlFor="male">Male</label>
+        <div>
+          <span>Gender: </span>
+          <input
+            type="radio"
+            id="female"
+            value="female"
+            {...register('gender')}
+          />
+          <label htmlFor="female">Female</label>
+          <input type="radio" id="male" value="male" {...register('gender')} />
+          <label htmlFor="male">Male</label>
 
-        {errors.gender?.message && (
           <div data-testid="gender-error" className="error">
             {errors.gender?.message}
           </div>
-        )}
+        </div>
 
-        <input
-          type="checkbox"
-          id="checkbox"
-          data-testid="check-box"
-          {...register('checkbox')}
-        />
-        <label htmlFor="checkbox"> Accept Terms and Conditions agreement</label>
+        <div>
+          <label htmlFor="file"> Upload picture: </label>
+          <input type="file" id="file" {...register('file')}></input>
 
-        {errors.checkbox?.message && (
+          <div className="error">{errors.file?.message}</div>
+        </div>
+
+        <div>
+          <input
+            type="checkbox"
+            id="checkbox"
+            data-testid="check-box"
+            {...register('checkbox')}
+          />
+          <label htmlFor="checkbox">
+            {' '}
+            Accept terms and conditions agreement
+          </label>
+
           <div data-testid="checkbox-error" className="error">
             {errors.checkbox?.message}
           </div>
-        )}
+        </div>
 
-        <label htmlFor="file"> Upload picture:</label>
-        <input type="file" id="file" {...register('file')}></input>
-
-        {errors.file?.message && (
-          <div className="error">{errors.file?.message}</div>
-        )}
-
-        <input
-          data-testid="submit"
-          type="submit"
-          value="Submit"
-          disabled={!isValid}
-        />
+        <div>
+          <input
+            data-testid="submit"
+            type="submit"
+            value="Submit"
+            disabled={!isValid}
+          />
+        </div>
       </form>
-    </>
+    </div>
   );
 }

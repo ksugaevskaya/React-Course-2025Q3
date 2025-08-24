@@ -5,6 +5,7 @@ import {
   updateControlledForm,
   updateUncontrolledForm,
 } from '../../redux/slices/form';
+import { fileToBase64 } from '../../helpers/base64';
 
 export const hasAtLeastOneSymbol = (
   string: string,
@@ -31,7 +32,15 @@ export default function UncontrolledForm() {
   const [passwordRepeatError, setPasswordRepeatError] = useState('');
   const [fileError, setFileError] = useState('');
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    setFirstNameError('');
+    setEmailError('');
+    setAgeError('');
+    setGenderError('');
+    setTermsError('');
+    setPasswordError('');
+    setPasswordRepeatError('');
+    setFileError('');
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
@@ -119,106 +128,122 @@ export default function UncontrolledForm() {
       setFileError('File size should be less than 1MB');
     }
 
-    dispatch(updateUncontrolledForm(values));
+    dispatch(
+      updateUncontrolledForm({
+        ...values,
+        file: await fileToBase64(values.file),
+      })
+    );
   }
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="fname">First name:</label>
-        <input
-          type="text"
-          id="fname"
-          name="fname"
-          placeholder="Write your name"
-          data-testid="fname"
-        />
+      <form className="uncontrolled-container" onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="fname">First name: </label>
+          <input
+            type="text"
+            id="fname"
+            name="fname"
+            placeholder="Write your name"
+            data-testid="fname"
+          />
 
-        {firstNameError && (
           <div className="error" data-testid="fname-error">
             {firstNameError}
           </div>
-        )}
+        </div>
+        <div>
+          <label htmlFor="age">Age: </label>
+          <input
+            type="text"
+            id="age"
+            name="age"
+            placeholder="Write your age"
+            data-testid="age"
+          />
 
-        <label htmlFor="age">Age:</label>
-        <input
-          type="text"
-          id="age"
-          name="age"
-          placeholder="Write your age"
-          data-testid="age"
-        />
-
-        {ageError && (
           <div className="error" data-testid="age-error">
             {' '}
             {ageError}
           </div>
-        )}
+        </div>
 
-        <label htmlFor="email">Email:</label>
-        <input type="text" id="email" name="email" data-testid="email" />
+        <div>
+          <label htmlFor="email">Email: </label>
+          <input
+            type="text"
+            id="email"
+            name="email"
+            data-testid="email"
+            placeholder="Write your email"
+          />
 
-        {emailError && (
           <div className="error" data-testid="email-error">
             {emailError}
           </div>
-        )}
+        </div>
 
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          data-testid="password"
-        />
+        <div>
+          <label htmlFor="password">Password: </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            data-testid="password"
+            placeholder="Write your password"
+          />
 
-        {passwordError && (
           <div className="error" data-testid="password-error">
             {passwordError}
           </div>
-        )}
+        </div>
 
-        <label htmlFor="passwordRepeat">Repeat password:</label>
-        <input
-          type="password"
-          id="passwordRepeat"
-          name="passwordRepeat"
-          data-testid="passwordRepeated"
-        />
+        <div>
+          <label htmlFor="passwordRepeat">Repeat password: </label>
+          <input
+            type="password"
+            id="passwordRepeat"
+            name="passwordRepeat"
+            data-testid="passwordRepeated"
+            placeholder="Repeat your age"
+          />
 
-        {passwordRepeatError && (
           <div className="error" data-testid="passwordRepeated-error">
             {passwordRepeatError}{' '}
           </div>
-        )}
+        </div>
+        <div>
+          <span>Gender:</span>
+          <input type="radio" id="female" name="gender" value="female" />
+          <label htmlFor="female">Female</label>
+          <input type="radio" id="male" name="gender" value="male" />
+          <label htmlFor="male">Male</label>
 
-        <p>Gender:</p>
-        <input type="radio" id="female" name="gender" value="female" />
-        <label htmlFor="female">Female</label>
-        <input type="radio" id="male" name="gender" value="male" />
-        <label htmlFor="male">Male</label>
-
-        {genderError && (
           <div data-testid="gender-error" className="error">
             {genderError}
           </div>
-        )}
+        </div>
 
-        <input type="checkbox" id="checkbox" name="checkbox" />
-        <label htmlFor="checkbox"> Accept Terms and Conditions agreement</label>
+        <div>
+          <label htmlFor="file"> Upload picture: </label>
+          <input type="file" id="file" name="file"></input>
 
-        {termsError && (
+          <div className="error">{fileError}</div>
+        </div>
+        <div>
+          <input type="checkbox" id="checkbox" name="checkbox" />
+          <label htmlFor="checkbox">
+            {' '}
+            Accept terms and conditions agreement
+          </label>
+
           <div data-testid="checkbox-error" className="error">
             {termsError}
           </div>
-        )}
-
-        <label htmlFor="file"> Upload picture:</label>
-        <input type="file" id="file" name="file"></input>
-
-        {fileError && <div className="error">{fileError}</div>}
-
-        <input data-testid="submit" type="submit" value="Submit" />
+        </div>
+        <div>
+          <input data-testid="submit" type="submit" value="Submit" />
+        </div>
       </form>
     </>
   );
