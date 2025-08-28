@@ -1,35 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect, useState } from 'react';
+import { getCO2RowsLatest, type Row } from './api/api';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function CO2Table() {
+  const [rows, setRows] = useState<Row[] | null>(null);
+
+  useEffect(() => {
+    getCO2RowsLatest().then(setRows);
+  }, []);
+
+  if (!rows) return <div className="loading">Loading…</div>;
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="main-container">
+      <h2 className="h2">CO₂ emissions — per country (latest year)</h2>
+      <div className="main-table-container">
+        <table className="table-container">
+          <thead className="thead">
+            <tr>
+              <th className="th">Name</th>
+              <th className="th">ISO Code</th>
+              <th className="th">Year</th>
+              <th className="th">Population</th>
+              <th className="th">CO2</th>
+              <th className="th">CO2 Per Capita</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.iso}>
+                <td className="td-left">{r.name}</td>
+                <td className="td">{r.iso}</td>
+                <td className="td">{r.year}</td>
+                <td className="td-right">{r.population ?? ''}</td>
+                <td className="td-right">{r.co2 ?? ''}</td>
+                <td className="td-right">{r.co2PerCapita ?? ''}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+      <p className="p">
+        Source: Our World in Data — CO₂ & Greenhouse Gas Emissions.
       </p>
-    </>
-  )
+    </div>
+  );
 }
-
-export default App
