@@ -3,6 +3,7 @@ import { getCO2RowsLatest, type Row } from './api/api';
 import './App.css';
 import wrapPromise from './resource';
 import Search from './components/search/search';
+import Select from './components/select/select';
 
 const rowsResource = wrapPromise(getCO2RowsLatest());
 
@@ -13,6 +14,7 @@ function CO2TableInner() {
     <div className="main-container">
       <h2 className="h2">CO₂ emissions — per country (latest year)</h2>
       <Search onClick={() => {}}></Search>
+      <Select></Select>
       <div className="main-table-container">
         <table className="table-container">
           <thead className="thead">
