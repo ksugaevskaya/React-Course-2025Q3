@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense } from 'react';
 import { getCO2RowsLatest, type Row } from './api/api';
 import './App.css';
+import wrapPromise from './resource';
+import Search from './components/search/search';
 
-export default function CO2Table() {
-  const [rows, setRows] = useState<Row[] | null>(null);
+const rowsResource = wrapPromise(getCO2RowsLatest());
 
-  useEffect(() => {
-    getCO2RowsLatest().then(setRows);
-  }, []);
-
-  if (!rows) return <div className="loading">Loading…</div>;
+function CO2TableInner() {
+  const rows: Row[] = rowsResource.read();
 
   return (
     <div className="main-container">
       <h2 className="h2">CO₂ emissions — per country (latest year)</h2>
+      <Search onClick={() => {}}></Search>
       <div className="main-table-container">
         <table className="table-container">
           <thead className="thead">
@@ -41,8 +40,16 @@ export default function CO2Table() {
         </table>
       </div>
       <p className="p">
-        Source: Our World in Data — CO₂ & Greenhouse Gas Emissions.
+        Source: Our World in Data — CO₂ &amp; Greenhouse Gas Emissions.
       </p>
     </div>
+  );
+}
+
+export default function CO2Table() {
+  return (
+    <Suspense fallback={<div className="loading">Loading…</div>}>
+      <CO2TableInner />
+    </Suspense>
   );
 }
