@@ -1,19 +1,23 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import { getCO2RowsLatest, type Row } from './api/api';
 import './App.css';
 import wrapPromise from './resource';
 import Search from './components/search/search';
 import Select from './components/select/select';
+import { filterRowsByName } from './utils/filter';
 
 const rowsResource = wrapPromise(getCO2RowsLatest());
 
 function CO2TableInner() {
   const rows: Row[] = rowsResource.read();
 
+  const [query, setQuery] = useState('');
+  const visibleRows = filterRowsByName(rows, query);
+
   return (
     <div className="main-container">
       <h2 className="h2">CO₂ emissions — per country (latest year)</h2>
-      <Search onClick={() => {}}></Search>
+      <Search onClick={setQuery}></Search>
       <Select></Select>
       <div className="main-table-container">
         <table className="table-container">
@@ -28,7 +32,7 @@ function CO2TableInner() {
             </tr>
           </thead>
           <tbody>
-            {rows.map((r) => (
+            {visibleRows.map((r) => (
               <tr key={r.iso}>
                 <td className="td-left">{r.name}</td>
                 <td className="td">{r.iso}</td>
@@ -38,6 +42,14 @@ function CO2TableInner() {
                 <td className="td-right">{r.co2PerCapita ?? ''}</td>
               </tr>
             ))}
+
+            {visibleRows.length === 0 && (
+              <tr>
+                <td className="td-left" colSpan={6}>
+                  No countries match “{query}”.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
