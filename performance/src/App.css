@@ -50,6 +50,19 @@
 .td-right {
   text-align: right;
 }
+
 .td-left {
   text-align: left;
+}
+
+.th-sort {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.caret {
+  font-size: 0.9em;
+  line-height: 1;
 }

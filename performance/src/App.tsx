@@ -4,7 +4,7 @@ import './App.css';
 import wrapPromise from './resource';
 import Search from './components/search/search';
 import Select from './components/select/select';
-import { filterRowsByName } from './utils/filter';
+import { filterRowsByName, sortRowsByName, type SortDir } from './utils/filter';
 
 const rowsResource = wrapPromise(getCO2RowsLatest());
 
@@ -12,18 +12,33 @@ function CO2TableInner() {
   const rows: Row[] = rowsResource.read();
 
   const [query, setQuery] = useState('');
-  const visibleRows = filterRowsByName(rows, query);
+  const [nameDir, setNameDir] = useState<SortDir>('asc');
+
+  const filtered = filterRowsByName(rows, query);
+  const visibleRows = sortRowsByName(filtered, nameDir);
 
   return (
     <div className="main-container">
       <h2 className="h2">CO₂ emissions — per country (latest year)</h2>
-      <Search onClick={setQuery}></Search>
-      <Select></Select>
+      <Search onClick={setQuery} />
+      <Select />
       <div className="main-table-container">
         <table className="table-container">
           <thead className="thead">
             <tr>
-              <th className="th">Name</th>
+              <th className="th">
+                <button
+                  className="th-sort"
+                  onClick={() =>
+                    setNameDir((d) => (d === 'asc' ? 'desc' : 'asc'))
+                  }
+                  aria-sort={nameDir === 'asc' ? 'ascending' : 'descending'}
+                  title={`Sort by name (${nameDir === 'asc' ? 'A→Z' : 'Z→A'})`}
+                >
+                  Name{' '}
+                  <span className="caret">{nameDir === 'asc' ? '▲' : '▼'}</span>
+                </button>
+              </th>
               <th className="th">ISO Code</th>
               <th className="th">Year</th>
               <th className="th">Population</th>
