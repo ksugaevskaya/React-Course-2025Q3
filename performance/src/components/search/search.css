@@ -1,0 +1,19 @@
+.top-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+  margin: 30px;
+}
+
+.input {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-size: medium;
+  flex-grow: 1;
+}
+
+.input::placeholder {
+  font-style: italic;
+}
