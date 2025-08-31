@@ -8,3 +8,11 @@
 | Sorting(ranked chart)                                | <img width="587" height="253" alt="Screenshot 2025-08-31 at 2 04 14 PM" src="https://github.com/user-attachments/assets/a00ddc4b-ed16-4ae6-b628-96decba4eea4" /> | <img width="813" height="180" alt="Screenshot 2025-08-31 at 2 29 30 PM" src="https://github.com/user-attachments/assets/2fee11ca-c22c-4537-a87e-5de1215a4c10" /> |
 | Search (flame-graph)                                 | <img width="809" height="177" alt="Screenshot 2025-08-31 at 2 06 12 PM" src="https://github.com/user-attachments/assets/89f1b650-8e16-499c-a0de-60fd74c4d8c8" /> | <img width="808" height="176" alt="Screenshot 2025-08-31 at 2 30 13 PM" src="https://github.com/user-attachments/assets/498a0e02-1644-4735-9244-5cf17ca72595" /> |
 | Search(ranked chart)                                 | <img width="795" height="185" alt="Screenshot 2025-08-31 at 2 06 40 PM" src="https://github.com/user-attachments/assets/172d77c3-2ae6-4310-8a03-82438e718eb3" /> | <img width="801" height="148" alt="Screenshot 2025-08-31 at 2 30 31 PM" src="https://github.com/user-attachments/assets/f2a8d90a-a7a4-442c-aaaf-4873013b0827" /> |
+
+1. Open modal. The commit time dropped from 79.5 ms to 3.1 ms. There used to be two commits with roughly the same duration; after the optimization we still have two commits, but the total time is about 25× lower.
+
+2. Open modal + 3 checkboxes + confirm button. The first commit decreased; the last commit decreased only slightly because it still has to render three table columns.
+
+3. Sorting. The time increased from 75 ms to 94 ms, most likely due to memoization overhead.
+
+4. Search. The time is virtually unchanged
