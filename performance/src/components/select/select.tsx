@@ -1,4 +1,6 @@
-export default function Select() {
+import React from 'react';
+
+function Select() {
   return (
     <>
       <label htmlFor="year"> Choose a year: </label>
@@ -14,3 +16,5 @@ export default function Select() {
     </>
   );
 }
+
+export default React.memo(Select);

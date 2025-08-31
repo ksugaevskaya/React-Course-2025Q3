@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Modal from '../modal/modal';
 import type { Row } from '../../api/api';
+import React from 'react';
 
 type Props = {
   visible: boolean;
@@ -8,7 +9,7 @@ type Props = {
   onConfirm: (fields: (keyof Row)[]) => void;
 };
 
-export default function Columns({ visible, onClose, onConfirm }: Props) {
+function Columns({ visible, onClose, onConfirm }: Props) {
   const [fields, setFields] = useState<(keyof Row)[]>([]);
 
   const toggleField = (field: keyof Row) => {
@@ -58,3 +59,5 @@ export default function Columns({ visible, onClose, onConfirm }: Props) {
     </Modal>
   );
 }
+
+export default React.memo(Columns);

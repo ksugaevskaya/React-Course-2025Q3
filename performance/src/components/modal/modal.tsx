@@ -2,6 +2,7 @@ import './modal.css';
 import cross from '../../assets/cross.svg';
 import { createPortal } from 'react-dom';
 import { useEffect } from 'react';
+import React from 'react';
 
 type ModalProps = {
   visible: boolean;
@@ -9,7 +10,7 @@ type ModalProps = {
   onClose: () => void;
 };
 
-export default function Modal({ visible, children, onClose }: ModalProps) {
+function Modal({ visible, children, onClose }: ModalProps) {
   const onStop = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
   };
@@ -59,3 +60,5 @@ export default function Modal({ visible, children, onClose }: ModalProps) {
     </>
   );
 }
+
+export default React.memo(Modal);

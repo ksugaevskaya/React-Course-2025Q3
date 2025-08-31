@@ -1,3 +1,4 @@
+import React from 'react';
 import './search.css';
 import { useState } from 'react';
 
@@ -5,7 +6,7 @@ type Props = {
   onClick: (value: string) => void;
 };
 
-export default function Search({ onClick }: Props) {
+function Search({ onClick }: Props) {
   const [value, setValue] = useState('');
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value.trim());
@@ -22,3 +23,5 @@ export default function Search({ onClick }: Props) {
     </div>
   );
 }
+
+export default React.memo(Search);

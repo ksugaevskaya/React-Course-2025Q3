@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Row } from '../../api/api';
 
 type Props = {
@@ -8,13 +9,7 @@ type Props = {
   query: string;
 };
 
-export default function Table({
-  nameDir,
-  changeSort,
-  fields,
-  visibleRows,
-  query,
-}: Props) {
+function Table({ nameDir, changeSort, fields, visibleRows, query }: Props) {
   return (
     <div className="main-table-container">
       <table className="table-container">
@@ -72,3 +67,4 @@ export default function Table({
     </div>
   );
 }
+export default React.memo(Table);
