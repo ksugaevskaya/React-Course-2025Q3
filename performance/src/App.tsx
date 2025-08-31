@@ -1,4 +1,4 @@
-import React, { Suspense, useCallback, useState } from 'react';
+import React, { Suspense, useCallback, useMemo, useState } from 'react';
 import { getCO2RowsLatest, type Row } from './api/api';
 import './App.css';
 import wrapPromise from './resource';
@@ -18,8 +18,10 @@ function CO2TableInner() {
   const [query, setQuery] = useState('');
   const [nameDir, setNameDir] = useState<SortDir>('asc');
 
-  const filtered = filterRowsByName(rows, query);
-  const visibleRows = sortRowsByName(filtered, nameDir);
+  const visibleRows = useMemo(() => {
+    const filtered = filterRowsByName(rows, query);
+    return sortRowsByName(filtered, nameDir);
+  }, [nameDir, query, rows]);
 
   const closeModal = useCallback(() => {
     setShowModal(false);
