@@ -5,23 +5,40 @@ import wrapPromise from './resource';
 import Search from './components/search/search';
 import Select from './components/select/select';
 import { filterRowsByName, sortRowsByName, type SortDir } from './utils/filter';
+import Columns from './components/additional-columns/columns';
 
 const rowsResource = wrapPromise(getCO2RowsLatest());
 
 function CO2TableInner() {
   const rows: Row[] = rowsResource.read();
 
+  const [fields, setFields] = useState<(keyof Row)[]>([]);
+  const [showModal, setShowModal] = useState(false);
   const [query, setQuery] = useState('');
   const [nameDir, setNameDir] = useState<SortDir>('asc');
 
   const filtered = filterRowsByName(rows, query);
   const visibleRows = sortRowsByName(filtered, nameDir);
 
+  const closeModal = () => {
+    setShowModal(false);
+  };
+  const openModal = () => {
+    setShowModal(true);
+  };
+  const changeSort = () => setNameDir((d) => (d === 'asc' ? 'desc' : 'asc'));
+
   return (
     <div className="main-container">
       <h2 className="h2">CO₂ emissions — per country (latest year)</h2>
       <Search onClick={setQuery} />
       <Select />
+      <button onClick={openModal}>Open Modal</button>
+      <Columns
+        visible={showModal}
+        onClose={closeModal}
+        onConfirm={setFields}
+      ></Columns>
       <div className="main-table-container">
         <table className="table-container">
           <thead className="thead">
@@ -29,9 +46,7 @@ function CO2TableInner() {
               <th className="th">
                 <button
                   className="th-sort"
-                  onClick={() =>
-                    setNameDir((d) => (d === 'asc' ? 'desc' : 'asc'))
-                  }
+                  onClick={changeSort}
                   aria-sort={nameDir === 'asc' ? 'ascending' : 'descending'}
                   title={`Sort by name (${nameDir === 'asc' ? 'A→Z' : 'Z→A'})`}
                 >
@@ -44,6 +59,11 @@ function CO2TableInner() {
               <th className="th">Population</th>
               <th className="th">CO2</th>
               <th className="th">CO2 Per Capita</th>
+              {fields.map((string) => (
+                <th className="th" key={string}>
+                  {string}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
@@ -55,6 +75,11 @@ function CO2TableInner() {
                 <td className="td-right">{r.population ?? ''}</td>
                 <td className="td-right">{r.co2 ?? ''}</td>
                 <td className="td-right">{r.co2PerCapita ?? ''}</td>
+                {fields.map((string) => (
+                  <td className="td-right" key={string}>
+                    {r[string]}
+                  </td>
+                ))}
               </tr>
             ))}
 

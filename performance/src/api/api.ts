@@ -6,6 +6,9 @@ type YearDatum = {
   population?: number;
   co2?: number;
   co2_per_capita?: number;
+  methane?: number;
+  oil_co2?: number;
+  temperature_change_from_co2?: number;
 };
 
 type Entity = {
@@ -24,6 +27,9 @@ export type Row = {
   population?: number;
   co2?: number;
   co2PerCapita?: number;
+  methane?: number;
+  oilCO2?: number;
+  temperatureChangeFromCO2?: number;
 };
 
 export async function getCO2RowsLatest(): Promise<Row[]> {
@@ -46,6 +52,9 @@ export async function getCO2RowsLatest(): Promise<Row[]> {
       population: last.population,
       co2: last.co2,
       co2PerCapita: last.co2_per_capita,
+      methane: last.methane,
+      oilCO2: last.oil_co2,
+      temperatureChangeFromCO2: last.temperature_change_from_co2,
     });
   }
 
