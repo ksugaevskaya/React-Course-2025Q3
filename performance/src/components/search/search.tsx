@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import './search.css';
 import { useState } from 'react';
 
@@ -8,9 +8,12 @@ type Props = {
 
 function Search({ onClick }: Props) {
   const [value, setValue] = useState('');
-  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value.trim());
-  };
+  const onInputChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(event.target.value.trim());
+    },
+    []
+  );
   return (
     <div className="top-container">
       <input

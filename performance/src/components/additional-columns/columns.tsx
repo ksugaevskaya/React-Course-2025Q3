@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Modal from '../modal/modal';
 import type { Row } from '../../api/api';
 import React from 'react';
@@ -12,16 +12,16 @@ type Props = {
 function Columns({ visible, onClose, onConfirm }: Props) {
   const [fields, setFields] = useState<(keyof Row)[]>([]);
 
-  const toggleField = (field: keyof Row) => {
+  const toggleField = useCallback((field: keyof Row) => {
     setFields((prev) =>
       prev.includes(field) ? prev.filter((f) => f !== field) : [...prev, field]
     );
-  };
+  }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     onConfirm(fields);
     onClose();
-  };
+  }, [fields, onClose, onConfirm]);
 
   return (
     <Modal visible={visible} onClose={onClose}>

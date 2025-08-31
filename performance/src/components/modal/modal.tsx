@@ -1,7 +1,7 @@
 import './modal.css';
 import cross from '../../assets/cross.svg';
 import { createPortal } from 'react-dom';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import React from 'react';
 
 type ModalProps = {
@@ -11,9 +11,9 @@ type ModalProps = {
 };
 
 function Modal({ visible, children, onClose }: ModalProps) {
-  const onStop = (e: React.MouseEvent<HTMLDivElement>) => {
+  const onStop = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
-  };
+  }, []);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
