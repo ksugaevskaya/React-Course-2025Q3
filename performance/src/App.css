@@ -13,7 +13,7 @@
 }
 
 .loading {
-  padding: 12px;
+  margin: 420px;
 }
 
 .p {
@@ -39,6 +39,7 @@
   padding: 8px 10px;
   border-bottom: 1px solid #e5e7eb;
   white-space: nowrap;
+  color: black;
 }
 
 .td {
@@ -49,10 +50,14 @@
 
 .td-right {
   text-align: right;
+  padding: 10px;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .td-left {
   text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .th-sort {
@@ -65,4 +70,19 @@
 .caret {
   font-size: 0.9em;
   line-height: 1;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 15px;
+}
+
+body {
+  background-color: #292323;
+  color: aliceblue;
+}
+
+.button {
 }

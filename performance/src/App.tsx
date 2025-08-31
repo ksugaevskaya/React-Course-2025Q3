@@ -38,8 +38,12 @@ function CO2TableInner() {
     <div className="main-container">
       <h2 className="h2">CO₂ emissions — per country (latest year)</h2>
       <Search onClick={setQuery} />
-      <Select />
-      <button onClick={openModal}>Open Modal</button>
+      <div className="container">
+        <div>
+          <Select />{' '}
+        </div>
+        <button onClick={openModal}>Open Modal</button>
+      </div>
       <Columns
         visible={showModal}
         onClose={closeModal}

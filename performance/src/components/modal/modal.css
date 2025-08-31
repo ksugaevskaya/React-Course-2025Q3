@@ -1,12 +1,13 @@
 .modal-content {
   position: relative;
-  min-height: 50%;
-  width: 75%;
+  min-height: 20%;
   max-width: 900px;
   display: flex;
   flex-direction: row;
   background-color: #fafafa;
   border-radius: 10px;
+  gap: 10px;
+  padding: 10px;
 }
 
 .modal-container {
@@ -21,13 +22,14 @@
   align-items: center;
   background-color: #6b666152;
   z-index: 2;
+  color: black;
 }
 
 .cross {
   z-index: 3;
   position: absolute;
   right: 0px;
-  padding-top: 12px;
+
   padding-right: 12px;
   cursor: pointer;
 }

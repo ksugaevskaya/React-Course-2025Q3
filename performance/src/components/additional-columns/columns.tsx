@@ -27,6 +27,7 @@ function Columns({ visible, onClose, onConfirm }: Props) {
     <Modal visible={visible} onClose={onClose}>
       <div>
         <input
+          className="text"
           type="checkbox"
           id="one"
           name="methane"
@@ -55,7 +56,10 @@ function Columns({ visible, onClose, onConfirm }: Props) {
         />
         <label htmlFor="three">Temperature change from CO2</label>
       </div>
-      <button onClick={handleSubmit}>Confirm</button>
+
+      <button className="button" onClick={handleSubmit}>
+        Confirm
+      </button>
     </Modal>
   );
 }
